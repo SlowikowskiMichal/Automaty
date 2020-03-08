@@ -11,17 +11,7 @@ namespace Lab1
     {
         static void Main(string[] args)
         {
-            string dupa = "DUPA";
-            Menu mainMenu = new Menu(new List<MenuOption> { 
-                new MenuOption(ConsoleKey.D1, "Pierwszy test",delegate(){PrintPierwszy(out dupa);}),
-                new MenuOption(ConsoleKey.C, "Oblicz siatke",delegate(){Calculate();})
-            });
-            ConsoleKey key;
-            do
-            {
-                key = mainMenu.printMenu();
-                Console.WriteLine($"Out: {dupa}");
-            } while (key != ConsoleKey.Escape);
+            Calculate();
         }
 
         static public void PrintPierwszy(out string a)
@@ -35,7 +25,8 @@ namespace Lab1
             Console.Write("Podaj rozmiar siatki:");
             int size = 10;
             int.TryParse(Console.ReadLine(), out size);
-            
+            size = size > 2 ? size : 3;
+
             Console.Write("Podaj regułę:");
             int rule = 127;
             int.TryParse(Console.ReadLine(), out rule);
@@ -46,15 +37,54 @@ namespace Lab1
             Random rand = new Random();
             bool[] grid = new bool[size];
             bool[] nextStepGrid = new bool[size];
-            for (int i = 0; i < size; i++)
-            {
-                grid[i] = false;// rand.NextDouble() > 0.5 ? true : false;
-            }
 
-            grid[size / 2] = true;
-
+            Console.WriteLine("Wybierz układ początkowy siatki:\n1. Jedna komórka w centrum w stanie 1\n2. Losowy rozkład stanów");
             ConsoleKey userInput;
+            bool continueFlag = true;
+            do
+            {
+                userInput = Console.ReadKey().Key;
 
+                switch (userInput)
+                {
+                    case ConsoleKey.D1:
+                        for (int i = 0; i < size; i++)
+                        {
+                            grid[i] = false;
+                        }
+
+                        grid[size / 2] = true;
+                        continueFlag = false;
+                        break;
+                    case ConsoleKey.D2:
+                        int proc;
+                        Console.WriteLine("\nPodaj ilość komórek w stanie 1 [%]:");
+                        if (!int.TryParse(Console.ReadLine(), out proc))
+                        {
+                            Console.WriteLine("Nieprawidłowa wartość, system przyjmuje 50%");
+                            proc = 50;
+                        }
+                        proc = Math.Min(Math.Max(proc, 0), 100);
+
+                        int sizeToActive = size * proc / 100;
+
+                        List<int> range = Enumerable.Range(0, size).OrderBy(a => rand.Next()).ToList();
+
+                        for(int i = 0; i < sizeToActive; i++)
+                        {
+                            grid[range[i]] = true;
+                        }
+
+                        continueFlag = false;
+                        break;
+                    default:
+                        Console.WriteLine("\nNieprawidłowa wartość");
+                        break;
+                }
+            } while (continueFlag);
+
+
+            Console.WriteLine("Aby przerwać działanie programu wciśnij ESC");
             do
             {
                 printGrid(grid);
@@ -71,7 +101,6 @@ namespace Lab1
             } while (userInput != ConsoleKey.Escape);
         }
 
-
         static void printGrid(bool[] grid)
         {
             foreach(bool b in grid)
@@ -84,70 +113,6 @@ namespace Lab1
         static int getRuleIndex(bool left, bool center, bool right)
         {
             return (left ? 4 : 0) + (center ? 2 : 0) + (right ? 1 : 0);
-        }
-    }
-
-    public class Menu
-    {
-        string menuTitle = "---MENU---";
-        string inputTitle = "Wybierz opcje: ";
-        List<MenuOption> menuOptions;
-
-        public Menu(List<MenuOption> menuOptions)
-        {
-            this.menuOptions = menuOptions;
-        }
-
-        public System.ConsoleKey printMenu()
-        {
-            Console.Clear();
-            Console.WriteLine(menuTitle);
-            foreach(MenuOption mo in menuOptions)
-            {
-                System.Console.WriteLine(mo.ToString());
-            }
-            Console.Write(inputTitle);
-            System.ConsoleKey userInput = Console.ReadKey().Key;
-            MenuOption optionToCall = menuOptions.FirstOrDefault(m => userInput == m.KeyValue);
-
-            if (optionToCall != null)
-            {
-                Console.WriteLine();
-                optionToCall.Execute();
-                Console.WriteLine("Wciśnij dowolny klawisz");
-                Console.ReadKey();
-            }
-
-            return userInput;
-        }
-    }
-
-    public class MenuOption
-    {
-        public ConsoleKey KeyValue;
-        public string OptionTitle;
-        FunctionToCall Func = delegate ()
-        {
-            Console.WriteLine("Not implemented");
-        };
-
-        public delegate void FunctionToCall();
-
-        public MenuOption(ConsoleKey keyValue, string optionTitle, FunctionToCall func)
-        {
-            KeyValue = keyValue;
-            OptionTitle = optionTitle;
-            Func = func;
-        }
-
-        public void Execute()
-        {
-            Func();
-        }
-
-        public override string ToString()
-        {
-            return $"{KeyValue.ToString()} - {OptionTitle}";
         }
     }
 }
