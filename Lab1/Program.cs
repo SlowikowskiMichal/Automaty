@@ -11,17 +11,6 @@ namespace Lab1
     {
         static void Main(string[] args)
         {
-            Calculate();
-        }
-
-        static public void PrintPierwszy(out string a)
-        {
-            a = "DUPA".ToLower();
-            Console.WriteLine(a);
-        }
-
-        static public void Calculate()
-        {
             Console.Write("Podaj rozmiar siatki:");
             int size = 10;
             int.TryParse(Console.ReadLine(), out size);
@@ -31,7 +20,7 @@ namespace Lab1
             int rule = 127;
             int.TryParse(Console.ReadLine(), out rule);
 
-            string stringRule = Convert.ToString(rule, 2).PadLeft(8,'0');
+            string stringRule = Convert.ToString(rule, 2).PadLeft(8, '0');
             bool[] ruleArray = stringRule.Reverse().Select(s => s.Equals('1')).ToArray();
 
             Random rand = new Random();
@@ -70,7 +59,7 @@ namespace Lab1
 
                         List<int> range = Enumerable.Range(0, size).OrderBy(a => rand.Next()).ToList();
 
-                        for(int i = 0; i < sizeToActive; i++)
+                        for (int i = 0; i < sizeToActive; i++)
                         {
                             grid[range[i]] = true;
                         }
@@ -89,18 +78,17 @@ namespace Lab1
             {
                 printGrid(grid);
                 nextStepGrid[0] = ruleArray[getRuleIndex(grid[size - 1], grid[0], grid[1])];
-                for(int i = 1; i < size - 1; i++)
+                for (int i = 1; i < size - 1; i++)
                 {
                     nextStepGrid[i] = ruleArray[getRuleIndex(grid[i - 1], grid[i], grid[i + 1])];
                 }
-                nextStepGrid[size - 1] = ruleArray[getRuleIndex(grid[size - 2], grid[size -1], grid[0])];
+                nextStepGrid[size - 1] = ruleArray[getRuleIndex(grid[size - 2], grid[size - 1], grid[0])];
 
-                nextStepGrid.CopyTo(grid,0);
+                nextStepGrid.CopyTo(grid, 0);
                 userInput = Console.ReadKey().Key;
 
             } while (userInput != ConsoleKey.Escape);
         }
-
         static void printGrid(bool[] grid)
         {
             foreach(bool b in grid)
