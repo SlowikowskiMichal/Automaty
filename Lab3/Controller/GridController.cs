@@ -93,7 +93,7 @@ namespace Lab3
             }
         }
 
-        public void CalculateNextGrid(IProgress<Grid> progress, bool onlyOneStep = false)
+        public void CalculateNextGrid(IProgress<Grid> progress, bool multipleSteps = true)
         {
             int nThreads = 4;
             Thread[] calculations = new Thread[nThreads];
@@ -101,7 +101,7 @@ namespace Lab3
             int y = Grid.SizeY / 2;
 
             Running = true;
-            while (Running || onlyOneStep)
+            do
             {
                 NextStepGrid.Copy(CurrentGrid, 0, 0, Grid.SizeX, Grid.SizeY);
                 calculations[0] = new Thread(() => CalculateNextGridFromCoordinates(0, 0, x, y));
@@ -117,12 +117,32 @@ namespace Lab3
                     task.Join();
                 }
                 CurrentGrid.Copy(NextStepGrid);
-                progress.Report(NextStepGrid);
-            }
+                progress.Report(this.GetGrid());
+            } while (Running && multipleSteps);
             Running = false;
         }
         #endregion
         #region Public
+
+        public void GridClicked(int x, int y)
+        {
+            if (Running)
+            {
+                throw new FieldAccessException("Nie można zmienić rozmiaru siatki podczas obliczeń.");
+            }
+
+            CurrentGrid.ChangeCellValue(x, y);
+        }
+
+        public bool IsSimulationRunning()
+        {
+            return Running;
+        }
+
+        public Grid GetGrid()
+        {
+            return new Grid(CurrentGrid);
+        }
         public void ResizeGrid(int sizeX, int sizeY)
         {
             if (Running)
@@ -182,7 +202,7 @@ namespace Lab3
                 throw new FieldAccessException("Nie można uruchomić obliczeń więcej niż raz jednocześnie.");
             }
 
-            CalculateNextGrid(progress, true);
+            CalculateNextGrid(progress, false);
         }
         #endregion
         #endregion

@@ -16,6 +16,12 @@ namespace Lab3
             State = 0;
         }
 
+        public Cell(Cell otherCell)
+        {
+            this.State = otherCell.State;
+            this.Id = otherCell.Id;
+        }
+
         public void ChangeState()
         {
             State = (State == 0) ? 1 : 0;

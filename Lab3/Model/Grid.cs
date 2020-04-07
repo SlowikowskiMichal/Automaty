@@ -28,6 +28,18 @@ namespace Lab3
             }
         }
 
+        public Grid(Grid otherGrid)
+        {
+            Cells = new Cell[_sizeX, _sizeY];
+            for (int i = 0; i < _sizeX; i++)
+            {
+                for (int j = 0; j < _sizeY; j++)
+                {
+                    Cells[i, j] = new Cell(otherGrid.Cells[i,j]);
+                }
+            }
+        }
+
         public Grid(int X, int Y)
         {
             if (X > 0 && Y > 0)

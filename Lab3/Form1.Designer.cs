@@ -377,7 +377,7 @@
             this.stopCAButton.TabIndex = 16;
             this.stopCAButton.Text = "Stop";
             this.stopCAButton.UseVisualStyleBackColor = true;
-            this.stopCAButton.Click += new System.EventHandler(this.stopFillButton_Click);
+            this.stopCAButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // runCAButton
             // 
