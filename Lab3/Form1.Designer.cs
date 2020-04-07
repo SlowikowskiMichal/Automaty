@@ -1,6 +1,6 @@
 ﻿namespace Lab3
 {
-    partial class Form1
+    partial class Automat2D
     {
         /// <summary>
         /// Wymagana zmienna projektanta.
@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.errLabel = new System.Windows.Forms.Label();
+            this.gridPanel = new System.Windows.Forms.Panel();
+            this.gridPictureBox = new System.Windows.Forms.PictureBox();
             this.zoomLabel = new System.Windows.Forms.Label();
             this.zoomTrackBar = new System.Windows.Forms.TrackBar();
             this.gridCheckBox = new System.Windows.Forms.CheckBox();
@@ -39,8 +38,6 @@
             this.boundaryLabel = new System.Windows.Forms.Label();
             this.boundaryComboBox = new System.Windows.Forms.ComboBox();
             this.NeighborComboBox = new System.Windows.Forms.ComboBox();
-            this.speedLabel = new System.Windows.Forms.Label();
-            this.speedBar = new System.Windows.Forms.TrackBar();
             this.xNumberLabel = new System.Windows.Forms.Label();
             this.yNumberLabel = new System.Windows.Forms.Label();
             this.resizeGridButton = new System.Windows.Forms.Button();
@@ -56,47 +53,33 @@
             this.stopCAButton = new System.Windows.Forms.Button();
             this.runCAButton = new System.Windows.Forms.Button();
             this.aliveRulesLlabel = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.gridPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).BeginInit();
             this.gridOptionsGroupBox.SuspendLayout();
             this.gridViewGroupBox.SuspendLayout();
             this.executionGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // gridPanel
             // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(17, 16);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1067, 738);
-            this.panel1.TabIndex = 0;
+            this.gridPanel.AutoScroll = true;
+            this.gridPanel.Controls.Add(this.gridPictureBox);
+            this.gridPanel.Location = new System.Drawing.Point(17, 16);
+            this.gridPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.gridPanel.Name = "gridPanel";
+            this.gridPanel.Size = new System.Drawing.Size(1067, 738);
+            this.gridPanel.TabIndex = 0;
             // 
-            // pictureBox1
+            // gridPictureBox
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(4, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(744, 556);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 55;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            // 
-            // errLabel
-            // 
-            this.errLabel.AutoSize = true;
-            this.errLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.errLabel.Location = new System.Drawing.Point(1088, 757);
-            this.errLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.errLabel.Name = "errLabel";
-            this.errLabel.Size = new System.Drawing.Size(27, 17);
-            this.errLabel.TabIndex = 13;
-            this.errLabel.Text = "Err";
+            this.gridPictureBox.Location = new System.Drawing.Point(4, 4);
+            this.gridPictureBox.Name = "gridPictureBox";
+            this.gridPictureBox.Size = new System.Drawing.Size(528, 424);
+            this.gridPictureBox.TabIndex = 0;
+            this.gridPictureBox.TabStop = false;
+            this.gridPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gridPictureBox_MouseDown);
+            this.gridPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridPictureBox_MouseUp);
             // 
             // zoomLabel
             // 
@@ -126,12 +109,13 @@
             // gridCheckBox
             // 
             this.gridCheckBox.AutoSize = true;
-            this.gridCheckBox.Location = new System.Drawing.Point(13, 119);
+            this.gridCheckBox.Location = new System.Drawing.Point(47, 89);
             this.gridCheckBox.Margin = new System.Windows.Forms.Padding(4);
             this.gridCheckBox.Name = "gridCheckBox";
-            this.gridCheckBox.Size = new System.Drawing.Size(69, 21);
+            this.gridCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.gridCheckBox.Size = new System.Drawing.Size(122, 21);
             this.gridCheckBox.TabIndex = 47;
-            this.gridCheckBox.Text = "Siatka";
+            this.gridCheckBox.Text = "Generuj siatkę";
             this.gridCheckBox.UseVisualStyleBackColor = true;
             this.gridCheckBox.CheckedChanged += new System.EventHandler(this.gridCheckBox_CheckedChanged);
             // 
@@ -173,7 +157,8 @@
             this.boundaryComboBox.FormattingEnabled = true;
             this.boundaryComboBox.Items.AddRange(new object[] {
             "Periodyczne",
-            "Odbijające"});
+            "Odbijające",
+            "Ustalone (0)"});
             this.boundaryComboBox.Location = new System.Drawing.Point(107, 39);
             this.boundaryComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.boundaryComboBox.Name = "boundaryComboBox";
@@ -202,29 +187,6 @@
             this.NeighborComboBox.Size = new System.Drawing.Size(166, 24);
             this.NeighborComboBox.TabIndex = 41;
             this.NeighborComboBox.SelectedIndexChanged += new System.EventHandler(this.NeighborComboBox_SelectedIndexChanged);
-            // 
-            // speedLabel
-            // 
-            this.speedLabel.AutoSize = true;
-            this.speedLabel.Location = new System.Drawing.Point(17, 80);
-            this.speedLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.speedLabel.Name = "speedLabel";
-            this.speedLabel.Size = new System.Drawing.Size(72, 17);
-            this.speedLabel.TabIndex = 40;
-            this.speedLabel.Text = "Szybkość:";
-            // 
-            // speedBar
-            // 
-            this.speedBar.LargeChange = 2500;
-            this.speedBar.Location = new System.Drawing.Point(91, 80);
-            this.speedBar.Margin = new System.Windows.Forms.Padding(4);
-            this.speedBar.Maximum = 1000000;
-            this.speedBar.Name = "speedBar";
-            this.speedBar.Size = new System.Drawing.Size(139, 56);
-            this.speedBar.SmallChange = 10000;
-            this.speedBar.TabIndex = 39;
-            this.speedBar.TickFrequency = 0;
-            this.speedBar.Value = 1000000;
             // 
             // xNumberLabel
             // 
@@ -298,15 +260,13 @@
             // gridViewGroupBox
             // 
             this.gridViewGroupBox.Controls.Add(this.zoomTrackBar);
-            this.gridViewGroupBox.Controls.Add(this.speedBar);
-            this.gridViewGroupBox.Controls.Add(this.speedLabel);
             this.gridViewGroupBox.Controls.Add(this.zoomLabel);
             this.gridViewGroupBox.Controls.Add(this.gridCheckBox);
             this.gridViewGroupBox.Location = new System.Drawing.Point(1092, 16);
             this.gridViewGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.gridViewGroupBox.Name = "gridViewGroupBox";
             this.gridViewGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.gridViewGroupBox.Size = new System.Drawing.Size(281, 148);
+            this.gridViewGroupBox.Size = new System.Drawing.Size(281, 121);
             this.gridViewGroupBox.TabIndex = 57;
             this.gridViewGroupBox.TabStop = false;
             this.gridViewGroupBox.Text = "Widok siatki";
@@ -400,24 +360,21 @@
             this.aliveRulesLlabel.TabIndex = 55;
             this.aliveRulesLlabel.Text = "Reguła narodzin";
             // 
-            // Form1
+            // Automat2D
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1388, 784);
             this.Controls.Add(this.executionGroupBox);
             this.Controls.Add(this.gridViewGroupBox);
-            this.Controls.Add(this.errLabel);
             this.Controls.Add(this.gridOptionsGroupBox);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.gridPanel);
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Name = "Automat2D";
+            this.Text = "Automat2D";
+            this.gridPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.speedBar)).EndInit();
             this.gridOptionsGroupBox.ResumeLayout(false);
             this.gridOptionsGroupBox.PerformLayout();
             this.gridViewGroupBox.ResumeLayout(false);
@@ -425,15 +382,12 @@
             this.executionGroupBox.ResumeLayout(false);
             this.executionGroupBox.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label errLabel;
+        private System.Windows.Forms.Panel gridPanel;
         private System.Windows.Forms.Label zoomLabel;
         private System.Windows.Forms.TrackBar zoomTrackBar;
         private System.Windows.Forms.CheckBox gridCheckBox;
@@ -442,8 +396,6 @@
         private System.Windows.Forms.Label boundaryLabel;
         private System.Windows.Forms.ComboBox boundaryComboBox;
         private System.Windows.Forms.ComboBox NeighborComboBox;
-        private System.Windows.Forms.Label speedLabel;
-        private System.Windows.Forms.TrackBar speedBar;
         private System.Windows.Forms.Label xNumberLabel;
         private System.Windows.Forms.Label yNumberLabel;
         private System.Windows.Forms.Button resizeGridButton;
@@ -459,6 +411,7 @@
         private System.Windows.Forms.Button stopCAButton;
         private System.Windows.Forms.Button runCAButton;
         private System.Windows.Forms.Label aliveRulesLlabel;
+        private System.Windows.Forms.PictureBox gridPictureBox;
     }
 }
 

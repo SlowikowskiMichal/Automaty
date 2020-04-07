@@ -83,6 +83,23 @@ namespace Lab3
             }
         }
 
+        public void ChangeCellValue(int x, int y, int status)
+        {
+            if (x < _sizeX && y < _sizeY && x >= 0 && y >= 0)
+            {
+                Cells[x, y].ChangeState(status);
+            }
+        }
+
+        internal int GetCellState(int x, int y)
+        {
+            if (x < 0 || y < 0)
+            {
+                return 0;
+            }
+            return Cells[x, y].State;
+        }
+
         public void Clear()
         {
             foreach(Cell c in Cells)

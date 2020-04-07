@@ -1,152 +1,106 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Lab3
 {
 
-    public partial class Form1 : Form
+    public partial class Automat2D : Form
     {
+
+
         GridController GridController;
-        
-        float cellXSize;
-        float cellYSize;
-        Color BackgroundColor = Color.White;
-        Bitmap nextImage;
 
-        bool CurrentlyDrawing;
+        SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Green) };
+        SolidBrush GridBrush = new SolidBrush(Color.LightGray);
 
-        SolidBrush BackGroundBrush;
-        SolidBrush ForeGround;
-
-        int zoom;
-        bool drawGrid;
-        
+        int Zoom;
+        bool DrawGridValue;
+        int mouseX = -1, mouseY = -1;
+        int clickStatus = -1;
+        bool mouseDown = false;
+        List<Point> pointsToDraw;
         string errMsg = "";
-
-        Task CASimulationTask;
-
-        public Form1()
+        public Automat2D()
         {
             InitializeComponent();
             GridController = new GridController(100, 100, 0, 0);
-
             boundaryComboBox.SelectedIndex = 0;
             NeighborComboBox.SelectedIndex = 0;
 
+            pointsToDraw = new List<Point>();
             xCellTextBox.Text = Grid.SizeX.ToString();
             yCellTextBox.Text = Grid.SizeY.ToString();
 
-            BackGroundBrush = new SolidBrush(Color.White);
-            ForeGround = new SolidBrush(Color.Blue);
-
-
-            CASimulationTask = null;
-
             //GRID VIEW
-            zoom = zoomTrackBar.Value;
-            cellXSize = zoom;
-            cellYSize = zoom;
-            drawGrid = gridCheckBox.Checked;
-
-            nextImage = new Bitmap((int)cellXSize * Grid.SizeX, (int)cellYSize * Grid.SizeY);
-            pictureBox1.Image = nextImage;
-
-            DrawGrid();
-            pictureBox1.Refresh();
+            Zoom = zoomTrackBar.Value;
+            GridController.Zoom = Zoom;
+;
+            DrawGridValue = gridCheckBox.Checked;
+            GridController.DrawGrid = DrawGridValue;
+            Bitmap gridToDraw = this.GridController.GetGridImage();
+            this.gridPictureBox.Size = new Size(gridToDraw.Width, gridToDraw.Height);
+            DrawGrid(gridToDraw);
         }
 
-        ~Form1()
+        //--------------------------------------------------------------------------
+        //RYSOWANIE
+        void DrawGrid(Bitmap gridToDraw)
         {
-            BackGroundBrush.Dispose();
-            ForeGround.Dispose();
+            this.gridPictureBox.Image = gridToDraw;
         }
 
 
-            //--------------------------------------------------------------------------
-            //RYSOWANIE
-        void DrawGrid(Grid gridToDraw = null)
+        void drawChangedCells(int x, int y)
         {
-            CurrentlyDrawing = true;
-            if (gridToDraw == null)
+            using (var g = Graphics.FromImage(this.gridPictureBox.Image))
             {
-                gridToDraw = GridController.GetGrid();
-            }
-            Action<int,int, SolidBrush> drawAction;
+                Action<int, int, SolidBrush, Graphics> drawAction;
 
-            if (drawGrid)
-            {
-                drawAction = new Action<int,int, SolidBrush>(DrawGridWithBorder);
-            }
-            else
-            {
-                drawAction = new Action<int, int, SolidBrush>(DrawGridWithoutBorder);
-            }
-
-            for (int i = 0; i < Grid.SizeX; i++)
-            {
-                for (int j = 0; j < Grid.SizeY; j++)
+                if (DrawGridValue && Zoom > 3)
                 {
-                    if (gridToDraw.Cells[i, j].State == 1)
-                    {
-                        drawAction.Invoke(i, j, ForeGround);
-                    }
-                    else
-                    {
-                        drawAction.Invoke(i, j, BackGroundBrush);
-                    }
+                    drawAction = new Action<int, int, SolidBrush, Graphics>(DrawGridWithBorder);
                 }
-            }
-
-            pictureBox1.Refresh();
-            CurrentlyDrawing = false;
-        }
-        void DrawGridWithBorder(int x, int y, SolidBrush brush)
-        {
-            Graphics.FromImage(nextImage).
-                FillRectangle(brush,
-                x * cellXSize + 1, y * cellYSize + 1,
-                cellXSize - 2, cellYSize - 2);
-
-        }
-
-        void DrawGridWithoutBorder(int x, int y, SolidBrush brush)
-        {
-            Graphics.FromImage(nextImage).
-                FillRectangle(brush,
-                x * cellXSize, y * cellYSize,
-                cellXSize, cellYSize);
-        }
-
- 
-        //PICTUREBOX
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-            errLabel.Text = errMsg;
-            e.Graphics.DrawImage(nextImage, 0, 0, nextImage.Width, nextImage.Height);
-            errMsg = "";
-        }
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            MouseEventArgs me = (MouseEventArgs)e;
-            if (me.Button == MouseButtons.Left)
-            {
-                int x = (int)(me.X / cellXSize);
-                int y = (int)(me.Y / cellYSize);
-                if (x >= Grid.SizeX || x < 0
-                    || y >= Grid.SizeY || y < 0)
+                else
                 {
-                    return;
+                    drawAction = new Action<int, int, SolidBrush, Graphics>(DrawGridWithoutBorder);
                 }
-
-                GridController.GridClicked(x, y);
-
-                DrawGrid();
+                drawAction.Invoke(x, y, GridBrushes[clickStatus], g);
+                gridPictureBox.Refresh();
             }
+        }
+
+        void DrawGridWithBorder(int x, int y, Brush b, Graphics panelGraphics)
+        {
+            panelGraphics.
+                FillRectangle(b,
+                x * Zoom + 1, y * Zoom + 1,
+                Zoom - 2, Zoom - 2);
+
+        }
+
+        void DrawGridWithoutBorder(int x, int y, Brush b, Graphics panelGraphics)
+        {
+            panelGraphics.
+                FillRectangle(b,
+                x * Zoom, y * Zoom,
+                Zoom, Zoom);
+        }
+
+        void ChangeGridCellStatus(int x, int  y, int status)
+        {
+
+            if (x >= Grid.SizeX || x < 0
+                || y >= Grid.SizeY || y < 0)
+            {
+                return;
+            }
+
+            GridController.ChangeCellStatus(x, y, status);
         }
 
         //GRID VIEW
@@ -155,37 +109,32 @@ namespace Lab3
             int zoomBuff = zoomTrackBar.Value;
             if(GridController.IsSimulationRunning())
             {
-                zoomTrackBar.Value = zoom;
+                zoomTrackBar.Value = Zoom;
                 return;
             }
 
-            if (zoom == zoomBuff)
+            if (Zoom == zoomBuff)
             {
                 return;
             }
-            zoom = zoomBuff;
+            Zoom = zoomBuff;
 
-            cellXSize = zoom;
-            cellYSize = zoom;
-            
-            nextImage = new Bitmap((int)cellXSize * Grid.SizeX, (int)cellYSize * Grid.SizeY);
-            
-            DrawGrid();
-            
-            pictureBox1.Image = nextImage;
-            pictureBox1.Refresh();
+            GridController.Zoom = zoomBuff;
+            Bitmap gridToDraw = this.GridController.GetGridImage();
+            this.gridPictureBox.Size = new Size(gridToDraw.Width, gridToDraw.Height);
+            DrawGrid(gridToDraw);
         }
         private void gridCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (GridController.IsSimulationRunning())
             {
-                gridCheckBox.Checked = drawGrid;
+                gridCheckBox.Checked = DrawGridValue;
                 return;
             }
-            drawGrid = gridCheckBox.Checked;
 
-            DrawGrid();
-            pictureBox1.Refresh();
+            DrawGridValue = gridCheckBox.Checked;
+            GridController.DrawGrid = DrawGridValue;
+            DrawGrid(this.GridController.GetGridImage());
         }
 
         //GRID OPTIONS
@@ -202,20 +151,15 @@ namespace Lab3
             }
 
             GridController.ResizeGrid(sizeX, sizeY);
-            
-            nextImage = new Bitmap((int)cellXSize * Grid.SizeX, (int)cellYSize * Grid.SizeY);
-            DrawGrid();
-
-            pictureBox1.Size = new Size(nextImage.Size.Width, nextImage.Size.Height);
-            pictureBox1.Image = nextImage;
-            pictureBox1.Refresh();
+            Bitmap gridToDraw = this.GridController.GetGridImage();
+            this.gridPictureBox.Size = new Size(gridToDraw.Width, gridToDraw.Height);
+            DrawGrid(gridToDraw);
         }
         private void clearButton_Click(object sender, EventArgs e)
         {
             GridController.ClearGrid();
-            DrawGrid();
-            pictureBox1.Image = nextImage;
-            pictureBox1.Refresh();
+            DrawGrid(this.GridController.GetGridImage());
+
         }
         private void boundaryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -267,42 +211,130 @@ namespace Lab3
 
         private async void runCAButton_Click(object sender, EventArgs e)
         {
-            EnableGui(false);
 
-            var progress = new Progress<Grid>(grid =>
+            if(GridController.IsSimulationRunning())
             {
-                if(!CurrentlyDrawing)
-                    DrawGrid(grid);
-                
-            });
-            if(CASimulationTask != null)
-            {
+                ShowMyDialogBox("Nie można uruchomić kolejnej symulacji, podczas gdy jedna jest już uruchomiona.");
                 return;
             }
 
-            CASimulationTask = Task.Factory.StartNew(() => GridController.RunCASimulation(progress),
+            EnableGui(false);
+
+            var progress = new Progress<Bitmap>(bmp =>
+            {
+                DrawGrid(bmp);
+            });
+            
+            await Task.Factory.StartNew(() => GridController.RunCASimulation(progress),
                 TaskCreationOptions.LongRunning);
+            EnableGui(true);
+
         }
         private void stopButton_Click(object sender, EventArgs e)
         {
             GridController.StopCASimulation();
-
-            CASimulationTask.Wait();
-            CASimulationTask.Dispose();
-            CASimulationTask = null;
-            EnableGui(true);
         }
         private async void nextStepCAButton_Click(object sender, EventArgs e)
         {
-            EnableGui(false);
-            var progress = new Progress<Grid>(grid =>
+            if (GridController.IsSimulationRunning())
             {
-                DrawGrid(grid);
+                ShowMyDialogBox("Nie można uruchomić kolejnej symulacji, podczas gdy jedna jest już uruchomiona.");
+                return;
+            }
+            EnableGui(false);
+            var progress = new Progress<Bitmap>(bmp =>
+            {
+                DrawGrid(bmp);
             });
 
             await Task.Factory.StartNew(() => GridController.NextStepCASimulation(progress),
                 TaskCreationOptions.LongRunning);
             EnableGui(true);
+        }
+
+
+        public void ShowMyDialogBox(string errorMessage)
+        {
+            DialogResult res = MessageBox.Show(errorMessage, "Uwaga", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+        }
+        /*
+        private void gridPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.None)
+            {
+                int x = (int)(e.X / zoom);
+                int y = (int)(e.Y / zoom);
+
+
+                if (mouseX != x && mouseY != y && clickStatus == GridController.GetCellStatus(x, y))
+                {
+                    mouseX = x;
+                    mouseY = y;
+                    ChangeGridCellStatus(x, y, clickStatus);
+                }
+
+            }
+        }
+        */
+
+
+
+        private void gridPictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (GridController.IsSimulationRunning())
+                {
+                    ShowMyDialogBox("Nie można rysować podczas symulacji.");
+                    return;
+                }
+                int x = (int)(e.X / Zoom);
+                int y = (int)(e.Y / Zoom);
+
+                if (mouseDown)
+                {
+                    if (mouseX != x || mouseY != y)
+                    {
+                        mouseX = x;
+                        mouseY = y;
+                        pointsToDraw.Add(new Point(x, y));
+                        drawChangedCells(x, y);
+                    }
+                }
+                else
+                {
+                    mouseX = x;
+                    mouseY = y;
+                    clickStatus = GridController.GetCellStatus(x, y) == 0 ? 1 : 0;
+                    pointsToDraw.Add(new Point(x, y));
+                    mouseDown = true;
+                    drawChangedCells(x, y);
+                }
+            }
+        }
+        
+        private void gridPictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (GridController.IsSimulationRunning())
+            {
+                ShowMyDialogBox("Nie można rysować podczas symulacji.");
+                return;
+            }
+            if (e.Button == MouseButtons.Left)
+            {
+                foreach(Point p in pointsToDraw)
+                {
+                    ChangeGridCellStatus(p.X, p.Y, clickStatus);
+                }
+                mouseX = -1;
+                mouseY = -1;
+                clickStatus = -1;
+                mouseDown = false;
+                pointsToDraw.Clear();
+
+                DrawGrid(this.GridController.GetGridImage());
+            }
         }
     }
 }

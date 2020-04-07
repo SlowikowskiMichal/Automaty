@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 
@@ -16,9 +17,13 @@ namespace Lab3
         Neighborhood Neighborhood;
 
         BoundaryConditions BoundaryCondition;
-
+        SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Blue) };
+        SolidBrush GridBrush = new SolidBrush(Color.LightGray);
         Grid CurrentGrid;
         Grid NextStepGrid;
+
+        public bool DrawGrid;
+        public int Zoom;
 
         List<int> AliveRule;
         List<int> DeadRule;
@@ -30,12 +35,15 @@ namespace Lab3
 
         #region Constructors
 
-        public GridController(int sizeX, int sizeY, int boundaryCondition, int neighborhoodType)
+        public GridController(int sizeX, int sizeY, int boundaryCondition, int neighborhoodType, bool drawGrid = false, int zoom = 1)
         {
 
             //GRID
             CurrentGrid = new Grid(sizeX, sizeY);
             NextStepGrid = new Grid(sizeX, sizeY);
+
+            Zoom = zoom;
+            DrawGrid = drawGrid;
 
             //RULES
             AliveRule = new List<int>();
@@ -62,7 +70,7 @@ namespace Lab3
                 {
                     n = Neighborhood.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY, BoundaryCondition);
 
-                    int aliveNeighborhoodsCount = n.Where(p => CurrentGrid.Cells[p.X, p.Y].State == 1).Count();
+                    int aliveNeighborhoodsCount = n.Where(p => CurrentGrid.GetCellState(p.X, p.Y) == 1).Count();
 
                     CalculateNewState(CurrentGrid.Cells[x, y].State, x, y, aliveNeighborhoodsCount);
                 }
@@ -93,7 +101,7 @@ namespace Lab3
             }
         }
 
-        public void CalculateNextGrid(IProgress<Grid> progress, bool multipleSteps = true)
+        public void CalculateNextGrid(IProgress<Bitmap> progress, bool multipleSteps = true)
         {
             int nThreads = 4;
             Thread[] calculations = new Thread[nThreads];
@@ -117,18 +125,87 @@ namespace Lab3
                     task.Join();
                 }
                 CurrentGrid.Copy(NextStepGrid);
-                progress.Report(this.GetGrid());
+                progress.Report(PrepareImage());
             } while (Running && multipleSteps);
             Running = false;
         }
+
+        private Bitmap PrepareImage()
+        {
+            var bmp = new Bitmap(Grid.SizeX * Zoom, Grid.SizeY * Zoom, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+            using (var g = Graphics.FromImage(bmp))
+            {
+                if (DrawGrid)
+                {
+                    g.FillRectangle(GridBrush, 0, 0, Grid.SizeX*Zoom, Grid.SizeY*Zoom);
+                }
+
+
+                Action<int, int, SolidBrush, Graphics> drawAction;
+
+                if (DrawGrid && Zoom > 3)
+                {
+                    drawAction = new Action<int, int, SolidBrush, Graphics>(DrawGridWithBorder);
+                }
+                else
+                {
+                    drawAction = new Action<int, int, SolidBrush, Graphics>(DrawGridWithoutBorder);
+                }
+
+
+                for (int i = 0; i < Grid.SizeX; i++)
+                {
+                    for (int j = 0; j < Grid.SizeY; j++)
+                    {
+                        drawAction.Invoke(i, j, GridBrushes[CurrentGrid.Cells[i, j].State], g);
+                    }
+                }
+            }
+            return bmp;
+        }
+
+        void DrawGridWithBorder(int x, int y, Brush b, Graphics panelGraphics)
+        {
+            panelGraphics.
+                FillRectangle(b,
+                x * Zoom + 1, y * Zoom + 1,
+                Zoom - 2, Zoom - 2);
+
+        }
+
+        void DrawGridWithoutBorder(int x, int y, Brush b, Graphics panelGraphics)
+        {
+            panelGraphics.
+                FillRectangle(b,
+                x * Zoom, y * Zoom,
+                Zoom, Zoom);
+        }
+
+
         #endregion
         #region Public
 
-        public void GridClicked(int x, int y)
+        public Bitmap GetGridImage()
+        {
+            return PrepareImage();
+        }
+
+        public void ChangeCellStatus(int x, int y, int status)
         {
             if (Running)
             {
-                throw new FieldAccessException("Nie można zmienić rozmiaru siatki podczas obliczeń.");
+                return;
+            }
+
+            CurrentGrid.ChangeCellValue(x, y, status);
+        }
+
+        public void ChangeCellStatus(int x, int y)
+        {
+            if (Running)
+            {
+                return;
             }
 
             CurrentGrid.ChangeCellValue(x, y);
@@ -139,15 +216,11 @@ namespace Lab3
             return Running;
         }
 
-        public Grid GetGrid()
-        {
-            return new Grid(CurrentGrid);
-        }
         public void ResizeGrid(int sizeX, int sizeY)
         {
             if (Running)
             {
-                throw new FieldAccessException("Nie można zmienić rozmiaru siatki podczas obliczeń.");
+                return;
             }
 
             CurrentGrid.Resize(sizeX, sizeY);
@@ -157,7 +230,7 @@ namespace Lab3
         {
             if (Running)
             {
-                throw new FieldAccessException("Nie można wyczyścić siatki podczas obliczeń.");
+                return;
             }
             CurrentGrid.Clear();
             NextStepGrid.Clear();
@@ -173,19 +246,25 @@ namespace Lab3
 
         public void SetAliveRule(List<int> aliveRule)
         {
-            AliveRule = aliveRule;
+            lock (synLock)
+            {
+                AliveRule = aliveRule;
+            }
         }
 
         public void SetDeadRule(List<int> deadRule)
         {
-            DeadRule = deadRule;
+            lock (synLock)
+            {
+                DeadRule = deadRule;
+            }
         }
 
-        public void RunCASimulation(IProgress<Grid> progress)
+        public void RunCASimulation(IProgress<Bitmap> progress)
         {
-            if (Running)
+            if(Running)
             {
-                throw new FieldAccessException("Nie można uruchomić obliczeń więcej niż raz jednocześnie.");
+                return;
             }
             Running = true;
             CalculateNextGrid(progress);
@@ -195,14 +274,19 @@ namespace Lab3
         {
             Running = false;
         }
-        public void NextStepCASimulation(IProgress<Grid> progress)
+        public void NextStepCASimulation(IProgress<Bitmap> progress)
         {
             if (Running)
             {
-                throw new FieldAccessException("Nie można uruchomić obliczeń więcej niż raz jednocześnie.");
+                return;
             }
 
-            CalculateNextGrid(progress, false);
+            CalculateNextGrid(progress,false);
+        }
+
+        public int GetCellStatus(int x, int y)
+        {
+            return CurrentGrid.Cells[x, y].State;
         }
         #endregion
         #endregion
