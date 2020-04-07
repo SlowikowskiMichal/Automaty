@@ -6,7 +6,6 @@ namespace Lab1
 {
     class Program
     {
-
         static List<int> CalculationOrder;
 
         static void Main(string[] args)
@@ -20,11 +19,11 @@ namespace Lab1
             size = size > 2 ? size : 3;
             CalculationOrder = new List<int>();
             CalculationOrder.AddRange(Enumerable.Range(0, size));
+
             int rule = 127;
             do
             {
-                Console.Write("Podaj regułę (0-255):");
-                
+                Console.Write("Podaj regułę (0-255):"); 
             }while(!int.TryParse(Console.ReadLine(), out rule));
 
             string stringRule = Convert.ToString(rule, 2).PadLeft(8, '0');
@@ -175,42 +174,48 @@ namespace Lab1
             {
                 for (int i = 0; i < firstIndex; i++)
                 {
-                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
+                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1],
+                        grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
                 }
 
                 grid[0] = ruleArray[getRuleIndex(grid[size - 1], grid[0], grid[1])];
 
                 for (int i = firstIndex + 1; i < endIndex; i++)
                 {
-                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
+                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1],
+                        grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
                 }
 
                 grid[size - 1] = ruleArray[getRuleIndex(grid[size - 2], grid[size - 1], grid[0])];
 
                 for (int i = endIndex + 1; i < size - 1; i++)
                 {
-                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
+                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], 
+                        grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
                 }
             }
             else
             {
                 for (int i = 0; i < endIndex; i++)
                 {
-                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
+                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], 
+                        grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
                 }
 
                 grid[size - 1] = ruleArray[getRuleIndex(grid[size - 2], grid[size - 1], grid[0])];
 
                 for (int i = endIndex + 1; i < firstIndex; i++)
                 {
-                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
+                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1],
+                        grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
                 }
 
                 grid[0] = ruleArray[getRuleIndex(grid[size - 1], grid[0], grid[1])];
 
                 for (int i = firstIndex + 1; i < size - 1; i++)
                 {
-                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
+                    grid[CalculationOrder[i]] = ruleArray[getRuleIndex(grid[CalculationOrder[i] - 1], 
+                        grid[CalculationOrder[i]], grid[CalculationOrder[i] + 1])];
                 }
             }
             return grid;
