@@ -82,7 +82,7 @@
             this.gridPanel.Location = new System.Drawing.Point(0, 0);
             this.gridPanel.Margin = new System.Windows.Forms.Padding(4);
             this.gridPanel.Name = "gridPanel";
-            this.gridPanel.Size = new System.Drawing.Size(950, 673);
+            this.gridPanel.Size = new System.Drawing.Size(866, 673);
             this.gridPanel.TabIndex = 0;
             // 
             // gridPictureBox
@@ -113,7 +113,7 @@
             // 
             this.splitContainer.Panel2.Controls.Add(this.settingsPanel);
             this.splitContainer.Size = new System.Drawing.Size(1182, 673);
-            this.splitContainer.SplitterDistance = 950;
+            this.splitContainer.SplitterDistance = 866;
             this.splitContainer.TabIndex = 58;
             // 
             // settingsPanel
@@ -124,7 +124,7 @@
             this.settingsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsPanel.Location = new System.Drawing.Point(0, 0);
             this.settingsPanel.Name = "settingsPanel";
-            this.settingsPanel.Size = new System.Drawing.Size(228, 673);
+            this.settingsPanel.Size = new System.Drawing.Size(312, 673);
             this.settingsPanel.TabIndex = 58;
             // 
             // executionGroupBox
