@@ -9,12 +9,10 @@ namespace Lab3
     class GridController
     {
         #region Attributes
-        readonly Neighborhood[] ImplementedNeighborhood = {new MooresNeighborhood(), new NeumannNeighborhood(),
-            new HexagonalLeftNeighborhood(), new HexagonalRightNeighborhood(), new HexagonalRandomNeighborhood(),
-            new PentagonalLeftNeighborhood(), new PentagonalRightNeighborhood(), new PentagonalTopNeighborhood(),
-            new PentagonalBottomNeighborhood(), new PentagonalRandomNeighborhood() };
 
-        Neighborhood Neighborhood;
+        NeighborhoodManager _Neighborhood;
+
+        public NeighborhoodManager Neighborhood { get { return _Neighborhood; } private set { _Neighborhood = value; } }
 
         BoundaryConditions BoundaryCondition;
         SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Blue) };
@@ -51,7 +49,7 @@ namespace Lab3
 
             //GRID OPTIONS
             BoundaryCondition = (BoundaryConditions)boundaryCondition;
-            Neighborhood = ImplementedNeighborhood[neighborhoodType];
+            _Neighborhood = new NeighborhoodManager(neighborhoodType);//.SetNeighborhood(new List<int>() { neighborhoodType });
         }
 
         #endregion
@@ -68,7 +66,7 @@ namespace Lab3
             {
                 for (int y = startY; y < endY; y++)
                 {
-                    n = Neighborhood.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY, BoundaryCondition);
+                    n = _Neighborhood.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY, BoundaryCondition);
 
                     int aliveNeighborhoodsCount = n.Where(p => CurrentGrid.GetCellState(p.X, p.Y) == 1).Count();
 
@@ -241,7 +239,7 @@ namespace Lab3
         }
         public void SetNeighborhoodType(int neighborhood)
         {
-            Neighborhood = ImplementedNeighborhood[neighborhood];
+            _Neighborhood.SetNeighborhood(new List<int>() { neighborhood });
         }
 
         public void SetAliveRule(List<int> aliveRule)

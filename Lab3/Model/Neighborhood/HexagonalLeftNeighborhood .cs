@@ -8,6 +8,10 @@ namespace Lab3
 {
     class HexagonalLeftNeighborhood : Neighborhood
     {
+        public HexagonalLeftNeighborhood()
+        {
+            NumberOfNeighbors = 6;
+        }
         public override List<Point> GetNeighborhood(int CellX, int CellY, int SizeX, int SizeY, BoundaryConditions condition)
         {
             List<Point> cellNeighborIndexes = new List<Point>();

@@ -8,6 +8,10 @@ namespace Lab3
 {
     class PentagonalRightNeighborhood : Neighborhood
     {
+        public PentagonalRightNeighborhood()
+        {
+            NumberOfNeighbors = 5;
+        }
         override public List<Point> GetNeighborhood(int CellX, int CellY, int SizeX, int SizeY, BoundaryConditions condition)
         {
             List<Point> cellNeighborIndexes = new List<Point>();

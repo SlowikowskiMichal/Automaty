@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="Model\Grid.cs" />
     <Compile Include="Controller\GridController.cs" />
+    <Compile Include="Model\NeighborhoodManager.cs" />
     <Compile Include="Model\Neighborhood\HexagonalLeftNeighborhood .cs" />
     <Compile Include="Model\Neighborhood\HexagonalRandomNeighborhood.cs" />
     <Compile Include="Model\Neighborhood\HexagonalRightNeighborhood.cs" />

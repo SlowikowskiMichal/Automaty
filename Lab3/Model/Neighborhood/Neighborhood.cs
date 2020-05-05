@@ -10,6 +10,7 @@ namespace Lab3
 
     abstract class Neighborhood
     {
+        public int NumberOfNeighbors;
         public abstract List<Point> GetNeighborhood(int CellX, int CellY, int SizeX, int SizeY, BoundaryConditions condition);
 
         protected void CheckForBoundaryCondition(List<Point> cellNeighborIndexes, int SizeX, int SizeY, BoundaryConditions boundary)

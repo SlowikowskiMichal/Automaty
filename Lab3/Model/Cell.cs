@@ -16,6 +16,7 @@ namespace Lab3
             State = 0;
         }
 
+
         public Cell(Cell otherCell)
         {
             this.State = otherCell.State;

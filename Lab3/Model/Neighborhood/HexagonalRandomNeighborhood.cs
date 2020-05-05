@@ -8,6 +8,10 @@ namespace Lab3
 {
     class HexagonalRandomNeighborhood : Neighborhood
     {
+        public HexagonalRandomNeighborhood()
+        {
+            NumberOfNeighbors = 6;
+        }
         override public List<Point> GetNeighborhood(int CellX, int CellY, int SizeX, int SizeY, BoundaryConditions condition)
         {
             Random r = new Random();
