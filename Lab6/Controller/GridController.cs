@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Lab6;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -11,7 +13,9 @@ namespace Lab6
         #region Attributes
 
         public List<Point> OriginGrains { get; internal set; }
+        public List<Point> FrontPoints { get; internal set; }
         public int NumberOfFreeCells { get; private set; }
+        NeighborhoodManager NManager;
 
         public int Iteration;
         SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Blue), new SolidBrush(Color.Red) };
@@ -37,6 +41,7 @@ namespace Lab6
             if (_Instance == null)
             {
                 _Instance = new GridController(100, 100, 0);
+                _Instance.NManager = new NeighborhoodManager();
             }
             return _Instance;
         }
@@ -54,7 +59,9 @@ namespace Lab6
             NextGrid = new Grid(sizeX, sizeY);
             Zoom = zoom;
             DrawGrid = drawGrid;
+            
 
+           
             //GRID OPTIONS
             OriginGrains = new List<Point>();
             Iteration = 1;
@@ -65,32 +72,22 @@ namespace Lab6
         #region Methods
         #region Private
         void CalculateNextGridFromCoordinates(int startX, int startY, int endX, int endY)
-        {
-            //Faza 1
-            for (int x = startX; x < endX; x++)
+        { 
+            for(int i = FrontPoints.Count - 1; i >=0; i--)
             {
-                for (int y = startY; y < endY; y++)
+                Point p = FrontPoints[i];
+                if(CurrentGrid.Cells[p.X,p.Y].Time < Iteration)
                 {
-                    if (CurrentGrid.GetCellState(x, y) == 0)
+                    List<Point> nList = NManager.GetNeighborhood(p.X, p.Y, Grid.SizeX, Grid.SizeY, BoundaryConditions.Fixed)
+                        .Where(v => CurrentGrid.GetCellState(v.X, v.Y) == 0).ToList();
+                    foreach(Point p2 in nList)
                     {
-                        if (CurrentGrid.Cells[x, y].Time <= Iteration * 1.1)
-                        {
-
-                            CurrentGrid.Cells[x, y].ChangeState(2);
-                        }
+                        CurrentGrid.Cells[p2.X, p2.Y].ChangeState(2);
                     }
-                }
-            }
-            //Faza 2
-            for (int x = startX; x < endX; x++)
-            {
-                for (int y = startY; y < endY; y++)
-                {
-                    if (CurrentGrid.GetCellState(x, y) == 2)
-                    {
-                        CurrentGrid.Cells[x, y].ChangeState(1);
-                        NumberOfFreeCells--;
-                    }
+                    FrontPoints.AddRange(nList);
+                    CurrentGrid.Cells[p.X, p.Y].ChangeState(1);
+                    FrontPoints.RemoveAt(i);
+                    NumberOfFreeCells--;
                 }
             }
         }
@@ -98,6 +95,7 @@ namespace Lab6
         public void CalculateNextGrid(IProgress<Bitmap> progress, bool multipleSteps = true)
         {
             NumberOfFreeCells = 0;
+            FrontPoints = new List<Point>();
             for (int x = 0; x < Grid.SizeX; x++)
             {
                 for (int y = 0; y < Grid.SizeY; y++)
@@ -105,6 +103,15 @@ namespace Lab6
                     if (CurrentGrid.Cells[x, y].State != 1)
                     {
                         NumberOfFreeCells++;
+                    }
+                    else
+                    {
+                        var frontList = NManager.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY, BoundaryConditions.Fixed).Where(p => CurrentGrid.Cells[p.X, p.Y].State == 2 || CurrentGrid.Cells[p.X, p.Y].State == 0);
+                        foreach(Point p in frontList)
+                        {
+                            CurrentGrid.Cells[p.X, p.Y].ChangeState(2);   
+                        }
+                        FrontPoints.AddRange(frontList);
                     }
                 }
             }
@@ -318,7 +325,7 @@ namespace Lab6
                         distance = Math.Sqrt(distance);
                         lock (synLock)
                         {
-                            NextGrid.Cells[x, y].Time = distance;
+                            NextGrid.Cells[x, y].Time = distance * 1.1;
                             NextGrid.Cells[x, y].Id = CurrentGrid.Cells[grainLocation.X, grainLocation.Y].Id;
                         }
                     }

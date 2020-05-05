@@ -185,6 +185,7 @@ namespace Lab5
             
             await Task.Factory.StartNew(() => GridController.RunCASimulation(progress),
                 TaskCreationOptions.LongRunning);
+            DrawGrid(this.GridController.GetGridImage());
             EnableGui(true);
 
         }

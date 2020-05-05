@@ -55,6 +55,20 @@
     </Compile>
     <Compile Include="Model\Cell.cs" />
     <Compile Include="Model\Grid.cs" />
+    <Compile Include="Model\NeighborhoodManager.cs" />
+    <Compile Include="Model\Neighborhood\HexagonalLeftNeighborhood .cs" />
+    <Compile Include="Model\Neighborhood\HexagonalRandomNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\HexagonalRightNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\MooresNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\Neighborhood.cs" />
+    <Compile Include="Model\Neighborhood\NeumannNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\PentagonalBottomNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\PentagonalLeftNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\PentagonalRandomNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\PentagonalRightNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\PentagonalTopNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\PseudoHeksagonalNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\RectangleNeighborhood.cs" />
     <Compile Include="Model\Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

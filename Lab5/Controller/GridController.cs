@@ -12,6 +12,7 @@ namespace Lab5
         #region Attributes
 
         public List<Point> OriginGrains { get; internal set; }
+
         public int NumberOfFreeCells { get; private set; }
 
         public int Iteration;
@@ -74,9 +75,8 @@ namespace Lab5
                 {
                     if (CurrentGrid.GetCellState(x, y) == 0)
                     {
-                        if (CurrentGrid.Cells[x,y].Time <= Iteration * 1.1)
+                        if (CurrentGrid.Cells[x,y].Time <= Iteration)
                         {
-
                             CurrentGrid.Cells[x, y].ChangeState(2);
                         }
                     }
@@ -305,7 +305,7 @@ namespace Lab5
                     if (c.State == 0)
                     {
                         var distance = double.MaxValue;
-                        var tempDistance = c.Time;
+                        var tempDistance = 0.0;
                         Point grainLocation = new Point(-1, -1);
                         foreach (Point p in OriginGrains)
                         {
@@ -319,7 +319,7 @@ namespace Lab5
                         distance = Math.Sqrt(distance);
                         lock (synLock)
                         {
-                            NextGrid.Cells[x, y].Time = distance;
+                            NextGrid.Cells[x, y].Time = distance * 1.1;
                             NextGrid.Cells[x, y].Id = CurrentGrid.Cells[grainLocation.X, grainLocation.Y].Id;
                         }
                     }
