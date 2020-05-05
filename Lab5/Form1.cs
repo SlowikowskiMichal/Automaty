@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Lab5.NeighborhoodManager;
 
 namespace Lab5
 {
@@ -30,10 +29,6 @@ namespace Lab5
         {
             InitializeComponent();
             GridController = GridController.GetInstance();
-            GridController.SetNeighborhoodType(0);
-            boundaryComboBox.SelectedIndex = 0;
-            randomNeighborhoodComboBox.SelectedIndex = 0;
-            NeighborhoodCheckedListBox.SetItemChecked(0,true);
 
             pointsToDraw = new List<Point>();
             xCellTextBox.Text = Grid.SizeX.ToString();
@@ -48,9 +43,6 @@ namespace Lab5
             Bitmap gridToDraw = this.GridController.GetGridImage();
             this.gridPictureBox.Size = new Size(gridToDraw.Width, gridToDraw.Height);
             DrawGrid(gridToDraw);
-
-            SetAliveRuleFromTextBox();
-            SetDeadRuleFromTextBox();
         }
 
         //--------------------------------------------------------------------------
@@ -167,10 +159,6 @@ namespace Lab5
             DrawGrid(this.GridController.GetGridImage());
 
         }
-        private void boundaryComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridController.SetBoundaryCondition(boundaryComboBox.SelectedIndex);
-        }
 
         //ENABLED/DISABLED
         private void EnableGui(bool flag)
@@ -179,47 +167,6 @@ namespace Lab5
             gridOptionsGroupBox.Enabled = flag;
         }
 
-        private void aliveRulesTextBox_TextChanged(object sender, EventArgs e)
-        {
-            SetAliveRuleFromTextBox();
-        }
-
-        private void SetAliveRuleFromTextBox()
-        {
-            char[] separators = new char[] { ' ', ',', ';' };
-            List<string> alive = aliveRulesTextBox.Text.Split(separators).Where(v => v != string.Empty).ToList();
-            List<string> dead = deadRulesTextBox.Text.Split(separators).Where(v => v != string.Empty).ToList();
-            SetupRuleTextBox(aliveRulesTextBox, alive);
-            dead.RemoveAll(v => alive.Contains(v));
-            SetupRuleTextBox(deadRulesTextBox, dead);
-
-            GridController.SetAliveRule(alive.Select(v => int.Parse(v)).ToList());
-            GridController.SetDeadRule(dead.Select(v => int.Parse(v)).ToList());
-        }
-
-        private void SetupRuleTextBox(TextBox textBox, List<string> list, string separator = ";")
-        {
-            list = list.Where(v => v.All(char.IsDigit)).ToList();
-            textBox.Text = string.Join(separator, list);
-        }
-
-        private void deadRulesTextBox_TextChanged(object sender, EventArgs e)
-        {
-            SetDeadRuleFromTextBox();
-        }
-
-        private void SetDeadRuleFromTextBox()
-        {
-            char[] separators = new char[] { ' ', ',', ';' };
-            List<string> alive = aliveRulesTextBox.Text.Split(separators).Where(v => v != string.Empty).ToList();
-            List<string> dead = deadRulesTextBox.Text.Split(separators).Where(v => v != string.Empty).ToList();
-            SetupRuleTextBox(deadRulesTextBox, dead);
-            alive.RemoveAll(v => dead.Contains(v));
-            SetupRuleTextBox(aliveRulesTextBox, alive);
-
-            GridController.SetAliveRule(alive.Select(v => int.Parse(v)).ToList());
-            GridController.SetDeadRule(dead.Select(v => int.Parse(v)).ToList());
-        }
 
         private async void runCAButton_Click(object sender, EventArgs e)
         {
@@ -231,7 +178,6 @@ namespace Lab5
             }
 
             EnableGui(false);
-            GridController.Neighborhood.SetNeighborhood(NeighborhoodCheckedListBox.CheckedIndices.Cast<int>().ToList());
             var progress = new Progress<Bitmap>(bmp =>
             {
                 DrawGrid(bmp);
@@ -254,7 +200,6 @@ namespace Lab5
                 return;
             }
             EnableGui(false);
-            GridController.Neighborhood.SetNeighborhood(NeighborhoodCheckedListBox.CheckedIndices.Cast<int>().ToList());
             var progress = new Progress<Bitmap>(bmp =>
             {
                 DrawGrid(bmp);
@@ -271,27 +216,6 @@ namespace Lab5
             DialogResult res = MessageBox.Show(errorMessage, "Uwaga", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         }
-        /*
-        private void gridPictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.None)
-            {
-                int x = (int)(e.X / zoom);
-                int y = (int)(e.Y / zoom);
-
-
-                if (mouseX != x && mouseY != y && clickStatus == GridController.GetCellStatus(x, y))
-                {
-                    mouseX = x;
-                    mouseY = y;
-                    ChangeGridCellStatus(x, y, clickStatus);
-                }
-
-            }
-        }
-        */
-
-
 
         private void gridPictureBox_MouseDown(object sender, MouseEventArgs e)
         {
@@ -327,123 +251,6 @@ namespace Lab5
             }
         }
 
-        private void randomThresholdTextBox_Leave(object sender, EventArgs e)
-        {
-            SetThresholdTextBox();  
-        }
-
-        private void SetThresholdTextBox()
-        {
-            char[] separators = new char[] { ' ', ',', ';' };
-
-            List<string> thresholdValues = randomThresholdTextBox.Text.Split(separators).Where(v => v != string.Empty).ToList();
-
-            List<double> thresholdList = thresholdValues.Select(v => Math.Round(Math.Min(Math.Max(Convert.ToSingle(v.Replace('.', ',')), 0.0), 1.0), 2)).ToList();
-
-            int numberOfThresholds = DetermineNumberOfThresholds();
-
-            if (numberOfThresholds < thresholdList.Count)
-            {
-                thresholdList.RemoveRange(numberOfThresholds, thresholdList.Count - numberOfThresholds);
-            }
-            else if (numberOfThresholds > thresholdList.Count)
-            {
-                for (int i = thresholdList.Count; i < numberOfThresholds; i++)
-                {
-                    thresholdList.Add(0);
-                }
-            }
-
-            if (GridController.Neighborhood.RandomMode != RandomNeighborhoodMode.Toggle && GridController.Neighborhood.RandomMode != RandomNeighborhoodMode.Direction)
-            {
-                double val = 0f;
-                for (int i = 0; i < thresholdList.Count; i++)
-                {
-                    if (val + thresholdList[i] > 1.0)
-                    {
-                        thresholdList[i] = Math.Max(1.0 - val, 0.0);
-                    }
-                    val += thresholdList[i];
-                }
-
-                if (val < 1 && thresholdList.Count > 0)
-                {
-                    thresholdList[0] += 1 - val;
-                }
-
-            }
-            GridController.Neighborhood.RandomThresholdList = thresholdList;
-
-            randomThresholdTextBox.Text = string.Join(";", thresholdList.Select(v => v.ToString().Replace(',', '.')));
-        }
-
-        private int DetermineNumberOfThresholds()
-        {
-            switch(randomNeighborhoodComboBox.SelectedIndex)
-            {
-                case 0:
-                    return 0;
-                case 1:
-                    return 1;
-                case 2:
-                    return GridController.Neighborhood.CurrentNeighborhoods.Count();
-                case 3:
-                    return GridController.Neighborhood.GetNumberOfNeighbors();
-                default:
-                    return 1;
-            }
-        }
-
-        private void randomNeighborhoodComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            randomThresholdTextBox_Leave(sender, e);
-            GridController.Neighborhood.RandomMode = (RandomNeighborhoodMode)randomNeighborhoodComboBox.SelectedIndex;
-            if(!GridController.Neighborhood.IsRandomModeMultiNeighborhood() && NeighborhoodCheckedListBox.CheckedIndices.Count > 1)
-            {
-                for (int i = 0; i < NeighborhoodCheckedListBox.Items.Count; i++)
-                {
-                    NeighborhoodCheckedListBox.SetItemChecked(i, false);
-                }
-                NeighborhoodCheckedListBox.SetItemChecked(0,true);
-                GridController.Neighborhood.SetNeighborhood(new List<int>() { 0 }); ;
-            }
-            GridController.Neighborhood.SetNeighborhood(NeighborhoodCheckedListBox.CheckedIndices.Cast<int>().ToList());
-        }
-
-        private void NeighborhoodCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if(!GridController.Neighborhood.IsRandomModeMultiNeighborhood())
-            {
-                if (e.NewValue == CheckState.Checked && NeighborhoodCheckedListBox.CheckedItems.Count > 0)
-                {
-                    NeighborhoodCheckedListBox.ItemCheck -= NeighborhoodCheckedListBox_ItemCheck;
-                    NeighborhoodCheckedListBox.SetItemChecked(NeighborhoodCheckedListBox.CheckedIndices[0], false);
-                    NeighborhoodCheckedListBox.ItemCheck += NeighborhoodCheckedListBox_ItemCheck;
-                }
-            }
-            var list = NeighborhoodCheckedListBox.CheckedIndices.Cast<int>().ToList();
-            if (e.NewValue == CheckState.Unchecked)
-            {
-                if (NeighborhoodCheckedListBox.CheckedItems.Count == 1)
-                {
-                    e.NewValue = CheckState.Checked;
-                    GridController.Neighborhood.SetNeighborhood(new List<int>() { e.Index });
-                }
-                else
-                {
-                    list.Remove(e.Index);
-                    GridController.Neighborhood.SetNeighborhood(list);
-                }
-
-            }
-            else
-            {
-                list.Add(e.Index);
-                GridController.Neighborhood.SetNeighborhood(list);
-            }
-            SetThresholdTextBox();
-        }
-
         private void gridPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             if (GridController.IsSimulationRunning())
@@ -453,9 +260,19 @@ namespace Lab5
             }
             if (e.Button == MouseButtons.Left)
             {
+                EnableGui(false);
                 foreach(Point p in pointsToDraw)
                 {
                     ChangeGridCellStatus(p.X, p.Y, clickStatus);
+                    ChangeGridCellId(p.X, p.Y, clickStatus);
+                }
+                if(clickStatus == 1)
+                {
+                    GridController.AddGrainOriginPoints(pointsToDraw, 1);
+                }
+                else
+                {
+                    GridController.RemoveGrainOriginPoints(pointsToDraw);
                 }
                 mouseX = -1;
                 mouseY = -1;
@@ -464,7 +281,13 @@ namespace Lab5
                 pointsToDraw.Clear();
 
                 DrawGrid(this.GridController.GetGridImage());
+                EnableGui(true);
             }
+        }
+
+        private void ChangeGridCellId(int x, int y, int v)
+        {
+            GridController.ChangeCellId(x, y, v);
         }
     }
 }

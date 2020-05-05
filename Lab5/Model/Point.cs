@@ -16,5 +16,12 @@ namespace Lab5
             X = x;
             Y = y;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Point point &&
+                   X == point.X &&
+                   Y == point.Y;
+        }
     }
 }

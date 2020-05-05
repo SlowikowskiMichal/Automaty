@@ -119,6 +119,7 @@ namespace Lab5
                         this.Cells[i, j].ChangeState();
                         this.Cells[i, j].Id = other.Cells[i, j].Id;
                     }
+                    this.Cells[i, j].Time = other.Cells[i, j].Time;
                 }
             }
         }

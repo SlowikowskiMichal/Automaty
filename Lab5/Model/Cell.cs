@@ -10,10 +10,12 @@ namespace Lab5
     {
         public int State { get; private set; }
         public int Id { get; set; }
-
+        public double Time { get; set; }
         public Cell()
         {
             State = 0;
+            Id = 0;
+            Time = double.MaxValue;
         }
 
 
@@ -43,6 +45,8 @@ namespace Lab5
         public void Reset()
         {
             State = 0;
+            Id = 0;
+            Time = double.MaxValue;
         }
     }
 }

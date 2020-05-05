@@ -10,24 +10,21 @@ namespace Lab5
     {
         #region Attributes
 
-        NeighborhoodManager _Neighborhood;
+        public List<Point> OriginGrains { get; internal set; }
 
-        public NeighborhoodManager Neighborhood { get { return _Neighborhood; } private set { _Neighborhood = value; } }
         public int Iteration;
-        BoundaryConditions BoundaryCondition;
         SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Blue) };
         SolidBrush GridBrush = new SolidBrush(Color.LightGray);
         Grid CurrentGrid;
+        Grid NextGrid;
+
+        readonly static object synLock = new object();
 
         public bool DrawGrid;
         public int Zoom;
 
-        List<int> AliveRule;
-        List<int> DeadRule;
-
         bool Running = false;
 
-        readonly static object synLock = new object();
         #endregion
 
         #region Constructors
@@ -36,10 +33,9 @@ namespace Lab5
 
         public static GridController GetInstance()
         {
-            if(_Instance == null)
+            if (_Instance == null)
             {
                 _Instance = new GridController(100, 100, 0);
-                _Instance._Neighborhood = new NeighborhoodManager(0);
             }
             return _Instance;
         }
@@ -50,18 +46,13 @@ namespace Lab5
 
             //GRID
             CurrentGrid = new Grid(sizeX, sizeY);
-
+            NextGrid = new Grid(sizeX, sizeY);
             Zoom = zoom;
             DrawGrid = drawGrid;
 
-            //RULES
-            AliveRule = new List<int>();
-            DeadRule = new List<int>();
-
             //GRID OPTIONS
-            BoundaryCondition = (BoundaryConditions)boundaryCondition;
-            //.SetNeighborhood(new List<int>() { neighborhoodType });
-            Iteration = 0;
+            OriginGrains = new List<Point>();
+            Iteration = 1;
         }
 
         #endregion
@@ -78,18 +69,12 @@ namespace Lab5
             {
                 for (int y = startY; y < endY; y++)
                 {
-                    if(CurrentGrid.GetCellState(x, y) == 0)
+                    if (CurrentGrid.GetCellState(x, y) == 0)
                     {
-                        n = _Neighborhood.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY, BoundaryCondition);
-
-                        int aliveNeighborhoodsCount = n.Where(p => CurrentGrid.GetCellState(p.X, p.Y) == 1).Count();
-
-                        if (aliveNeighborhoodsCount > 0)
+                        if (CurrentGrid.Cells[x,y].Time <= Iteration * 1.1)
                         {
-                            lock (synLock)
-                            {
-                                CurrentGrid.Cells[x, y].ChangeState(2);
-                            }
+
+                            CurrentGrid.Cells[x, y].ChangeState(2);
                         }
                     }
                 }
@@ -101,10 +86,7 @@ namespace Lab5
                 {
                     if (CurrentGrid.GetCellState(x, y) == 2)
                     {
-                        lock (synLock)
-                        {
-                            CurrentGrid.Cells[x, y].ChangeState(1);
-                        }
+                        CurrentGrid.Cells[x, y].ChangeState(1);
                     }
                 }
             }
@@ -130,7 +112,7 @@ namespace Lab5
             {
                 if (DrawGrid)
                 {
-                    g.FillRectangle(GridBrush, 0, 0, Grid.SizeX*Zoom, Grid.SizeY*Zoom);
+                    g.FillRectangle(GridBrush, 0, 0, Grid.SizeX * Zoom, Grid.SizeY * Zoom);
                 }
 
 
@@ -216,6 +198,8 @@ namespace Lab5
             }
 
             CurrentGrid.Resize(sizeX, sizeY);
+            OriginGrains.Clear();
+            NextGrid.Resize(sizeX, sizeY);
         }
         public void ClearGrid()
         {
@@ -224,35 +208,14 @@ namespace Lab5
                 return;
             }
             CurrentGrid.Clear();
-        }
-        public void SetBoundaryCondition(int boundaryCondition)
-        {
-            BoundaryCondition = (BoundaryConditions)boundaryCondition;
-        }
-        public void SetNeighborhoodType(int neighborhood)
-        {
-            _Neighborhood.SetNeighborhood(new List<int>() { neighborhood });
-        }
-
-        public void SetAliveRule(List<int> aliveRule)
-        {
-            lock (synLock)
-            {
-                AliveRule = aliveRule;
-            }
-        }
-
-        public void SetDeadRule(List<int> deadRule)
-        {
-            lock (synLock)
-            {
-                DeadRule = deadRule;
-            }
+            OriginGrains.Clear();
+            NextGrid.Clear();
+            Iteration = 1;
         }
 
         public void RunCASimulation(IProgress<Bitmap> progress)
         {
-            if(Running)
+            if (Running)
             {
                 return;
             }
@@ -271,15 +234,94 @@ namespace Lab5
                 return;
             }
 
-            CalculateNextGrid(progress,false);
+            CalculateNextGrid(progress, false);
         }
 
         public int GetCellStatus(int x, int y)
         {
             return CurrentGrid.Cells[x, y].State;
         }
-        #endregion
-        #endregion
-    }
 
+        internal void AddGrainOriginPoints(List<Point> pointsToDraw, int v)
+        {
+            OriginGrains.AddRange(pointsToDraw);
+            foreach(Point p in pointsToDraw)
+            {
+                CurrentGrid.Cells[p.X, p.Y].Id = v;
+                CurrentGrid.Cells[p.X, p.Y].ChangeState(1);
+            }
+            RecalculateOriginForGrid();
+        }
+
+        private void RecalculateOriginForGrid()
+        {
+            int nThreads = 4;
+            Thread[] calculations = new Thread[nThreads];
+            int x = Grid.SizeX / 2;
+            int y = Grid.SizeY / 2;
+            NextGrid.Copy(CurrentGrid);
+            calculations[0] = new Thread(() => RecalcalculateOriginForCoords(0, 0, x, y));
+            calculations[1] = new Thread(() => RecalcalculateOriginForCoords(x, 0, Grid.SizeX, y));
+            calculations[2] = new Thread(() => RecalcalculateOriginForCoords(0, y, x, Grid.SizeY));
+            calculations[3] = new Thread(() => RecalcalculateOriginForCoords(x, y, Grid.SizeX, Grid.SizeY));
+            foreach (Thread task in calculations)
+            {
+                task.Start();
+            }
+            foreach (Thread task in calculations)
+            {
+                task.Join();
+            }
+            CurrentGrid.Copy(NextGrid);
+        }
+
+        private void RecalcalculateOriginForCoords(int xStart, int yStart, int xEnd, int yEnd)
+        {
+            for (int x = xStart; x < xEnd; x++)
+            {
+                for (int y = yStart; y < yEnd; y++)
+                {
+                    Cell c = CurrentGrid.Cells[x, y];
+                    if (c.State != 1)
+                    {
+                        var distance = double.MaxValue;
+                        var tempDistance = c.Time;
+                        Point grainLocation = new Point(-1, -1);
+                        foreach (Point p in OriginGrains)
+                        {
+                            tempDistance = Math.Pow(p.X - x, 2.0) + Math.Pow(p.Y - y, 2.0);
+                            if (tempDistance < distance)
+                            {
+                                grainLocation = p;
+                                distance = tempDistance;
+                            }
+                        }
+                        distance = Math.Sqrt(distance);
+                        lock (synLock)
+                        {
+                            NextGrid.Cells[x, y].Time = distance;
+                            NextGrid.Cells[x, y].Id = CurrentGrid.Cells[grainLocation.X, grainLocation.Y].Id;
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void RemoveGrainOriginPoints(List<Point> pointsToDraw)
+        {
+            foreach (Point p in pointsToDraw)
+            {
+                OriginGrains.Remove(p);
+            }
+        }
+
+        internal void ChangeCellId(int x, int y, int v)
+        {
+            CurrentGrid.Cells[x, y].Id = v;
+        }
+    }
+    #endregion
+    #endregion
 }
+
+
