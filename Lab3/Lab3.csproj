@@ -67,6 +67,8 @@
     <Compile Include="Model\Neighborhood\PentagonalRandomNeighborhood.cs" />
     <Compile Include="Model\Neighborhood\PentagonalRightNeighborhood.cs" />
     <Compile Include="Model\Neighborhood\PentagonalTopNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\PseudoHeksagonalNeighborhood.cs" />
+    <Compile Include="Model\Neighborhood\RectangleNeighborhood.cs" />
     <Compile Include="Model\Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

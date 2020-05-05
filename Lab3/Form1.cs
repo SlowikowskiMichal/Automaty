@@ -29,7 +29,8 @@ namespace Lab3
         public Automat2D()
         {
             InitializeComponent();
-            GridController = new GridController(100, 100, 0, 0);
+            GridController = GridController.GetInstance();
+            GridController.SetNeighborhoodType(0);
             boundaryComboBox.SelectedIndex = 0;
             randomNeighborhoodComboBox.SelectedIndex = 0;
             NeighborhoodCheckedListBox.SetItemChecked(0,true);

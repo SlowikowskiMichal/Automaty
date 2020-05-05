@@ -11,7 +11,8 @@ namespace Lab3
         static Neighborhood[] ImplementedNeighborhood = {new MooresNeighborhood(), new NeumannNeighborhood(),
             new HexagonalLeftNeighborhood(), new HexagonalRightNeighborhood(), new HexagonalRandomNeighborhood(),
             new PentagonalLeftNeighborhood(), new PentagonalRightNeighborhood(), new PentagonalTopNeighborhood(),
-            new PentagonalBottomNeighborhood(), new PentagonalRandomNeighborhood() };
+            new PentagonalBottomNeighborhood(), new PentagonalRandomNeighborhood(),new PseudoHeksagonalNeighborhood(),
+            new RectangleNeighborhood()};
 
 
 

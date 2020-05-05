@@ -309,7 +309,9 @@
             "Pentagonal Right",
             "Pentagonal Top",
             "Pentagonal Bottom",
-            "Pentagonal Random"});
+            "Pentagonal Random",
+            "Pseudo - Heksagonal",
+            "Rectangle"});
             this.NeighborhoodCheckedListBox.Location = new System.Drawing.Point(106, 104);
             this.NeighborhoodCheckedListBox.Name = "NeighborhoodCheckedListBox";
             this.NeighborhoodCheckedListBox.Size = new System.Drawing.Size(166, 89);

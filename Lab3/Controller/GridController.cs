@@ -13,7 +13,7 @@ namespace Lab3
         NeighborhoodManager _Neighborhood;
 
         public NeighborhoodManager Neighborhood { get { return _Neighborhood; } private set { _Neighborhood = value; } }
-
+        public int Iteration;
         BoundaryConditions BoundaryCondition;
         SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Blue) };
         SolidBrush GridBrush = new SolidBrush(Color.LightGray);
@@ -33,7 +33,20 @@ namespace Lab3
 
         #region Constructors
 
-        public GridController(int sizeX, int sizeY, int boundaryCondition, int neighborhoodType, bool drawGrid = false, int zoom = 1)
+        static GridController _Instance;
+
+        public static GridController GetInstance()
+        {
+            if(_Instance == null)
+            {
+                _Instance = new GridController(100, 100, 0);
+                _Instance._Neighborhood = new NeighborhoodManager(0);
+            }
+            return _Instance;
+        }
+
+
+        GridController(int sizeX, int sizeY, int boundaryCondition, bool drawGrid = false, int zoom = 1)
         {
 
             //GRID
@@ -49,7 +62,8 @@ namespace Lab3
 
             //GRID OPTIONS
             BoundaryCondition = (BoundaryConditions)boundaryCondition;
-            _Neighborhood = new NeighborhoodManager(neighborhoodType);//.SetNeighborhood(new List<int>() { neighborhoodType });
+            //.SetNeighborhood(new List<int>() { neighborhoodType });
+            Iteration = 0;
         }
 
         #endregion
@@ -122,6 +136,7 @@ namespace Lab3
                 {
                     task.Join();
                 }
+                Iteration++;
                 CurrentGrid.Copy(NextStepGrid);
                 progress.Report(PrepareImage());
             } while (Running && multipleSteps);
