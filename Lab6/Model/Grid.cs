@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab5
+namespace Lab6
 {
     class Grid
     {
@@ -35,7 +35,7 @@ namespace Lab5
             {
                 for (int j = 0; j < _sizeY; j++)
                 {
-                    Cells[i, j] = new Cell(otherGrid.Cells[i,j]);
+                    Cells[i, j] = new Cell(otherGrid.Cells[i, j]);
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace Lab5
 
         public void Clear()
         {
-            foreach(Cell c in Cells)
+            foreach (Cell c in Cells)
             {
                 c.Reset();
             }
@@ -110,9 +110,9 @@ namespace Lab5
 
         internal void Copy(Grid other)
         {
-            for(int i = 0; i < Grid.SizeX; i++)
+            for (int i = 0; i < Grid.SizeX; i++)
             {
-                for(int j = 0; j < Grid.SizeY; j++)
+                for (int j = 0; j < Grid.SizeY; j++)
                 {
                     if (this.Cells[i, j].State != other.Cells[i, j].State)
                     {

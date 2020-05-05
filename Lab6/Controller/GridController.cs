@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 
-namespace Lab5
+namespace Lab6
 {
     class GridController
     {
@@ -75,7 +75,7 @@ namespace Lab5
                 {
                     if (CurrentGrid.GetCellState(x, y) == 0)
                     {
-                        if (CurrentGrid.Cells[x,y].Time <= Iteration * 1.1)
+                        if (CurrentGrid.Cells[x, y].Time <= Iteration * 1.1)
                         {
 
                             CurrentGrid.Cells[x, y].ChangeState(2);
@@ -249,7 +249,7 @@ namespace Lab5
         internal void AddGrainOriginPoints(List<Point> pointsToDraw, int v)
         {
             OriginGrains.AddRange(pointsToDraw);
-            foreach(Point p in pointsToDraw)
+            foreach (Point p in pointsToDraw)
             {
                 CurrentGrid.Cells[p.X, p.Y].Id = v;
                 CurrentGrid.Cells[p.X, p.Y].ChangeState(1);
@@ -318,7 +318,7 @@ namespace Lab5
                 CurrentGrid.Cells[p.X, p.Y].ChangeState(0);
                 OriginGrains.Remove(p);
             }
-            if(OriginGrains.Count > 0)
+            if (OriginGrains.Count > 0)
             {
                 RecalculateOriginForGrid();
             }
@@ -327,7 +327,7 @@ namespace Lab5
                 CurrentGrid.Clear();
                 Iteration = 1;
             }
-            
+
         }
 
         internal void ChangeCellId(int x, int y, int v)

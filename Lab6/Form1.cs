@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Lab5
+namespace Lab6
 {
 
     public partial class Automat2D : Form
@@ -37,7 +37,7 @@ namespace Lab5
             //GRID VIEW
             Zoom = zoomTrackBar.Value;
             GridController.Zoom = Zoom;
-;
+            ;
             DrawGridValue = gridCheckBox.Checked;
             GridController.DrawGrid = DrawGridValue;
             Bitmap gridToDraw = this.GridController.GetGridImage();
@@ -89,7 +89,7 @@ namespace Lab5
                 Zoom, Zoom);
         }
 
-        void ChangeGridCellStatus(int x, int  y, int status)
+        void ChangeGridCellStatus(int x, int y, int status)
         {
 
             if (x >= Grid.SizeX || x < 0
@@ -105,7 +105,7 @@ namespace Lab5
         private void zoomTrackBar_MouseUp(object sender, MouseEventArgs e)
         {
             int zoomBuff = zoomTrackBar.Value;
-            if(GridController.IsSimulationRunning())
+            if (GridController.IsSimulationRunning())
             {
                 zoomTrackBar.Value = Zoom;
                 return;
@@ -170,7 +170,7 @@ namespace Lab5
 
         private async void runCAButton_Click(object sender, EventArgs e)
         {
-            
+
             if (GridController.IsSimulationRunning())
             {
                 ShowMyDialogBox("Nie można uruchomić kolejnej symulacji, podczas gdy jedna jest już uruchomiona.");
@@ -182,7 +182,7 @@ namespace Lab5
             {
                 DrawGrid(bmp);
             });
-            
+
             await Task.Factory.StartNew(() => GridController.RunCASimulation(progress),
                 TaskCreationOptions.LongRunning);
             EnableGui(true);
@@ -267,7 +267,7 @@ namespace Lab5
                     ChangeGridCellStatus(p.X, p.Y, clickStatus);
                     ChangeGridCellId(p.X, p.Y, clickStatus);
                 }
-                if(clickStatus == 1)
+                if (clickStatus == 1)
                 {
                     GridController.AddGrainOriginPoints(pointsToDraw, 1);
                 }
