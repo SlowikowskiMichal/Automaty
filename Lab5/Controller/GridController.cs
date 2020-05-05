@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Lab5
 {
@@ -11,6 +12,7 @@ namespace Lab5
         #region Attributes
 
         public List<Point> OriginGrains { get; internal set; }
+        public int NumberOfFreeCells { get; private set; }
 
         public int Iteration;
         SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Blue), new SolidBrush(Color.Red) };
@@ -65,9 +67,6 @@ namespace Lab5
         #region Private
         void CalculateNextGridFromCoordinates(int startX, int startY, int endX, int endY)
         {
-            Random r = new Random();
-
-            List<Point> n;
             //Faza 1
             for (int x = startX; x < endX; x++)
             {
@@ -91,6 +90,7 @@ namespace Lab5
                     if (CurrentGrid.GetCellState(x, y) == 2)
                     {
                         CurrentGrid.Cells[x, y].ChangeState(1);
+                        NumberOfFreeCells--;
                     }
                 }
             }
@@ -98,13 +98,29 @@ namespace Lab5
 
         public void CalculateNextGrid(IProgress<Bitmap> progress, bool multipleSteps = true)
         {
+            NumberOfFreeCells = 0;
+            for (int x = 0; x < Grid.SizeX; x++)
+            {
+                for (int y = 0; y < Grid.SizeY; y++)
+                {
+                    if(CurrentGrid.Cells[x,y].State != 1)
+                    {
+                        NumberOfFreeCells++;
+                    }
+                }
+            }
+
             Running = true;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             do
             {
                 CalculateNextGridFromCoordinates(0, 0, Grid.SizeX, Grid.SizeY);
                 Iteration++;
-                progress.Report(PrepareImage());
-            } while (Running && multipleSteps);
+                //progress.Report(PrepareImage());
+            } while (Running && multipleSteps && NumberOfFreeCells > 0);
+            sw.Stop();
+            Debug.WriteLine($"Elapsed Time: {sw.Elapsed}");
             Running = false;
         }
 
