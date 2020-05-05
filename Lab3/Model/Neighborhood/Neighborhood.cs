@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab5
+namespace Lab3
 {
     enum BoundaryConditions { Periodic = 0, Reflective = 1 };
 

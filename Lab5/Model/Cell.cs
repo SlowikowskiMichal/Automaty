@@ -25,7 +25,14 @@ namespace Lab5
 
         public void ChangeState()
         {
-            State = (State == 0) ? 1 : 0;
+            if (State == 0)
+            {
+                State = 2;
+            }
+            else if (State == 2)
+            {
+                State = 1;
+            }
         }
 
         public void ChangeState(int state)

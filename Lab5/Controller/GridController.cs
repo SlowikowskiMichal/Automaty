@@ -18,7 +18,6 @@ namespace Lab5
         SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Blue) };
         SolidBrush GridBrush = new SolidBrush(Color.LightGray);
         Grid CurrentGrid;
-        Grid NextStepGrid;
 
         public bool DrawGrid;
         public int Zoom;
@@ -51,7 +50,6 @@ namespace Lab5
 
             //GRID
             CurrentGrid = new Grid(sizeX, sizeY);
-            NextStepGrid = new Grid(sizeX, sizeY);
 
             Zoom = zoom;
             DrawGrid = drawGrid;
@@ -75,39 +73,38 @@ namespace Lab5
             Random r = new Random();
 
             List<Point> n;
-
+            //Faza 1
             for (int x = startX; x < endX; x++)
             {
                 for (int y = startY; y < endY; y++)
                 {
-                    n = _Neighborhood.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY, BoundaryCondition);
-
-                    int aliveNeighborhoodsCount = n.Where(p => CurrentGrid.GetCellState(p.X, p.Y) == 1).Count();
-
-                    CalculateNewState(CurrentGrid.Cells[x, y].State, x, y, aliveNeighborhoodsCount);
-                }
-            }
-        }
-
-        void CalculateNewState(int state, int x, int y, int aliveCount)
-        {
-            if (state == 1)
-            {
-                if (DeadRule.Contains(aliveCount))
-                {
-                    lock (synLock)
+                    if(CurrentGrid.GetCellState(x, y) == 0)
                     {
-                        NextStepGrid.Cells[x, y].ChangeState();
+                        n = _Neighborhood.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY, BoundaryCondition);
+
+                        int aliveNeighborhoodsCount = n.Where(p => CurrentGrid.GetCellState(p.X, p.Y) == 1).Count();
+
+                        if (aliveNeighborhoodsCount > 0)
+                        {
+                            lock (synLock)
+                            {
+                                CurrentGrid.Cells[x, y].ChangeState(2);
+                            }
+                        }
                     }
                 }
             }
-            else
+            //Faza 2
+            for (int x = startX; x < endX; x++)
             {
-                if (AliveRule.Contains(aliveCount))
+                for (int y = startY; y < endY; y++)
                 {
-                    lock (synLock)
+                    if (CurrentGrid.GetCellState(x, y) == 2)
                     {
-                        NextStepGrid.Cells[x, y].ChangeState();
+                        lock (synLock)
+                        {
+                            CurrentGrid.Cells[x, y].ChangeState(1);
+                        }
                     }
                 }
             }
@@ -115,29 +112,11 @@ namespace Lab5
 
         public void CalculateNextGrid(IProgress<Bitmap> progress, bool multipleSteps = true)
         {
-            int nThreads = 4;
-            Thread[] calculations = new Thread[nThreads];
-            int x = Grid.SizeX / 2;
-            int y = Grid.SizeY / 2;
-
             Running = true;
             do
             {
-                NextStepGrid.Copy(CurrentGrid, 0, 0, Grid.SizeX, Grid.SizeY);
-                calculations[0] = new Thread(() => CalculateNextGridFromCoordinates(0, 0, x, y));
-                calculations[1] = new Thread(() => CalculateNextGridFromCoordinates(x, 0, Grid.SizeX, y));
-                calculations[2] = new Thread(() => CalculateNextGridFromCoordinates(0, y, x, Grid.SizeY));
-                calculations[3] = new Thread(() => CalculateNextGridFromCoordinates(x, y, Grid.SizeX, Grid.SizeY));
-                foreach (Thread task in calculations)
-                {
-                    task.Start();
-                }
-                foreach (Thread task in calculations)
-                {
-                    task.Join();
-                }
+                CalculateNextGridFromCoordinates(0, 0, Grid.SizeX, Grid.SizeY);
                 Iteration++;
-                CurrentGrid.Copy(NextStepGrid);
                 progress.Report(PrepareImage());
             } while (Running && multipleSteps);
             Running = false;
@@ -237,7 +216,6 @@ namespace Lab5
             }
 
             CurrentGrid.Resize(sizeX, sizeY);
-            NextStepGrid.Resize(sizeX, sizeY);
         }
         public void ClearGrid()
         {
@@ -246,7 +224,6 @@ namespace Lab5
                 return;
             }
             CurrentGrid.Clear();
-            NextStepGrid.Clear();
         }
         public void SetBoundaryCondition(int boundaryCondition)
         {

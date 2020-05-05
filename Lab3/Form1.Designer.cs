@@ -1,4 +1,4 @@
-﻿namespace Lab5
+﻿namespace Lab3
 {
     partial class Automat2D
     {

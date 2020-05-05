@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Lab5.NeighborhoodManager;
+using static Lab3.NeighborhoodManager;
 
-namespace Lab5
+namespace Lab3
 {
 
     public partial class Automat2D : Form

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Lab5
+namespace Lab3
 {
     class PentagonalTopNeighborhood : Neighborhood
     {

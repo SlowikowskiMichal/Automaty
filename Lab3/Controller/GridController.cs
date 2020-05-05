@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 
-namespace Lab5
+namespace Lab3
 {
     class GridController
     {
