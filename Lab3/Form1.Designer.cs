@@ -387,7 +387,7 @@
             this.neighborhoodLabel.Name = "neighborhoodLabel";
             this.neighborhoodLabel.Size = new System.Drawing.Size(79, 17);
             this.neighborhoodLabel.TabIndex = 45;
-            this.neighborhoodLabel.Text = "Sąsiedstwo";
+            this.neighborhoodLabel.Text = "Sąsiedztwo";
             // 
             // yCellTextBox
             // 

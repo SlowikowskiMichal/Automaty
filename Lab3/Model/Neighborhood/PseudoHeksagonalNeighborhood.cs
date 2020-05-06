@@ -11,9 +11,11 @@ namespace Lab3
 
         GridController gc;
 
+
         public PseudoHeksagonalNeighborhood()
         {
             gc = GridController.GetInstance();
+            NumberOfNeighbors = 8;
         }
 
         public override List<Point> GetNeighborhood(int CellX, int CellY, int SizeX, int SizeY, BoundaryConditions condition)
