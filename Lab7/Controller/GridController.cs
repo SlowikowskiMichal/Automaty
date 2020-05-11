@@ -13,9 +13,11 @@ namespace Lab7
 
         NeighborhoodManager _Neighborhood;
 
+        SolverEngine Solver;
+
         public NeighborhoodManager Neighborhood { get { return _Neighborhood; } private set { _Neighborhood = value; } }
         public int Iteration;
-        BoundaryConditions BoundaryCondition;
+
         SolidBrush GridBrush = new SolidBrush(Color.LightGray);
         Grid CurrentGrid;
         Grid NextStepGrid;
@@ -36,14 +38,15 @@ namespace Lab7
         {
             if(_Instance == null)
             {
-                _Instance = new GridController(100, 100, 0);
-                _Instance._Neighborhood = new NeighborhoodManager(0);
+                _Instance = new GridController(100, 100);
+                _Instance._Neighborhood = NeighborhoodManager.GetInstance();
+                _Instance.Solver = new ClassicSolverEngine();
             }
             return _Instance;
         }
 
 
-        GridController(int sizeX, int sizeY, int boundaryCondition, bool drawGrid = false, int zoom = 1)
+        GridController(int sizeX, int sizeY, bool drawGrid = false, int zoom = 1)
         {
 
             //GRID
@@ -54,8 +57,6 @@ namespace Lab7
             DrawGrid = drawGrid;
 
             //GRID OPTIONS
-            BoundaryCondition = (BoundaryConditions)boundaryCondition;
-            //.SetNeighborhood(new List<int>() { neighborhoodType });
             Iteration = 0;
         }
 
@@ -63,23 +64,10 @@ namespace Lab7
 
         #region Methods
         #region Private
-        void CalculateNextGridFromCoordinates(int startX, int startY, int endX, int endY)
+
+        public void SetBoundaryCondition(int boundary)
         {
-            Random r = new Random();
-
-            List<Point> n;
-
-            for (int x = startX; x < endX; x++)
-            {
-                for (int y = startY; y < endY; y++)
-                {
-                    n = _Neighborhood.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY, BoundaryCondition);
-
-                    int aliveNeighborhoodsCount = n.Where(p => CurrentGrid.GetCellState(p.X, p.Y) == 1).Count();
-
-                    CalculateNewState(CurrentGrid.Cells[x, y].State, x, y, aliveNeighborhoodsCount);
-                }
-            }
+            _Neighborhood.Boundary = (BoundaryConditions)boundary;
         }
 
         void CalculateNewState(int state, int x, int y, int aliveCount)
@@ -101,31 +89,12 @@ namespace Lab7
 
         public void CalculateNextGrid(IProgress<Bitmap> progress, bool multipleSteps = true)
         {
-            int nThreads = 4;
-            Thread[] calculations = new Thread[nThreads];
-            int x = Grid.SizeX / 2;
-            int y = Grid.SizeY / 2;
-
             Running = true;
             do
             {
-                NextStepGrid.Copy(CurrentGrid, 0, 0, Grid.SizeX, Grid.SizeY);
-                calculations[0] = new Thread(() => CalculateNextGridFromCoordinates(0, 0, x, y));
-                calculations[1] = new Thread(() => CalculateNextGridFromCoordinates(x, 0, Grid.SizeX, y));
-                calculations[2] = new Thread(() => CalculateNextGridFromCoordinates(0, y, x, Grid.SizeY));
-                calculations[3] = new Thread(() => CalculateNextGridFromCoordinates(x, y, Grid.SizeX, Grid.SizeY));
-                foreach (Thread task in calculations)
-                {
-                    task.Start();
-                }
-                foreach (Thread task in calculations)
-                {
-                    task.Join();
-                }
-                Iteration++;
-                CurrentGrid.Copy(NextStepGrid);
+                CurrentGrid.Copy(Solver.Run(CurrentGrid));
                 progress.Report(PrepareImage());
-            } while (Running && multipleSteps);
+            } while (Running && multipleSteps && SolverEngine.Change);
             Running = false;
         }
 
@@ -244,10 +213,7 @@ namespace Lab7
             CurrentGrid.Clear();
             NextStepGrid.Clear();
         }
-        public void SetBoundaryCondition(int boundaryCondition)
-        {
-            BoundaryCondition = (BoundaryConditions)boundaryCondition;
-        }
+
         public void SetNeighborhoodType(int neighborhood)
         {
             _Neighborhood.SetNeighborhood(new List<int>() { neighborhood });

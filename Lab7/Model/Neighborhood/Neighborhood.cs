@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab7
 {
-    enum BoundaryConditions { Periodic = 0, Reflective = 1 };
+    enum BoundaryConditions { Periodic = 0, Reflective = 1, Fixed = 2 };
 
     abstract class Neighborhood
     {

@@ -16,5 +16,15 @@ namespace Lab7
             X = x;
             Y = y;
         }
+
+        public double DistanceBettwenPoints(Point otherPoint)
+        {
+            return Math.Sqrt(SqrDistanceBettwenPoints(otherPoint));
+        }
+
+        public double SqrDistanceBettwenPoints(Point otherPoint)
+        {
+            return Math.Pow(this.X - otherPoint.X, 2) + Math.Pow(this.Y - otherPoint.Y, 2);
+        }
     }
 }

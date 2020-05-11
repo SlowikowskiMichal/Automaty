@@ -23,7 +23,7 @@ namespace Lab7
             {
                 for (int j = 0; j < _sizeY; j++)
                 {
-                    Cells[i, j] = new Cell();
+                    Cells[i, j] = new Cell(i,j);
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace Lab7
             {
                 for (int j = 0; j < Y; j++)
                 {
-                    Cells[i, j] = new Cell();
+                    Cells[i, j] = new Cell(i,j);
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace Lab7
                 {
                     for (int j = 0; j < Y; j++)
                     {
-                        Cells[i, j] = new Cell();
+                        Cells[i, j] = new Cell(i,j);
                     }
                 }
             }
@@ -89,6 +89,20 @@ namespace Lab7
             {
                 Cells[x, y].ChangeState(status);
             }
+        }
+
+        internal int GetCellId(int x, int y)
+        {
+            if (x < 0 || y < 0)
+            {
+                return -1;
+            }
+            return Cells[x, y].Id;
+        }
+
+        public void ChangeCellOrigin(int x, int y, int originX, int originY)
+        {
+            Cells[x, y].SetOriginFromCoords(originX, originY);
         }
 
         internal int GetCellState(int x, int y)

@@ -14,7 +14,7 @@ namespace Lab7
             new PentagonalBottomNeighborhood(), new PentagonalRandomNeighborhood(),new PseudoHeksagonalNeighborhood(),
             new RectangleNeighborhood()};
 
-
+        static NeighborhoodManager _Instance;
 
         public List<Neighborhood> CurrentNeighborhoods;
         public enum RandomNeighborhoodMode
@@ -27,6 +27,7 @@ namespace Lab7
 
         public List<double> RandomThresholdList;
 
+        public BoundaryConditions Boundary;
 
         public RandomNeighborhoodMode _RandomMode;
         public RandomNeighborhoodMode RandomMode 
@@ -56,7 +57,7 @@ namespace Lab7
             } 
         }
 
-        Func<int, int, int, int, BoundaryConditions, List<Point>> GetNeighborhoodFunction;
+        Func<int, int, int, int, List<Point>> GetNeighborhoodFunction;
 
         public bool IsRandomModeMultiNeighborhood()
         {
@@ -75,12 +76,23 @@ namespace Lab7
             }
         }
 
-        public NeighborhoodManager(int index = 0)
+        
+        static public NeighborhoodManager GetInstance()
         {
-            
+            if (_Instance == null)
+            {
+                _Instance = new NeighborhoodManager();
+            }
+            return _Instance;
+        }
+
+
+        NeighborhoodManager()
+        {
             CurrentNeighborhoods = new List<Neighborhood>();
-            CurrentNeighborhoods.Add(ImplementedNeighborhood[index]);
+            CurrentNeighborhoods.Add(ImplementedNeighborhood[0]);
             RandomThresholdList = new List<double>();
+            Boundary = BoundaryConditions.Fixed;
         }
         public int GetNumberOfNeighbors(int index = 0)
         {
@@ -92,23 +104,23 @@ namespace Lab7
         }
 
         
-        internal List<Point> GetNeighborhood(int x, int y, int sizeX, int sizeY, BoundaryConditions boundaryCondition)
+        internal List<Point> GetNeighborhood(int x, int y, int sizeX, int sizeY)
         {
-            return GetNeighborhoodFunction(x, y, sizeX, sizeY, boundaryCondition);
+            return GetNeighborhoodFunction(x, y, sizeX, sizeY);
         }
 
-        internal List<Point> GetNeighborhoodRandomNone(int x, int y, int sizeX, int sizeY, BoundaryConditions boundaryCondition)
+        internal List<Point> GetNeighborhoodRandomNone(int x, int y, int sizeX, int sizeY)
         {
-            return CurrentNeighborhoods[0].GetNeighborhood(x, y, sizeX, sizeY, boundaryCondition);
+            return CurrentNeighborhoods[0].GetNeighborhood(x, y, sizeX, sizeY, Boundary);
         }
 
-        internal List<Point> GetNeighborhoodRandomToggle(int x, int y, int sizeX, int sizeY, BoundaryConditions boundaryCondition)
+        internal List<Point> GetNeighborhoodRandomToggle(int x, int y, int sizeX, int sizeY)
         {
             var val = new Random().NextDouble();
-            return val >= RandomThresholdList[0] ? CurrentNeighborhoods[0].GetNeighborhood(x, y, sizeX, sizeY, boundaryCondition) : new List<Point>();
+            return val >= RandomThresholdList[0] ? CurrentNeighborhoods[0].GetNeighborhood(x, y, sizeX, sizeY, Boundary) : new List<Point>();
         }
 
-        internal List<Point> GetNeighborhoodRandomMultiple(int x, int y, int sizeX, int sizeY, BoundaryConditions boundaryCondition)
+        internal List<Point> GetNeighborhoodRandomMultiple(int x, int y, int sizeX, int sizeY)
         {
             var val = new Random().NextDouble();
             double sum = 0.0;
@@ -117,16 +129,16 @@ namespace Lab7
                 sum += RandomThresholdList[i];
                 if(val <= sum)
                 {
-                    return CurrentNeighborhoods[i].GetNeighborhood(x, y, sizeX, sizeY, boundaryCondition);
+                    return CurrentNeighborhoods[i].GetNeighborhood(x, y, sizeX, sizeY, Boundary);
                 }
             }
             return new List<Point>();
         }
 
-        internal List<Point> GetNeighborhoodRandomDirection(int x, int y, int sizeX, int sizeY, BoundaryConditions boundaryCondition)
+        internal List<Point> GetNeighborhoodRandomDirection(int x, int y, int sizeX, int sizeY)
         {
             Random r = new Random();
-            return CurrentNeighborhoods[0].GetNeighborhood(x, y, sizeX, sizeY, boundaryCondition).Where((v, i) => RandomThresholdList[i] <= r.NextDouble()).ToList();
+            return CurrentNeighborhoods[0].GetNeighborhood(x, y, sizeX, sizeY, Boundary).Where((v, i) => RandomThresholdList[i] <= r.NextDouble()).ToList();
         }
     }
 }

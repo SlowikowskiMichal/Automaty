@@ -71,6 +71,9 @@
     <Compile Include="Model\Neighborhood\PseudoHeksagonalNeighborhood.cs" />
     <Compile Include="Model\Neighborhood\RectangleNeighborhood.cs" />
     <Compile Include="Model\Point.cs" />
+    <Compile Include="Model\SolverEngine\CircleSolver.cs" />
+    <Compile Include="Model\SolverEngine\ClassicSolverEngine.cs" />
+    <Compile Include="Model\SolverEngine\SolverEngine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
