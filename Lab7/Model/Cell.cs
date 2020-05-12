@@ -15,7 +15,7 @@ namespace Lab7
         public int State { get; private set; }
         public int Id { get; set; }
 
-        public int Time;
+        public double Time;
 
 
         public Cell(int x, int y)

@@ -11,8 +11,18 @@ namespace Lab7
         public static bool Change = false;
         public static int Iteration = 0;
 
-        abstract public Grid Run(Grid currentGrid);
+        abstract public void Setup();
 
+        virtual public List<Point> Run(Grid currentGrid)
+        {
+            Change = false;
+            SolverEngine.Iteration++;
+            return null;
+        }
 
+        virtual internal void Clear()
+        {
+            Iteration = 0;
+        }
     }
 }

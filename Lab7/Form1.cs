@@ -27,7 +27,6 @@ namespace Lab7
         int CurrentNucleonId = 0;
 
         List<Point> pointsToDraw;
-        string errMsg = "";
         public Automat2D()
         {
             InitializeComponent();
@@ -105,9 +104,15 @@ namespace Lab7
             {
                 return;
             }
-
-            GridController.ChangeCellStatus(x, y, cellStatus);
-            GridController.SetCellId(x, y, CurrentNucleonId);
+            if(cellStatus == 0)
+            {
+                GridController.ResetCell(x, y);
+            }
+            else
+            {
+                GridController.SetCellAsActive(x, y, CurrentNucleonId);
+            }
+            
         }
 
         //GRID VIEW
@@ -127,6 +132,7 @@ namespace Lab7
             Zoom = zoomBuff;
 
             GridController.Zoom = zoomBuff;
+            GridController.ZoomChanged();
             Bitmap gridToDraw = this.GridController.GetGridImage();
             this.gridPictureBox.Size = new Size(gridToDraw.Width, gridToDraw.Height);
             DrawGrid(gridToDraw);

@@ -26,5 +26,11 @@ namespace Lab7
         {
             return Math.Pow(this.X - otherPoint.X, 2) + Math.Pow(this.Y - otherPoint.Y, 2);
         }
+
+        internal void Set(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
     }
 }

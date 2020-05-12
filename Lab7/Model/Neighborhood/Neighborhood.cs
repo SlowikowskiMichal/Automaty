@@ -15,30 +15,32 @@ namespace Lab7
 
         protected void CheckForBoundaryCondition(List<Point> cellNeighborIndexes, int SizeX, int SizeY, BoundaryConditions boundary)
         {
-
-            Func<int, int, int> lessThanZero;
-            Func<int, int, int> moreThanSize;
-            
-
             if (boundary == BoundaryConditions.Periodic)
             {
-                lessThanZero = PeriodicLessThanZero;
-                moreThanSize = PeriodicMoreThanZero;
+                BoundaryConditionTest(cellNeighborIndexes, SizeX, SizeY, PeriodicLessThanZero, PeriodicMoreThanZero);
             }
             else if(boundary == BoundaryConditions.Reflective)
             {
-                lessThanZero = ReflectiveLessThanZero;
-                moreThanSize = ReflectiveMoreThanZero;
+                BoundaryConditionTest(cellNeighborIndexes, SizeX, SizeY, ReflectiveLessThanZero, ReflectiveMoreThanZero);
             }
             else
             {
-                lessThanZero = FixedLessThanZero;
-                moreThanSize = FixedMoreThanZero;
-
+                for(int i = cellNeighborIndexes.Count -1; i >= 0; i--)
+                {
+                    Point p = cellNeighborIndexes[i];
+                    if(p.X < 0 || p.X >= SizeX || p.Y < 0 || p.Y >= SizeY)
+                    {
+                        cellNeighborIndexes.RemoveAt(i);
+                    }
+                }
             }
+        }
+
+        protected void BoundaryConditionTest(List<Point> cellNeighborIndexes, int SizeX, int SizeY, Func<int, int, int> lessThanZero, Func<int, int, int> moreThanSize)
+        {
             foreach (Point p in cellNeighborIndexes)
             {
-                if(p.X < 0)
+                if (p.X < 0)
                 {
                     p.X = lessThanZero(p.X, SizeX);
                 }

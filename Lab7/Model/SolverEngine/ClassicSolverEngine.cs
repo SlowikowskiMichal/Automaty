@@ -12,21 +12,24 @@ namespace Lab7
         NeighborhoodManager _Neighborhood;
         Grid CurrentGrid;
         Grid NextStepGrid;
+
+        int x, y, nThreads;
+        Thread[] calculations;
+
+
         public ClassicSolverEngine()
         {
             _Neighborhood = NeighborhoodManager.GetInstance();
+            NextStepGrid = new Grid(Grid.SizeX,Grid.SizeY);
         }
 
-        public override Grid Run(Grid currentGrid)
+        public override List<Point> Run(Grid currentGrid)
         {
+            base.Run(currentGrid);
             Change = false;
             CurrentGrid = currentGrid;
-            int nThreads = 4;
-            Thread[] calculations = new Thread[nThreads];
-            int x = Grid.SizeX / 2;
-            int y = Grid.SizeY / 2;
-            NextStepGrid = new Grid(currentGrid);
-            
+            NextStepGrid.Copy(CurrentGrid);
+
             calculations[0] = new Thread(() => CalculateNextGridFromCoordinates(0, 0, x, y));
             calculations[1] = new Thread(() => CalculateNextGridFromCoordinates(x, 0, Grid.SizeX, y));
             calculations[2] = new Thread(() => CalculateNextGridFromCoordinates(0, y, x, Grid.SizeY));
@@ -40,7 +43,15 @@ namespace Lab7
                 task.Join();
             }
             SolverEngine.Iteration++;
-            return NextStepGrid;
+            return null;
+        }
+
+        public override void Setup()
+        {
+            nThreads = 4;
+            calculations = new Thread[nThreads];
+            x = Grid.SizeX / 2;
+            y = Grid.SizeY / 2;
         }
 
         void CalculateNextGridFromCoordinates(int startX, int startY, int endX, int endY)

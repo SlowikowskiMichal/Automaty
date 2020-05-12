@@ -163,5 +163,18 @@ namespace Lab7
                 }
             }
         }
+
+        internal List<Point> CellsAsListOfPoints()
+        {
+            List<Point> pList = new List<Point>();
+            for(int x = 0; x < Grid.SizeX; x++)
+            {
+                for(int y = 0; y < Grid.SizeY; y++)
+                {
+                    pList.Add(new Point(x, y));
+                }
+            }
+            return pList;
+        }
     }
 }
