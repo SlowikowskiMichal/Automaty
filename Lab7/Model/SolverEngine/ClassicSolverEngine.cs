@@ -9,7 +9,6 @@ namespace Lab7
 {
     class ClassicSolverEngine : SolverEngine
     {
-        NeighborhoodManager _Neighborhood;
         Grid CurrentGrid;
         Grid NextStepGrid;
 
@@ -19,7 +18,6 @@ namespace Lab7
 
         public ClassicSolverEngine()
         {
-            _Neighborhood = NeighborhoodManager.GetInstance();
             NextStepGrid = new Grid(Grid.SizeX,Grid.SizeY);
         }
 

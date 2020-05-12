@@ -16,6 +16,7 @@ namespace Lab7
         NeighborhoodManager _Neighborhood;
         Bitmap CurrentBitmap;
         SolverEngine Solver;
+        List<SolverEngine> SolversList;
 
         public List<Point> OriginGrains { get; internal set; }
 
@@ -26,6 +27,7 @@ namespace Lab7
 
         public int Iteration { get { return SolverEngine.Iteration; } }
 
+        
         public bool DrawGrid;
         public int Zoom;
 
@@ -36,6 +38,9 @@ namespace Lab7
         #region Constructors
 
         static GridController _Instance;
+        public decimal RectRotation;
+        public decimal RectRatioSecond;
+        public decimal RectRatioFirst;
 
         public static GridController GetInstance()
         {
@@ -43,7 +48,8 @@ namespace Lab7
             {
                 _Instance = new GridController(100, 100);
                 _Instance._Neighborhood = NeighborhoodManager.GetInstance();
-                _Instance.Solver = new CircleSolver();
+                _Instance.SolversList = new List<SolverEngine>() { new CircleSolver(), new RectSolver() };
+                _Instance.Solver = _Instance.SolversList[0];
             }
             return _Instance;
         }
@@ -369,6 +375,14 @@ namespace Lab7
                         CurrentGrid.Cells[x, y].ChangeState(0);
                     }
                 }
+            }
+        }
+
+        internal void SetSolver(int index)
+        {
+            if (index >= 0 && index < SolversList.Count)
+            {
+                Solver = _Instance.SolversList[index];
             }
         }
         #endregion

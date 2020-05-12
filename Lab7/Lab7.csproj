@@ -75,6 +75,7 @@
     <Compile Include="Model\Point.cs" />
     <Compile Include="Model\SolverEngine\CircleSolver.cs" />
     <Compile Include="Model\SolverEngine\ClassicSolverEngine.cs" />
+    <Compile Include="Model\SolverEngine\FrontalSolverEngine.cs" />
     <Compile Include="Model\SolverEngine\RectSolver.cs" />
     <Compile Include="Model\SolverEngine\SolverEngine.cs" />
     <Compile Include="Program.cs" />

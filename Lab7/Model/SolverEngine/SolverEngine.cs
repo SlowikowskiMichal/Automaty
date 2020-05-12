@@ -10,6 +10,12 @@ namespace Lab7
     {
         public static bool Change = false;
         public static int Iteration = 0;
+        protected NeighborhoodManager _Neighborhood;
+
+        public SolverEngine()
+        {
+            _Neighborhood = NeighborhoodManager.GetInstance();
+        }
 
         abstract public void Setup();
 

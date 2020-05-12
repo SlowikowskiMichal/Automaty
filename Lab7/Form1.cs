@@ -17,7 +17,6 @@ namespace Lab7
         GridController GridController;
 
         SolidBrush[] GridBrushes = new SolidBrush[] { new SolidBrush(Color.White), new SolidBrush(Color.Black) };
-        SolidBrush GridBrush = new SolidBrush(Color.LightGray);
 
         int Zoom;
         bool DrawGridValue;
@@ -32,10 +31,11 @@ namespace Lab7
             InitializeComponent();
             CurrentNucleonId = 0;
             GridController = GridController.GetInstance();
-            GridController.SetNeighborhoodType(0);
-            boundaryComboBox.SelectedIndex = 0;
+            GridController.SetNeighborhoodType((int)BoundaryConditions.Fixed);
+            boundaryComboBox.SelectedIndex = (int)BoundaryConditions.Fixed;
             randomNeighborhoodComboBox.SelectedIndex = 0;
             NeighborhoodCheckedListBox.SetItemChecked(0,true);
+            circleModeExecutionRadioButton.Checked = true;
 
             pointsToDraw = new List<Point>();
             xCellTextBox.Text = Grid.SizeX.ToString();
@@ -408,6 +408,35 @@ namespace Lab7
             }
 
             currentNucleonIdValueLabel.Text = string.Format("{0}", CurrentNucleonId + 1);
+        }
+
+        private void executionModeRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(squareModeExecutionRadioButton.Checked)
+            {
+                GridController.SetSolver(1);
+                rectangleExecutionOptionsGroupBox.Visible = true;
+            }
+            else
+            {
+                GridController.SetSolver(0);
+                rectangleExecutionOptionsGroupBox.Visible = false;
+            }
+        }
+
+        private void rotationRectNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            GridController.RectRotation = rotationRectNumericUpDown.Value;
+        }
+
+        private void ratioFirstRectNumeric_ValueChanged(object sender, EventArgs e)
+        {
+            GridController.RectRatioFirst = ratioFirstRectNumeric.Value;
+        }
+
+        private void ratioSecondRectNumeric_ValueChanged(object sender, EventArgs e)
+        {
+            GridController.RectRatioSecond = ratioSecondRectNumeric.Value;
         }
 
         private void gridPictureBox_MouseUp(object sender, MouseEventArgs e)
