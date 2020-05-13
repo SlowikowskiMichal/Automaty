@@ -94,17 +94,17 @@ namespace Lab7
                
                 if (ratio <= SideRatio)
                 {
-                    return Math.Abs(y0) * FirstSideRatio / Math.Max(FirstSideRatio, SecondSideRatio);
+                    return Math.Abs(y0) * FirstSideRatio / Math.Max(FirstSideRatio, SecondSideRatio) + 1;
                 }
                 else
                 {
-                    return Math.Abs(x0) * SecondSideRatio / Math.Max(FirstSideRatio, SecondSideRatio);
+                    return Math.Abs(x0) * SecondSideRatio / Math.Max(FirstSideRatio, SecondSideRatio) + 1;
                 }
 
             }
             else
             {
-                return Math.Abs(x0) * SecondSideRatio / Math.Max(FirstSideRatio, SecondSideRatio);
+                return Math.Abs(x0) * SecondSideRatio / Math.Max(FirstSideRatio, SecondSideRatio) + 1;
             }
 
         }
