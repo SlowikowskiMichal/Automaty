@@ -9,7 +9,7 @@ namespace Lab7
     abstract class SolverEngine
     {
         public static bool Change = false;
-        public static int Iteration = 0;
+        public static double Iteration = 0;
         protected NeighborhoodManager _Neighborhood;
 
         public SolverEngine()
@@ -17,7 +17,7 @@ namespace Lab7
             _Neighborhood = NeighborhoodManager.GetInstance();
         }
 
-        abstract public void Setup();
+        abstract public List<Point> Setup();
 
         virtual public List<Point> Run(Grid currentGrid)
         {

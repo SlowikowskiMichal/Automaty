@@ -122,6 +122,7 @@ namespace Lab7
             // 
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer.IsSplitterFixed = true;
             this.splitContainer.Location = new System.Drawing.Point(0, 0);
             this.splitContainer.Name = "splitContainer";
             // 
@@ -623,17 +624,37 @@ namespace Lab7
             0,
             0,
             0});
+            this.ratioFirstRectNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.ratioFirstRectNumeric.Name = "ratioFirstRectNumeric";
             this.ratioFirstRectNumeric.Size = new System.Drawing.Size(71, 22);
             this.ratioFirstRectNumeric.TabIndex = 3;
+            this.ratioFirstRectNumeric.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.ratioFirstRectNumeric.ValueChanged += new System.EventHandler(this.ratioFirstRectNumeric_ValueChanged);
             // 
             // ratioSecondRectNumeric
             // 
             this.ratioSecondRectNumeric.Location = new System.Drawing.Point(200, 64);
+            this.ratioSecondRectNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.ratioSecondRectNumeric.Name = "ratioSecondRectNumeric";
             this.ratioSecondRectNumeric.Size = new System.Drawing.Size(71, 22);
             this.ratioSecondRectNumeric.TabIndex = 4;
+            this.ratioSecondRectNumeric.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.ratioSecondRectNumeric.ValueChanged += new System.EventHandler(this.ratioSecondRectNumeric_ValueChanged);
             // 
             // label1

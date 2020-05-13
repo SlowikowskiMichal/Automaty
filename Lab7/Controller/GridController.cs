@@ -25,7 +25,7 @@ namespace Lab7
         SolidBrush GridBrush = new SolidBrush(Color.LightGray);
         public Grid CurrentGrid;
 
-        public int Iteration { get { return SolverEngine.Iteration; } }
+        public int Iteration { get { return (int)SolverEngine.Iteration; } }
 
         
         public bool DrawGrid;
@@ -57,6 +57,8 @@ namespace Lab7
 
         GridController(int sizeX, int sizeY, bool drawGrid = false, int zoom = 1)
         {
+            RectRatioFirst = 1;
+            RectRatioSecond = 1;
 
             //GRID
             CurrentGrid = new Grid(sizeX, sizeY);
@@ -94,12 +96,14 @@ namespace Lab7
         {
             Running = true;
             Stopwatch sw = new Stopwatch();
-            Solver.Setup();
+            List<Point> ChangedPoints = Solver.Setup();
+            PrepareImage(ChangedPoints, CurrentBitmap);
+            progress.Report(new Bitmap(CurrentBitmap));
             do
             {
                 sw.Reset();
                 sw.Start();
-                List<Point> ChangedPoints = Solver.Run(CurrentGrid);
+                ChangedPoints = Solver.Run(CurrentGrid);
                 sw.Stop();
                 Debug.WriteLine($"Calculations Time {sw.Elapsed}");
                 sw.Reset();

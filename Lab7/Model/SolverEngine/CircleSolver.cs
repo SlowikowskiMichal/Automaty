@@ -8,9 +8,27 @@ namespace Lab7
 {
     class CircleSolver : FrontalSolverEngine
     {
-        public override void Setup()
+        public override List<Point> Setup()
         {
             base.Setup();
+            Grid CurrentGrid = GridController.GetInstance().CurrentGrid;
+            List<Point> OriginPoints = GridController.GetInstance().OriginGrains;
+            foreach (Point origP in OriginPoints)
+            {
+                Cell origCell = CurrentGrid.Cells[origP.X, origP.Y];
+                var neighborsPoints = _Neighborhood.GetNeighborhood(origP.X, origP.Y, Grid.SizeX, Grid.SizeY).Where(p => CurrentGrid.Cells[p.X, p.Y].State == 2 || CurrentGrid.Cells[p.X, p.Y].State == 0);
+                foreach (Point nP in neighborsPoints)
+                {
+                    Cell cell = CurrentGrid.Cells[nP.X, nP.Y];
+                    cell.ChangeState(2);
+                    cell.OriginPosition = origCell.OriginPosition;
+                    cell.Id = origCell.Id;
+                    cell.Time = (int)cell.CurrentPosition.DistanceBettwenPoints(cell.OriginPosition);
+
+                }
+                FrontPoints.AddRange(neighborsPoints);
+            }
+            return FrontPoints;
         }
 
 

@@ -44,12 +44,13 @@ namespace Lab7
             return null;
         }
 
-        public override void Setup()
+        public override List<Point> Setup()
         {
             nThreads = 4;
             calculations = new Thread[nThreads];
             x = Grid.SizeX / 2;
             y = Grid.SizeY / 2;
+            return null;
         }
 
         void CalculateNextGridFromCoordinates(int startX, int startY, int endX, int endY)
@@ -62,7 +63,7 @@ namespace Lab7
             {
                 for (int y = startY; y < endY; y++)
                 {
-                    if(CurrentGrid.Cells[x,y].State == 0)
+                    if(CurrentGrid.Cells[x,y].State != 1)
                     {
                         n = _Neighborhood.GetNeighborhood(x, y, Grid.SizeX, Grid.SizeY);
 
