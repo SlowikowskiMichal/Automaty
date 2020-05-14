@@ -1,4 +1,4 @@
-﻿using Lab7.Controller;
+﻿using Lab8.Controller;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading;
 
-namespace Lab7
+namespace Lab8
 {
     class GridController
     {

@@ -4,36 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab7
+namespace Lab8
 {
-    class RectSolver : FrontalSolverEngine
+    class CircleSolver : FrontalSolverEngine
     {
-
-        double CosAngle;
-        double SinAngle;
-        double FirstSideRatio;
-        double SecondSideRatio;
-        double SideRatio;
-        double YRatio;
-        double XRatio;
-
         public override List<Point> Setup()
         {
             base.Setup();
-            GridController gc = GridController.GetInstance();
-            var Angle = (double)gc.RectRotation;
-            CosAngle = Math.Cos(Angle * Math.PI / 180.0);
-            SinAngle = Math.Sin(Angle * Math.PI / 180.0);
-            FirstSideRatio = (double)gc.RectRatioFirst;
-            SecondSideRatio = (double)gc.RectRatioSecond;
-            SideRatio = FirstSideRatio / SecondSideRatio;
-
-            YRatio = FirstSideRatio / Math.Max(FirstSideRatio, SecondSideRatio);
-            XRatio = SecondSideRatio / Math.Max(FirstSideRatio, SecondSideRatio);
-
             Grid CurrentGrid = GridController.GetInstance().CurrentGrid;
             List<Point> OriginPoints = GridController.GetInstance().OriginGrains;
-
             foreach (Point origP in OriginPoints)
             {
                 Cell origCell = CurrentGrid.Cells[origP.X, origP.Y];
@@ -45,22 +24,20 @@ namespace Lab7
                     cell.ChangeState(2);
                     cell.OriginPosition = origCell.OriginPosition;
                     cell.Id = origCell.Id;
-                    cell.Time = CalculateTime(cell.OriginPosition.X, cell.OriginPosition.Y, nP.X, nP.Y);
+                    cell.Time = (int)cell.CurrentPosition.DistanceBettwenPoints(cell.OriginPosition);
 
                 }
                 FrontPoints.AddRange(neighborsPoints);
             }
-
             return FrontPoints;
         }
 
+
         public override List<Point> Run(Grid CurrentGrid)
         {
-            base.Run(CurrentGrid);
-            Iteration -= 0.9;
             List<Point> ChangedPoints = new List<Point>();
+            base.Run(CurrentGrid);
             for (int i = FrontPoints.Count - 1; i >= 0; i--)
-
             {
                 Point frontalPoint = FrontPoints[i];
                 if (CurrentGrid.Cells[frontalPoint.X, frontalPoint.Y].Time < Iteration)
@@ -73,7 +50,7 @@ namespace Lab7
                         cell.ChangeState(2);
                         cell.Id = CurrentGrid.Cells[frontalPoint.X, frontalPoint.Y].Id;
                         cell.OriginPosition = CurrentGrid.Cells[frontalPoint.X, frontalPoint.Y].OriginPosition;
-                        cell.Time = CalculateTime(cell.OriginPosition.X, cell.OriginPosition.Y, newFrontalPoint.X, newFrontalPoint.Y);
+                        cell.Time = cell.CurrentPosition.DistanceBettwenPoints(cell.OriginPosition) * 1.1;
                         ChangedPoints.Add(newFrontalPoint);
                     }
                     FrontPoints.AddRange(nList);
@@ -86,33 +63,6 @@ namespace Lab7
             Change = Change || FrontPoints.Count > 0;
             return ChangedPoints;
         }
-
-        private double CalculateTime(int x1, int y1, int x2, int y2)
-        {
-            var diffX = (x2 - x1);
-            var diffY = (y2 - y1);
-            double x0 = diffX * CosAngle - diffY * SinAngle;
-            double y0 = diffX * SinAngle + diffY * CosAngle;
-
-            if(y0 != 0)
-            {
-                double ratio = Math.Abs(x0 / y0);
-               
-                if (ratio <= SideRatio)
-                {
-                    return Math.Abs(y0) * YRatio;
-                }
-                else
-                {
-                    return Math.Abs(x0) * XRatio;
-                }
-
-            }
-            else
-            {
-                return Math.Abs(x0) * XRatio;
-            }
-
-        }
     }
 }
+

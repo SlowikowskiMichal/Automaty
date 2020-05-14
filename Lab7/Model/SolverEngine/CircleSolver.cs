@@ -16,7 +16,8 @@ namespace Lab7
             foreach (Point origP in OriginPoints)
             {
                 Cell origCell = CurrentGrid.Cells[origP.X, origP.Y];
-                var neighborsPoints = _Neighborhood.GetNeighborhood(origP.X, origP.Y, Grid.SizeX, Grid.SizeY).Where(p => CurrentGrid.Cells[p.X, p.Y].State == 2 || CurrentGrid.Cells[p.X, p.Y].State == 0);
+                var neighborsPoints = _Neighborhood.GetNeighborhood(origP.X, origP.Y, Grid.SizeX, Grid.SizeY)
+                    .Where(p => CurrentGrid.Cells[p.X, p.Y].State == 2 || CurrentGrid.Cells[p.X, p.Y].State == 0);
                 foreach (Point nP in neighborsPoints)
                 {
                     Cell cell = CurrentGrid.Cells[nP.X, nP.Y];
