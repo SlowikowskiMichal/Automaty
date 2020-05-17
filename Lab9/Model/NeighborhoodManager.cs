@@ -109,6 +109,12 @@ namespace Lab9
             return GetNeighborhoodFunction(x, y, sizeX, sizeY);
         }
 
+        internal List<Point> GetNeighborhood(int x, int y, int sizeX, int sizeY, Neighborhood neighborhood)
+        {
+            return neighborhood.GetNeighborhood(x, y, sizeX, sizeY, Boundary);
+        }
+
+
         internal List<Point> GetNeighborhoodRandomNone(int x, int y, int sizeX, int sizeY)
         {
             return CurrentNeighborhoods[0].GetNeighborhood(x, y, sizeX, sizeY, Boundary);

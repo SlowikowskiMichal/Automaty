@@ -9,13 +9,15 @@ namespace Lab9
     class FrontalSolverEngine : SolverEngine
     {
         static public List<Point> FrontPoints;
-
+        Neighborhood vonNeuman;
         public FrontalSolverEngine()
         {
+            vonNeuman = new NeumannNeighborhood();
             FrontPoints = new List<Point>();
         }
         public override List<Point> Setup()
         {
+            List<Point> pointsToUpdate = new List<Point>();
             Grid CurrentGrid = GridController.GetInstance().CurrentGrid;
             for (int i = FrontPoints.Count - 1; i >= 0; i--)
             {
@@ -38,9 +40,15 @@ namespace Lab9
 
                 }
                 FrontPoints.AddRange(neighborsPoints);
+                if (origCell.State == 1 && _Neighborhood.GetNeighborhood(origP.X, origP.Y, Grid.SizeX, Grid.SizeY, vonNeuman)
+                    .Exists(p => CurrentGrid.Cells[p.X, p.Y].Id != origCell.Id && CurrentGrid.Cells[p.X, p.Y].State == origCell.State))
+                {
+                    origCell.ChangeState(4);
+                    pointsToUpdate.Add(origP);
+                }
             }
 
-            return FrontPoints;
+            return pointsToUpdate.Concat(FrontPoints).ToList();
         }
 
         internal override void Clear()
@@ -52,7 +60,6 @@ namespace Lab9
         public override List<Point> Run(Grid CurrentGrid)
         {
             base.Run(CurrentGrid);
-            //Iteration -= 0.9;
             List<Point> ChangedPoints = new List<Point>();
             for (int i = FrontPoints.Count - 1; i >= 0; i--)
             {
@@ -67,7 +74,16 @@ namespace Lab9
                         ChangedPoints.Add(newFrontalPoint);
                     }
                     FrontPoints.AddRange(nList);
-                    CurrentGrid.Cells[frontalPoint.X, frontalPoint.Y].ChangeState(1);
+                    if(_Neighborhood.GetNeighborhood(frontalPoint.X, frontalPoint.Y, Grid.SizeX, Grid.SizeY, vonNeuman)
+                        .Exists(p=>CurrentGrid.Cells[p.X,p.Y].Id != CurrentGrid.Cells[frontalPoint.X, frontalPoint.Y].Id))
+                    {
+                        CurrentGrid.Cells[frontalPoint.X, frontalPoint.Y].ChangeState(4);
+                    }
+                    else
+                    {
+                        CurrentGrid.Cells[frontalPoint.X, frontalPoint.Y].ChangeState(1);
+                    }
+                    
                     FrontPoints.RemoveAt(i);
                     Change = true;
                     ChangedPoints.Add(frontalPoint);

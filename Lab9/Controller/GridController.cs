@@ -159,9 +159,13 @@ namespace Lab9
                     {
                         c = ColorTranslator.FromHtml(ColorManager.indexColors[CurrentGrid.Cells[p.X, p.Y].Id % ColorManager.indexColors.Length]);
                     }
-                    else
+                    else if (state == 4)
                     {
                         c = Color.Black;
+                    }
+                    else
+                    {
+                        c = Color.Red;
                     }
 
 
