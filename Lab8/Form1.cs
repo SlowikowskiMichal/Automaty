@@ -209,6 +209,7 @@ namespace Lab8
             rectangleExecutionOptionsGroupBox.Enabled = flag;
             classicExecutionOptionsGroupBox.Enabled = flag;
             modeExecutionGroupBox.Enabled = flag;
+            nucleaGroupBox.Enabled = flag;
         }
 
 
@@ -231,11 +232,13 @@ namespace Lab8
             await Task.Factory.StartNew(() => GridController.RunCASimulation(progress),
                 TaskCreationOptions.LongRunning);
             EnableGui(true);
+            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
 
         }
         private void stopButton_Click(object sender, EventArgs e)
         {
             GridController.StopCASimulation();
+            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
         }
         private async void nextStepCAButton_Click(object sender, EventArgs e)
         {
@@ -254,6 +257,7 @@ namespace Lab8
             await Task.Factory.StartNew(() => GridController.NextStepCASimulation(progress),
                 TaskCreationOptions.LongRunning);
             EnableGui(true);
+            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
         }
 
 
@@ -551,7 +555,6 @@ namespace Lab8
 
         private void clearNucleaButton_Click(object sender, EventArgs e)
         {
-            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
             GridController.ClearGrid();
             countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
             DrawGrid(this.GridController.GetGridImage());

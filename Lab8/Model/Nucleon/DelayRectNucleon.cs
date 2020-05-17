@@ -44,14 +44,14 @@ namespace Lab8
             string attr;
             if (AddNucleonsAction == AddRandomRectNucleons)
             {
-                attr = "Random values";
+                attr = "Losowe wartości";
             }
             else
             {
-                attr = $"Rotation: {Rotation}, X Ratio: {FirstSideRatio}, Y Ratio: {SecondSideRatio}";
+                attr = $"Kąt: {Rotation}, Stosunek X: {FirstSideRatio}, Y: {SecondSideRatio}";
             }
 
-            return $"Rectangle, Delay: {Delay}, Amount: {NucleonAmount}, {attr}";
+            return $"Prostokąt, Opóźnienie: {Delay}, Ilość: {NucleonAmount}, {attr}";
         }
     }
 }

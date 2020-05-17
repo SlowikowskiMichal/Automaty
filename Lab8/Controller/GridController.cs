@@ -115,7 +115,7 @@ namespace Lab8
             progress.Report(new Bitmap(CurrentBitmap));
             do
             {
-                foreach(DelayNucleon dn in DelayNucleons)
+                foreach (DelayNucleon dn in DelayNucleons)
                 {
                     dn.AddNucleons();
                 }

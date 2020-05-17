@@ -36,27 +36,6 @@ namespace Lab8
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.settingsPanel = new System.Windows.Forms.Panel();
             this.menuTabControl = new System.Windows.Forms.TabControl();
-            this.optionsTabPage = new System.Windows.Forms.TabPage();
-            this.simulationOptionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.NeighborhoodCheckedListBox = new System.Windows.Forms.CheckedListBox();
-            this.randomThresholdTextBox = new System.Windows.Forms.TextBox();
-            this.randomThresholdLabel = new System.Windows.Forms.Label();
-            this.randomNeighborhoodLabel = new System.Windows.Forms.Label();
-            this.boundaryLabel = new System.Windows.Forms.Label();
-            this.boundaryComboBox = new System.Windows.Forms.ComboBox();
-            this.neighborhoodLabel = new System.Windows.Forms.Label();
-            this.randomNeighborhoodComboBox = new System.Windows.Forms.ComboBox();
-            this.gridOptionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.xCellTextBox = new System.Windows.Forms.TextBox();
-            this.yCellTextBox = new System.Windows.Forms.TextBox();
-            this.xNumberLabel = new System.Windows.Forms.Label();
-            this.yNumberLabel = new System.Windows.Forms.Label();
-            this.resizeGridButton = new System.Windows.Forms.Button();
-            this.clearButton = new System.Windows.Forms.Button();
-            this.gridViewGroupBox = new System.Windows.Forms.GroupBox();
-            this.zoomTrackBar = new System.Windows.Forms.TrackBar();
-            this.zoomLabel = new System.Windows.Forms.Label();
-            this.gridCheckBox = new System.Windows.Forms.CheckBox();
             this.executionTabPage = new System.Windows.Forms.TabPage();
             this.executionGroupBox = new System.Windows.Forms.GroupBox();
             this.executionButtonsPanel = new System.Windows.Forms.Panel();
@@ -64,6 +43,14 @@ namespace Lab8
             this.stopCAButton = new System.Windows.Forms.Button();
             this.runCAButton = new System.Windows.Forms.Button();
             this.nucleaGroupBox = new System.Windows.Forms.GroupBox();
+            this.nucleaInTimeGroupBox = new System.Windows.Forms.GroupBox();
+            this.nucleaInTimeButtonPanel = new System.Windows.Forms.Panel();
+            this.clearInTimeNucleaButton = new System.Windows.Forms.Button();
+            this.addInTimeNucleaButton = new System.Windows.Forms.Button();
+            this.delayNucleonsInTimePanel = new System.Windows.Forms.Panel();
+            this.delayNucleaInTimeNumeric = new System.Windows.Forms.NumericUpDown();
+            this.delayNucleaInTimeLabel = new System.Windows.Forms.Label();
+            this.nucleaInTimeListBox = new System.Windows.Forms.ListBox();
             this.nucleaButtonPanel = new System.Windows.Forms.Panel();
             this.clearNucleaButton = new System.Windows.Forms.Button();
             this.addNucleaButton = new System.Windows.Forms.Button();
@@ -91,14 +78,27 @@ namespace Lab8
             this.countNucleonIdValueLabel = new System.Windows.Forms.Label();
             this.countNucleonTextLabel = new System.Windows.Forms.Label();
             this.nucleonAmountNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.addInTimeNucleaButton = new System.Windows.Forms.Button();
-            this.clearInTimeNucleaButton = new System.Windows.Forms.Button();
-            this.nucleaInTimeListBox = new System.Windows.Forms.ListBox();
-            this.nucleaInTimeGroupBox = new System.Windows.Forms.GroupBox();
-            this.nucleaInTimeButtonPanel = new System.Windows.Forms.Panel();
-            this.delayNucleonsInTimePanel = new System.Windows.Forms.Panel();
-            this.delayNucleaInTimeLabel = new System.Windows.Forms.Label();
-            this.delayNucleaInTimeNumeric = new System.Windows.Forms.NumericUpDown();
+            this.optionsTabPage = new System.Windows.Forms.TabPage();
+            this.simulationOptionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.NeighborhoodCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.randomThresholdTextBox = new System.Windows.Forms.TextBox();
+            this.randomThresholdLabel = new System.Windows.Forms.Label();
+            this.randomNeighborhoodLabel = new System.Windows.Forms.Label();
+            this.boundaryLabel = new System.Windows.Forms.Label();
+            this.boundaryComboBox = new System.Windows.Forms.ComboBox();
+            this.neighborhoodLabel = new System.Windows.Forms.Label();
+            this.randomNeighborhoodComboBox = new System.Windows.Forms.ComboBox();
+            this.gridOptionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.xCellTextBox = new System.Windows.Forms.TextBox();
+            this.yCellTextBox = new System.Windows.Forms.TextBox();
+            this.xNumberLabel = new System.Windows.Forms.Label();
+            this.yNumberLabel = new System.Windows.Forms.Label();
+            this.resizeGridButton = new System.Windows.Forms.Button();
+            this.clearButton = new System.Windows.Forms.Button();
+            this.gridViewGroupBox = new System.Windows.Forms.GroupBox();
+            this.zoomTrackBar = new System.Windows.Forms.TrackBar();
+            this.zoomLabel = new System.Windows.Forms.Label();
+            this.gridCheckBox = new System.Windows.Forms.CheckBox();
             this.gridPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -107,15 +107,14 @@ namespace Lab8
             this.splitContainer.SuspendLayout();
             this.settingsPanel.SuspendLayout();
             this.menuTabControl.SuspendLayout();
-            this.optionsTabPage.SuspendLayout();
-            this.simulationOptionsGroupBox.SuspendLayout();
-            this.gridOptionsGroupBox.SuspendLayout();
-            this.gridViewGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBar)).BeginInit();
             this.executionTabPage.SuspendLayout();
             this.executionGroupBox.SuspendLayout();
             this.executionButtonsPanel.SuspendLayout();
             this.nucleaGroupBox.SuspendLayout();
+            this.nucleaInTimeGroupBox.SuspendLayout();
+            this.nucleaInTimeButtonPanel.SuspendLayout();
+            this.delayNucleonsInTimePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.delayNucleaInTimeNumeric)).BeginInit();
             this.nucleaButtonPanel.SuspendLayout();
             this.rectangleExecutionOptionsGroupBox.SuspendLayout();
             this.rotationModeRectGroupBox.SuspendLayout();
@@ -126,10 +125,11 @@ namespace Lab8
             this.modeExecutionGroupBox.SuspendLayout();
             this.nucleonNumberPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nucleonAmountNumericUpDown)).BeginInit();
-            this.nucleaInTimeGroupBox.SuspendLayout();
-            this.nucleaInTimeButtonPanel.SuspendLayout();
-            this.delayNucleonsInTimePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.delayNucleaInTimeNumeric)).BeginInit();
+            this.optionsTabPage.SuspendLayout();
+            this.simulationOptionsGroupBox.SuspendLayout();
+            this.gridOptionsGroupBox.SuspendLayout();
+            this.gridViewGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // gridPanel
@@ -140,7 +140,7 @@ namespace Lab8
             this.gridPanel.Location = new System.Drawing.Point(0, 0);
             this.gridPanel.Margin = new System.Windows.Forms.Padding(4);
             this.gridPanel.Name = "gridPanel";
-            this.gridPanel.Size = new System.Drawing.Size(800, 1022);
+            this.gridPanel.Size = new System.Drawing.Size(870, 1022);
             this.gridPanel.TabIndex = 0;
             // 
             // gridPictureBox
@@ -171,7 +171,7 @@ namespace Lab8
             // 
             this.splitContainer.Panel2.Controls.Add(this.settingsPanel);
             this.splitContainer.Size = new System.Drawing.Size(1131, 1022);
-            this.splitContainer.SplitterDistance = 800;
+            this.splitContainer.SplitterDistance = 870;
             this.splitContainer.TabIndex = 58;
             // 
             // settingsPanel
@@ -180,7 +180,7 @@ namespace Lab8
             this.settingsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsPanel.Location = new System.Drawing.Point(0, 0);
             this.settingsPanel.Name = "settingsPanel";
-            this.settingsPanel.Size = new System.Drawing.Size(327, 1022);
+            this.settingsPanel.Size = new System.Drawing.Size(257, 1022);
             this.settingsPanel.TabIndex = 58;
             // 
             // menuTabControl
@@ -191,8 +191,524 @@ namespace Lab8
             this.menuTabControl.Location = new System.Drawing.Point(0, 0);
             this.menuTabControl.Name = "menuTabControl";
             this.menuTabControl.SelectedIndex = 0;
-            this.menuTabControl.Size = new System.Drawing.Size(327, 1022);
+            this.menuTabControl.Size = new System.Drawing.Size(257, 1022);
             this.menuTabControl.TabIndex = 58;
+            // 
+            // executionTabPage
+            // 
+            this.executionTabPage.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.executionTabPage.Controls.Add(this.executionGroupBox);
+            this.executionTabPage.Controls.Add(this.nucleaGroupBox);
+            this.executionTabPage.Location = new System.Drawing.Point(4, 25);
+            this.executionTabPage.Name = "executionTabPage";
+            this.executionTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.executionTabPage.Size = new System.Drawing.Size(249, 993);
+            this.executionTabPage.TabIndex = 1;
+            this.executionTabPage.Text = "Egzekucja";
+            // 
+            // executionGroupBox
+            // 
+            this.executionGroupBox.AutoSize = true;
+            this.executionGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.executionGroupBox.Controls.Add(this.executionButtonsPanel);
+            this.executionGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.executionGroupBox.Location = new System.Drawing.Point(3, 686);
+            this.executionGroupBox.Margin = new System.Windows.Forms.Padding(4);
+            this.executionGroupBox.Name = "executionGroupBox";
+            this.executionGroupBox.Padding = new System.Windows.Forms.Padding(4);
+            this.executionGroupBox.Size = new System.Drawing.Size(243, 86);
+            this.executionGroupBox.TabIndex = 57;
+            this.executionGroupBox.TabStop = false;
+            this.executionGroupBox.Text = "Egzekucja";
+            // 
+            // executionButtonsPanel
+            // 
+            this.executionButtonsPanel.Controls.Add(this.nextStepCAButton);
+            this.executionButtonsPanel.Controls.Add(this.stopCAButton);
+            this.executionButtonsPanel.Controls.Add(this.runCAButton);
+            this.executionButtonsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.executionButtonsPanel.Location = new System.Drawing.Point(4, 19);
+            this.executionButtonsPanel.Name = "executionButtonsPanel";
+            this.executionButtonsPanel.Size = new System.Drawing.Size(235, 63);
+            this.executionButtonsPanel.TabIndex = 58;
+            // 
+            // nextStepCAButton
+            // 
+            this.nextStepCAButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.nextStepCAButton.Location = new System.Drawing.Point(200, 0);
+            this.nextStepCAButton.Margin = new System.Windows.Forms.Padding(4);
+            this.nextStepCAButton.Name = "nextStepCAButton";
+            this.nextStepCAButton.Size = new System.Drawing.Size(100, 63);
+            this.nextStepCAButton.TabIndex = 16;
+            this.nextStepCAButton.Text = "Następny\r\nKrok";
+            this.nextStepCAButton.UseVisualStyleBackColor = true;
+            this.nextStepCAButton.Click += new System.EventHandler(this.nextStepCAButton_Click);
+            // 
+            // stopCAButton
+            // 
+            this.stopCAButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.stopCAButton.Location = new System.Drawing.Point(100, 0);
+            this.stopCAButton.Margin = new System.Windows.Forms.Padding(4);
+            this.stopCAButton.Name = "stopCAButton";
+            this.stopCAButton.Size = new System.Drawing.Size(100, 63);
+            this.stopCAButton.TabIndex = 16;
+            this.stopCAButton.Text = "Stop";
+            this.stopCAButton.UseVisualStyleBackColor = true;
+            this.stopCAButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
+            // runCAButton
+            // 
+            this.runCAButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.runCAButton.Location = new System.Drawing.Point(0, 0);
+            this.runCAButton.Margin = new System.Windows.Forms.Padding(4);
+            this.runCAButton.Name = "runCAButton";
+            this.runCAButton.Size = new System.Drawing.Size(100, 63);
+            this.runCAButton.TabIndex = 16;
+            this.runCAButton.Text = "Start";
+            this.runCAButton.UseVisualStyleBackColor = true;
+            this.runCAButton.Click += new System.EventHandler(this.runCAButton_Click);
+            // 
+            // nucleaGroupBox
+            // 
+            this.nucleaGroupBox.AutoSize = true;
+            this.nucleaGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.nucleaGroupBox.Controls.Add(this.nucleaInTimeGroupBox);
+            this.nucleaGroupBox.Controls.Add(this.nucleaButtonPanel);
+            this.nucleaGroupBox.Controls.Add(this.rectangleExecutionOptionsGroupBox);
+            this.nucleaGroupBox.Controls.Add(this.classicExecutionOptionsGroupBox);
+            this.nucleaGroupBox.Controls.Add(this.modeExecutionGroupBox);
+            this.nucleaGroupBox.Controls.Add(this.nucleonNumberPanel);
+            this.nucleaGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleaGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.nucleaGroupBox.Name = "nucleaGroupBox";
+            this.nucleaGroupBox.Size = new System.Drawing.Size(243, 683);
+            this.nucleaGroupBox.TabIndex = 58;
+            this.nucleaGroupBox.TabStop = false;
+            this.nucleaGroupBox.Text = "Zarodki";
+            // 
+            // nucleaInTimeGroupBox
+            // 
+            this.nucleaInTimeGroupBox.Controls.Add(this.nucleaInTimeButtonPanel);
+            this.nucleaInTimeGroupBox.Controls.Add(this.delayNucleonsInTimePanel);
+            this.nucleaInTimeGroupBox.Controls.Add(this.nucleaInTimeListBox);
+            this.nucleaInTimeGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleaInTimeGroupBox.Location = new System.Drawing.Point(3, 456);
+            this.nucleaInTimeGroupBox.Name = "nucleaInTimeGroupBox";
+            this.nucleaInTimeGroupBox.Size = new System.Drawing.Size(237, 224);
+            this.nucleaInTimeGroupBox.TabIndex = 60;
+            this.nucleaInTimeGroupBox.TabStop = false;
+            this.nucleaInTimeGroupBox.Text = "Zarodki dodane w czasie";
+            // 
+            // nucleaInTimeButtonPanel
+            // 
+            this.nucleaInTimeButtonPanel.Controls.Add(this.clearInTimeNucleaButton);
+            this.nucleaInTimeButtonPanel.Controls.Add(this.addInTimeNucleaButton);
+            this.nucleaInTimeButtonPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleaInTimeButtonPanel.Location = new System.Drawing.Point(3, 156);
+            this.nucleaInTimeButtonPanel.Name = "nucleaInTimeButtonPanel";
+            this.nucleaInTimeButtonPanel.Size = new System.Drawing.Size(231, 54);
+            this.nucleaInTimeButtonPanel.TabIndex = 60;
+            // 
+            // clearInTimeNucleaButton
+            // 
+            this.clearInTimeNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.clearInTimeNucleaButton.Location = new System.Drawing.Point(154, 0);
+            this.clearInTimeNucleaButton.Name = "clearInTimeNucleaButton";
+            this.clearInTimeNucleaButton.Size = new System.Drawing.Size(147, 54);
+            this.clearInTimeNucleaButton.TabIndex = 65;
+            this.clearInTimeNucleaButton.Text = "Wyczyść listę";
+            this.clearInTimeNucleaButton.UseVisualStyleBackColor = true;
+            this.clearInTimeNucleaButton.Click += new System.EventHandler(this.clearInTimeNucleaButton_Click);
+            // 
+            // addInTimeNucleaButton
+            // 
+            this.addInTimeNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.addInTimeNucleaButton.Location = new System.Drawing.Point(0, 0);
+            this.addInTimeNucleaButton.Name = "addInTimeNucleaButton";
+            this.addInTimeNucleaButton.Size = new System.Drawing.Size(154, 54);
+            this.addInTimeNucleaButton.TabIndex = 64;
+            this.addInTimeNucleaButton.Text = "Dodaj w czasie";
+            this.addInTimeNucleaButton.UseVisualStyleBackColor = true;
+            this.addInTimeNucleaButton.Click += new System.EventHandler(this.addInTimeNucleaButton_Click);
+            // 
+            // delayNucleonsInTimePanel
+            // 
+            this.delayNucleonsInTimePanel.Controls.Add(this.delayNucleaInTimeNumeric);
+            this.delayNucleonsInTimePanel.Controls.Add(this.delayNucleaInTimeLabel);
+            this.delayNucleonsInTimePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.delayNucleonsInTimePanel.Location = new System.Drawing.Point(3, 102);
+            this.delayNucleonsInTimePanel.Name = "delayNucleonsInTimePanel";
+            this.delayNucleonsInTimePanel.Size = new System.Drawing.Size(231, 54);
+            this.delayNucleonsInTimePanel.TabIndex = 61;
+            // 
+            // delayNucleaInTimeNumeric
+            // 
+            this.delayNucleaInTimeNumeric.Location = new System.Drawing.Point(110, 19);
+            this.delayNucleaInTimeNumeric.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.delayNucleaInTimeNumeric.Name = "delayNucleaInTimeNumeric";
+            this.delayNucleaInTimeNumeric.Size = new System.Drawing.Size(166, 22);
+            this.delayNucleaInTimeNumeric.TabIndex = 1;
+            // 
+            // delayNucleaInTimeLabel
+            // 
+            this.delayNucleaInTimeLabel.AutoSize = true;
+            this.delayNucleaInTimeLabel.Location = new System.Drawing.Point(17, 21);
+            this.delayNucleaInTimeLabel.Name = "delayNucleaInTimeLabel";
+            this.delayNucleaInTimeLabel.Size = new System.Drawing.Size(80, 17);
+            this.delayNucleaInTimeLabel.TabIndex = 0;
+            this.delayNucleaInTimeLabel.Text = "Opóźnienie";
+            // 
+            // nucleaInTimeListBox
+            // 
+            this.nucleaInTimeListBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleaInTimeListBox.FormattingEnabled = true;
+            this.nucleaInTimeListBox.HorizontalScrollbar = true;
+            this.nucleaInTimeListBox.ItemHeight = 16;
+            this.nucleaInTimeListBox.Location = new System.Drawing.Point(3, 18);
+            this.nucleaInTimeListBox.Name = "nucleaInTimeListBox";
+            this.nucleaInTimeListBox.Size = new System.Drawing.Size(231, 84);
+            this.nucleaInTimeListBox.TabIndex = 59;
+            // 
+            // nucleaButtonPanel
+            // 
+            this.nucleaButtonPanel.Controls.Add(this.clearNucleaButton);
+            this.nucleaButtonPanel.Controls.Add(this.addNucleaButton);
+            this.nucleaButtonPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleaButtonPanel.Location = new System.Drawing.Point(3, 400);
+            this.nucleaButtonPanel.Name = "nucleaButtonPanel";
+            this.nucleaButtonPanel.Size = new System.Drawing.Size(237, 56);
+            this.nucleaButtonPanel.TabIndex = 63;
+            // 
+            // clearNucleaButton
+            // 
+            this.clearNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.clearNucleaButton.Location = new System.Drawing.Point(157, 0);
+            this.clearNucleaButton.Name = "clearNucleaButton";
+            this.clearNucleaButton.Size = new System.Drawing.Size(148, 56);
+            this.clearNucleaButton.TabIndex = 63;
+            this.clearNucleaButton.Text = "Wyczyść obecne zarodki";
+            this.clearNucleaButton.UseVisualStyleBackColor = true;
+            this.clearNucleaButton.Click += new System.EventHandler(this.clearNucleaButton_Click);
+            // 
+            // addNucleaButton
+            // 
+            this.addNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.addNucleaButton.Location = new System.Drawing.Point(0, 0);
+            this.addNucleaButton.Name = "addNucleaButton";
+            this.addNucleaButton.Size = new System.Drawing.Size(157, 56);
+            this.addNucleaButton.TabIndex = 62;
+            this.addNucleaButton.Text = "Dodaj natychmiast";
+            this.addNucleaButton.UseVisualStyleBackColor = true;
+            this.addNucleaButton.Click += new System.EventHandler(this.addNucleaButton_Click);
+            // 
+            // rectangleExecutionOptionsGroupBox
+            // 
+            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.rotationModeRectGroupBox);
+            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.label1);
+            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.ratioSecondRectNumeric);
+            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.ratioFirstRectNumeric);
+            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.ratioRectLabel);
+            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.rotationRectNumericUpDown);
+            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.rotationRectLabel);
+            this.rectangleExecutionOptionsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rectangleExecutionOptionsGroupBox.Location = new System.Drawing.Point(3, 242);
+            this.rectangleExecutionOptionsGroupBox.Name = "rectangleExecutionOptionsGroupBox";
+            this.rectangleExecutionOptionsGroupBox.Size = new System.Drawing.Size(237, 158);
+            this.rectangleExecutionOptionsGroupBox.TabIndex = 60;
+            this.rectangleExecutionOptionsGroupBox.TabStop = false;
+            this.rectangleExecutionOptionsGroupBox.Text = "Opcje Rozrostu";
+            this.rectangleExecutionOptionsGroupBox.Visible = false;
+            // 
+            // rotationModeRectGroupBox
+            // 
+            this.rotationModeRectGroupBox.Controls.Add(this.randomRotationRectRadioButton);
+            this.rotationModeRectGroupBox.Controls.Add(this.sameRotationRectRadioButton);
+            this.rotationModeRectGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.rotationModeRectGroupBox.Location = new System.Drawing.Point(3, 18);
+            this.rotationModeRectGroupBox.Margin = new System.Windows.Forms.Padding(4);
+            this.rotationModeRectGroupBox.Name = "rotationModeRectGroupBox";
+            this.rotationModeRectGroupBox.Padding = new System.Windows.Forms.Padding(4);
+            this.rotationModeRectGroupBox.Size = new System.Drawing.Size(231, 56);
+            this.rotationModeRectGroupBox.TabIndex = 58;
+            this.rotationModeRectGroupBox.TabStop = false;
+            this.rotationModeRectGroupBox.Text = "Tryb wartości";
+            // 
+            // randomRotationRectRadioButton
+            // 
+            this.randomRotationRectRadioButton.AutoSize = true;
+            this.randomRotationRectRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.randomRotationRectRadioButton.Location = new System.Drawing.Point(107, 19);
+            this.randomRotationRectRadioButton.Name = "randomRotationRectRadioButton";
+            this.randomRotationRectRadioButton.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.randomRotationRectRadioButton.Size = new System.Drawing.Size(96, 33);
+            this.randomRotationRectRadioButton.TabIndex = 17;
+            this.randomRotationRectRadioButton.Text = "Losowy";
+            this.randomRotationRectRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // sameRotationRectRadioButton
+            // 
+            this.sameRotationRectRadioButton.AutoSize = true;
+            this.sameRotationRectRadioButton.Checked = true;
+            this.sameRotationRectRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.sameRotationRectRadioButton.Location = new System.Drawing.Point(4, 19);
+            this.sameRotationRectRadioButton.Name = "sameRotationRectRadioButton";
+            this.sameRotationRectRadioButton.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.sameRotationRectRadioButton.Size = new System.Drawing.Size(103, 33);
+            this.sameRotationRectRadioButton.TabIndex = 18;
+            this.sameRotationRectRadioButton.TabStop = true;
+            this.sameRotationRectRadioButton.Text = "Wspólny";
+            this.sameRotationRectRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(182, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(12, 17);
+            this.label1.TabIndex = 5;
+            this.label1.Text = ":";
+            // 
+            // ratioSecondRectNumeric
+            // 
+            this.ratioSecondRectNumeric.Location = new System.Drawing.Point(202, 121);
+            this.ratioSecondRectNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ratioSecondRectNumeric.Name = "ratioSecondRectNumeric";
+            this.ratioSecondRectNumeric.Size = new System.Drawing.Size(71, 22);
+            this.ratioSecondRectNumeric.TabIndex = 4;
+            this.ratioSecondRectNumeric.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ratioSecondRectNumeric.ValueChanged += new System.EventHandler(this.ratioSecondRectNumeric_ValueChanged);
+            // 
+            // ratioFirstRectNumeric
+            // 
+            this.ratioFirstRectNumeric.Location = new System.Drawing.Point(107, 121);
+            this.ratioFirstRectNumeric.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.ratioFirstRectNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ratioFirstRectNumeric.Name = "ratioFirstRectNumeric";
+            this.ratioFirstRectNumeric.Size = new System.Drawing.Size(71, 22);
+            this.ratioFirstRectNumeric.TabIndex = 3;
+            this.ratioFirstRectNumeric.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ratioFirstRectNumeric.ValueChanged += new System.EventHandler(this.ratioFirstRectNumeric_ValueChanged);
+            // 
+            // ratioRectLabel
+            // 
+            this.ratioRectLabel.AutoSize = true;
+            this.ratioRectLabel.Location = new System.Drawing.Point(18, 126);
+            this.ratioRectLabel.Name = "ratioRectLabel";
+            this.ratioRectLabel.Size = new System.Drawing.Size(67, 17);
+            this.ratioRectLabel.TabIndex = 2;
+            this.ratioRectLabel.Text = "Stosunek";
+            // 
+            // rotationRectNumericUpDown
+            // 
+            this.rotationRectNumericUpDown.Location = new System.Drawing.Point(107, 86);
+            this.rotationRectNumericUpDown.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.rotationRectNumericUpDown.Name = "rotationRectNumericUpDown";
+            this.rotationRectNumericUpDown.Size = new System.Drawing.Size(166, 22);
+            this.rotationRectNumericUpDown.TabIndex = 1;
+            this.rotationRectNumericUpDown.ValueChanged += new System.EventHandler(this.rotationRectNumericUpDown_ValueChanged);
+            // 
+            // rotationRectLabel
+            // 
+            this.rotationRectLabel.AutoSize = true;
+            this.rotationRectLabel.Location = new System.Drawing.Point(18, 86);
+            this.rotationRectLabel.Name = "rotationRectLabel";
+            this.rotationRectLabel.Size = new System.Drawing.Size(44, 17);
+            this.rotationRectLabel.TabIndex = 0;
+            this.rotationRectLabel.Text = "Obrót";
+            // 
+            // classicExecutionOptionsGroupBox
+            // 
+            this.classicExecutionOptionsGroupBox.Controls.Add(this.deadRulesLabel);
+            this.classicExecutionOptionsGroupBox.Controls.Add(this.aliveRulesTextBox);
+            this.classicExecutionOptionsGroupBox.Controls.Add(this.deadRulesTextBox);
+            this.classicExecutionOptionsGroupBox.Controls.Add(this.aliveRulesLlabel);
+            this.classicExecutionOptionsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.classicExecutionOptionsGroupBox.Location = new System.Drawing.Point(3, 142);
+            this.classicExecutionOptionsGroupBox.Name = "classicExecutionOptionsGroupBox";
+            this.classicExecutionOptionsGroupBox.Size = new System.Drawing.Size(237, 100);
+            this.classicExecutionOptionsGroupBox.TabIndex = 59;
+            this.classicExecutionOptionsGroupBox.TabStop = false;
+            this.classicExecutionOptionsGroupBox.Text = "Opcje Rozrostu";
+            this.classicExecutionOptionsGroupBox.Visible = false;
+            // 
+            // deadRulesLabel
+            // 
+            this.deadRulesLabel.AutoSize = true;
+            this.deadRulesLabel.Location = new System.Drawing.Point(24, 67);
+            this.deadRulesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.deadRulesLabel.Name = "deadRulesLabel";
+            this.deadRulesLabel.Size = new System.Drawing.Size(101, 17);
+            this.deadRulesLabel.TabIndex = 60;
+            this.deadRulesLabel.Text = "Reguła śmierci";
+            // 
+            // aliveRulesTextBox
+            // 
+            this.aliveRulesTextBox.Location = new System.Drawing.Point(135, 32);
+            this.aliveRulesTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.aliveRulesTextBox.Name = "aliveRulesTextBox";
+            this.aliveRulesTextBox.Size = new System.Drawing.Size(138, 22);
+            this.aliveRulesTextBox.TabIndex = 57;
+            this.aliveRulesTextBox.Text = "3";
+            this.aliveRulesTextBox.Leave += new System.EventHandler(this.aliveRulesTextBox_TextChanged);
+            // 
+            // deadRulesTextBox
+            // 
+            this.deadRulesTextBox.Location = new System.Drawing.Point(135, 64);
+            this.deadRulesTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.deadRulesTextBox.Name = "deadRulesTextBox";
+            this.deadRulesTextBox.Size = new System.Drawing.Size(138, 22);
+            this.deadRulesTextBox.TabIndex = 58;
+            this.deadRulesTextBox.Text = "0;1;4;5;6;7;8";
+            this.deadRulesTextBox.Leave += new System.EventHandler(this.deadRulesTextBox_TextChanged);
+            // 
+            // aliveRulesLlabel
+            // 
+            this.aliveRulesLlabel.AutoSize = true;
+            this.aliveRulesLlabel.Location = new System.Drawing.Point(24, 32);
+            this.aliveRulesLlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.aliveRulesLlabel.Name = "aliveRulesLlabel";
+            this.aliveRulesLlabel.Size = new System.Drawing.Size(112, 17);
+            this.aliveRulesLlabel.TabIndex = 59;
+            this.aliveRulesLlabel.Text = "Reguła narodzin";
+            // 
+            // modeExecutionGroupBox
+            // 
+            this.modeExecutionGroupBox.Controls.Add(this.classicModeExecutionRadioButton);
+            this.modeExecutionGroupBox.Controls.Add(this.squareModeExecutionRadioButton);
+            this.modeExecutionGroupBox.Controls.Add(this.circleModeExecutionRadioButton);
+            this.modeExecutionGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.modeExecutionGroupBox.Location = new System.Drawing.Point(3, 86);
+            this.modeExecutionGroupBox.Margin = new System.Windows.Forms.Padding(4);
+            this.modeExecutionGroupBox.Name = "modeExecutionGroupBox";
+            this.modeExecutionGroupBox.Padding = new System.Windows.Forms.Padding(4);
+            this.modeExecutionGroupBox.Size = new System.Drawing.Size(237, 56);
+            this.modeExecutionGroupBox.TabIndex = 57;
+            this.modeExecutionGroupBox.TabStop = false;
+            this.modeExecutionGroupBox.Text = "Tryb rozrostu";
+            // 
+            // classicModeExecutionRadioButton
+            // 
+            this.classicModeExecutionRadioButton.AutoSize = true;
+            this.classicModeExecutionRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.classicModeExecutionRadioButton.Location = new System.Drawing.Point(181, 19);
+            this.classicModeExecutionRadioButton.Name = "classicModeExecutionRadioButton";
+            this.classicModeExecutionRadioButton.Size = new System.Drawing.Size(92, 33);
+            this.classicModeExecutionRadioButton.TabIndex = 19;
+            this.classicModeExecutionRadioButton.TabStop = true;
+            this.classicModeExecutionRadioButton.Text = "Klasyczny";
+            this.classicModeExecutionRadioButton.UseVisualStyleBackColor = true;
+            this.classicModeExecutionRadioButton.Visible = false;
+            this.classicModeExecutionRadioButton.CheckedChanged += new System.EventHandler(this.executionModeRadioButton_CheckedChanged);
+            // 
+            // squareModeExecutionRadioButton
+            // 
+            this.squareModeExecutionRadioButton.AutoSize = true;
+            this.squareModeExecutionRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.squareModeExecutionRadioButton.Location = new System.Drawing.Point(77, 19);
+            this.squareModeExecutionRadioButton.Name = "squareModeExecutionRadioButton";
+            this.squareModeExecutionRadioButton.Size = new System.Drawing.Size(104, 33);
+            this.squareModeExecutionRadioButton.TabIndex = 17;
+            this.squareModeExecutionRadioButton.TabStop = true;
+            this.squareModeExecutionRadioButton.Text = "Prostokątny";
+            this.squareModeExecutionRadioButton.UseVisualStyleBackColor = true;
+            this.squareModeExecutionRadioButton.CheckedChanged += new System.EventHandler(this.executionModeRadioButton_CheckedChanged);
+            // 
+            // circleModeExecutionRadioButton
+            // 
+            this.circleModeExecutionRadioButton.AutoSize = true;
+            this.circleModeExecutionRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.circleModeExecutionRadioButton.Location = new System.Drawing.Point(4, 19);
+            this.circleModeExecutionRadioButton.Name = "circleModeExecutionRadioButton";
+            this.circleModeExecutionRadioButton.Size = new System.Drawing.Size(73, 33);
+            this.circleModeExecutionRadioButton.TabIndex = 18;
+            this.circleModeExecutionRadioButton.TabStop = true;
+            this.circleModeExecutionRadioButton.Text = "Kołowy";
+            this.circleModeExecutionRadioButton.UseVisualStyleBackColor = true;
+            this.circleModeExecutionRadioButton.CheckedChanged += new System.EventHandler(this.executionModeRadioButton_CheckedChanged);
+            // 
+            // nucleonNumberPanel
+            // 
+            this.nucleonNumberPanel.Controls.Add(this.nucleonAmountLabel);
+            this.nucleonNumberPanel.Controls.Add(this.countNucleonIdValueLabel);
+            this.nucleonNumberPanel.Controls.Add(this.countNucleonTextLabel);
+            this.nucleonNumberPanel.Controls.Add(this.nucleonAmountNumericUpDown);
+            this.nucleonNumberPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleonNumberPanel.Location = new System.Drawing.Point(3, 18);
+            this.nucleonNumberPanel.Name = "nucleonNumberPanel";
+            this.nucleonNumberPanel.Size = new System.Drawing.Size(237, 68);
+            this.nucleonNumberPanel.TabIndex = 64;
+            // 
+            // nucleonAmountLabel
+            // 
+            this.nucleonAmountLabel.AutoSize = true;
+            this.nucleonAmountLabel.Location = new System.Drawing.Point(18, 9);
+            this.nucleonAmountLabel.Name = "nucleonAmountLabel";
+            this.nucleonAmountLabel.Size = new System.Drawing.Size(79, 17);
+            this.nucleonAmountLabel.TabIndex = 56;
+            this.nucleonAmountLabel.Text = "Ilość ziaren";
+            // 
+            // countNucleonIdValueLabel
+            // 
+            this.countNucleonIdValueLabel.AutoSize = true;
+            this.countNucleonIdValueLabel.Location = new System.Drawing.Point(193, 34);
+            this.countNucleonIdValueLabel.Name = "countNucleonIdValueLabel";
+            this.countNucleonIdValueLabel.Size = new System.Drawing.Size(16, 17);
+            this.countNucleonIdValueLabel.TabIndex = 61;
+            this.countNucleonIdValueLabel.Text = "0";
+            // 
+            // countNucleonTextLabel
+            // 
+            this.countNucleonTextLabel.AutoSize = true;
+            this.countNucleonTextLabel.Location = new System.Drawing.Point(17, 34);
+            this.countNucleonTextLabel.Name = "countNucleonTextLabel";
+            this.countNucleonTextLabel.Size = new System.Drawing.Size(146, 17);
+            this.countNucleonTextLabel.TabIndex = 60;
+            this.countNucleonTextLabel.Text = "Całkowita ilość ziaren:";
+            // 
+            // nucleonAmountNumericUpDown
+            // 
+            this.nucleonAmountNumericUpDown.Location = new System.Drawing.Point(129, 9);
+            this.nucleonAmountNumericUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.nucleonAmountNumericUpDown.Name = "nucleonAmountNumericUpDown";
+            this.nucleonAmountNumericUpDown.Size = new System.Drawing.Size(144, 22);
+            this.nucleonAmountNumericUpDown.TabIndex = 59;
+            this.nucleonAmountNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // optionsTabPage
             // 
@@ -460,521 +976,6 @@ namespace Lab8
             this.gridCheckBox.Text = "Generuj siatkę";
             this.gridCheckBox.UseVisualStyleBackColor = true;
             // 
-            // executionTabPage
-            // 
-            this.executionTabPage.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.executionTabPage.Controls.Add(this.executionGroupBox);
-            this.executionTabPage.Controls.Add(this.nucleaGroupBox);
-            this.executionTabPage.Location = new System.Drawing.Point(4, 25);
-            this.executionTabPage.Name = "executionTabPage";
-            this.executionTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.executionTabPage.Size = new System.Drawing.Size(319, 993);
-            this.executionTabPage.TabIndex = 1;
-            this.executionTabPage.Text = "Egzekucja";
-            // 
-            // executionGroupBox
-            // 
-            this.executionGroupBox.AutoSize = true;
-            this.executionGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.executionGroupBox.Controls.Add(this.executionButtonsPanel);
-            this.executionGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.executionGroupBox.Location = new System.Drawing.Point(3, 686);
-            this.executionGroupBox.Margin = new System.Windows.Forms.Padding(4);
-            this.executionGroupBox.Name = "executionGroupBox";
-            this.executionGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.executionGroupBox.Size = new System.Drawing.Size(313, 86);
-            this.executionGroupBox.TabIndex = 57;
-            this.executionGroupBox.TabStop = false;
-            this.executionGroupBox.Text = "Egzekucja";
-            // 
-            // executionButtonsPanel
-            // 
-            this.executionButtonsPanel.Controls.Add(this.nextStepCAButton);
-            this.executionButtonsPanel.Controls.Add(this.stopCAButton);
-            this.executionButtonsPanel.Controls.Add(this.runCAButton);
-            this.executionButtonsPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.executionButtonsPanel.Location = new System.Drawing.Point(4, 19);
-            this.executionButtonsPanel.Name = "executionButtonsPanel";
-            this.executionButtonsPanel.Size = new System.Drawing.Size(305, 63);
-            this.executionButtonsPanel.TabIndex = 58;
-            // 
-            // nextStepCAButton
-            // 
-            this.nextStepCAButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.nextStepCAButton.Location = new System.Drawing.Point(200, 0);
-            this.nextStepCAButton.Margin = new System.Windows.Forms.Padding(4);
-            this.nextStepCAButton.Name = "nextStepCAButton";
-            this.nextStepCAButton.Size = new System.Drawing.Size(100, 63);
-            this.nextStepCAButton.TabIndex = 16;
-            this.nextStepCAButton.Text = "Następny\r\nKrok";
-            this.nextStepCAButton.UseVisualStyleBackColor = true;
-            this.nextStepCAButton.Click += new System.EventHandler(this.nextStepCAButton_Click);
-            // 
-            // stopCAButton
-            // 
-            this.stopCAButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.stopCAButton.Location = new System.Drawing.Point(100, 0);
-            this.stopCAButton.Margin = new System.Windows.Forms.Padding(4);
-            this.stopCAButton.Name = "stopCAButton";
-            this.stopCAButton.Size = new System.Drawing.Size(100, 63);
-            this.stopCAButton.TabIndex = 16;
-            this.stopCAButton.Text = "Stop";
-            this.stopCAButton.UseVisualStyleBackColor = true;
-            this.stopCAButton.Click += new System.EventHandler(this.stopButton_Click);
-            // 
-            // runCAButton
-            // 
-            this.runCAButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.runCAButton.Location = new System.Drawing.Point(0, 0);
-            this.runCAButton.Margin = new System.Windows.Forms.Padding(4);
-            this.runCAButton.Name = "runCAButton";
-            this.runCAButton.Size = new System.Drawing.Size(100, 63);
-            this.runCAButton.TabIndex = 16;
-            this.runCAButton.Text = "Start";
-            this.runCAButton.UseVisualStyleBackColor = true;
-            this.runCAButton.Click += new System.EventHandler(this.runCAButton_Click);
-            // 
-            // nucleaGroupBox
-            // 
-            this.nucleaGroupBox.AutoSize = true;
-            this.nucleaGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.nucleaGroupBox.Controls.Add(this.nucleaInTimeGroupBox);
-            this.nucleaGroupBox.Controls.Add(this.nucleaButtonPanel);
-            this.nucleaGroupBox.Controls.Add(this.rectangleExecutionOptionsGroupBox);
-            this.nucleaGroupBox.Controls.Add(this.classicExecutionOptionsGroupBox);
-            this.nucleaGroupBox.Controls.Add(this.modeExecutionGroupBox);
-            this.nucleaGroupBox.Controls.Add(this.nucleonNumberPanel);
-            this.nucleaGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nucleaGroupBox.Location = new System.Drawing.Point(3, 3);
-            this.nucleaGroupBox.Name = "nucleaGroupBox";
-            this.nucleaGroupBox.Size = new System.Drawing.Size(313, 683);
-            this.nucleaGroupBox.TabIndex = 58;
-            this.nucleaGroupBox.TabStop = false;
-            this.nucleaGroupBox.Text = "Zarodki";
-            // 
-            // nucleaButtonPanel
-            // 
-            this.nucleaButtonPanel.Controls.Add(this.clearNucleaButton);
-            this.nucleaButtonPanel.Controls.Add(this.addNucleaButton);
-            this.nucleaButtonPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nucleaButtonPanel.Location = new System.Drawing.Point(3, 400);
-            this.nucleaButtonPanel.Name = "nucleaButtonPanel";
-            this.nucleaButtonPanel.Size = new System.Drawing.Size(307, 56);
-            this.nucleaButtonPanel.TabIndex = 63;
-            // 
-            // clearNucleaButton
-            // 
-            this.clearNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.clearNucleaButton.Location = new System.Drawing.Point(157, 0);
-            this.clearNucleaButton.Name = "clearNucleaButton";
-            this.clearNucleaButton.Size = new System.Drawing.Size(148, 56);
-            this.clearNucleaButton.TabIndex = 63;
-            this.clearNucleaButton.Text = "Wyczyść obecne zarodki";
-            this.clearNucleaButton.UseVisualStyleBackColor = true;
-            this.clearNucleaButton.Click += new System.EventHandler(this.clearNucleaButton_Click);
-            // 
-            // addNucleaButton
-            // 
-            this.addNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.addNucleaButton.Location = new System.Drawing.Point(0, 0);
-            this.addNucleaButton.Name = "addNucleaButton";
-            this.addNucleaButton.Size = new System.Drawing.Size(157, 56);
-            this.addNucleaButton.TabIndex = 62;
-            this.addNucleaButton.Text = "Dodaj natychmiast";
-            this.addNucleaButton.UseVisualStyleBackColor = true;
-            this.addNucleaButton.Click += new System.EventHandler(this.addNucleaButton_Click);
-            // 
-            // rectangleExecutionOptionsGroupBox
-            // 
-            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.rotationModeRectGroupBox);
-            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.label1);
-            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.ratioSecondRectNumeric);
-            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.ratioFirstRectNumeric);
-            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.ratioRectLabel);
-            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.rotationRectNumericUpDown);
-            this.rectangleExecutionOptionsGroupBox.Controls.Add(this.rotationRectLabel);
-            this.rectangleExecutionOptionsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.rectangleExecutionOptionsGroupBox.Location = new System.Drawing.Point(3, 242);
-            this.rectangleExecutionOptionsGroupBox.Name = "rectangleExecutionOptionsGroupBox";
-            this.rectangleExecutionOptionsGroupBox.Size = new System.Drawing.Size(307, 158);
-            this.rectangleExecutionOptionsGroupBox.TabIndex = 60;
-            this.rectangleExecutionOptionsGroupBox.TabStop = false;
-            this.rectangleExecutionOptionsGroupBox.Text = "Opcje Rozrostu";
-            this.rectangleExecutionOptionsGroupBox.Visible = false;
-            // 
-            // rotationModeRectGroupBox
-            // 
-            this.rotationModeRectGroupBox.Controls.Add(this.randomRotationRectRadioButton);
-            this.rotationModeRectGroupBox.Controls.Add(this.sameRotationRectRadioButton);
-            this.rotationModeRectGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.rotationModeRectGroupBox.Location = new System.Drawing.Point(3, 18);
-            this.rotationModeRectGroupBox.Margin = new System.Windows.Forms.Padding(4);
-            this.rotationModeRectGroupBox.Name = "rotationModeRectGroupBox";
-            this.rotationModeRectGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.rotationModeRectGroupBox.Size = new System.Drawing.Size(301, 56);
-            this.rotationModeRectGroupBox.TabIndex = 58;
-            this.rotationModeRectGroupBox.TabStop = false;
-            this.rotationModeRectGroupBox.Text = "Tryb obrotu";
-            // 
-            // randomRotationRectRadioButton
-            // 
-            this.randomRotationRectRadioButton.AutoSize = true;
-            this.randomRotationRectRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.randomRotationRectRadioButton.Location = new System.Drawing.Point(107, 19);
-            this.randomRotationRectRadioButton.Name = "randomRotationRectRadioButton";
-            this.randomRotationRectRadioButton.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.randomRotationRectRadioButton.Size = new System.Drawing.Size(96, 33);
-            this.randomRotationRectRadioButton.TabIndex = 17;
-            this.randomRotationRectRadioButton.Text = "Losowy";
-            this.randomRotationRectRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // sameRotationRectRadioButton
-            // 
-            this.sameRotationRectRadioButton.AutoSize = true;
-            this.sameRotationRectRadioButton.Checked = true;
-            this.sameRotationRectRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sameRotationRectRadioButton.Location = new System.Drawing.Point(4, 19);
-            this.sameRotationRectRadioButton.Name = "sameRotationRectRadioButton";
-            this.sameRotationRectRadioButton.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.sameRotationRectRadioButton.Size = new System.Drawing.Size(103, 33);
-            this.sameRotationRectRadioButton.TabIndex = 18;
-            this.sameRotationRectRadioButton.TabStop = true;
-            this.sameRotationRectRadioButton.Text = "Wspólny";
-            this.sameRotationRectRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(182, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(12, 17);
-            this.label1.TabIndex = 5;
-            this.label1.Text = ":";
-            // 
-            // ratioSecondRectNumeric
-            // 
-            this.ratioSecondRectNumeric.Location = new System.Drawing.Point(202, 121);
-            this.ratioSecondRectNumeric.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ratioSecondRectNumeric.Name = "ratioSecondRectNumeric";
-            this.ratioSecondRectNumeric.Size = new System.Drawing.Size(71, 22);
-            this.ratioSecondRectNumeric.TabIndex = 4;
-            this.ratioSecondRectNumeric.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ratioSecondRectNumeric.ValueChanged += new System.EventHandler(this.ratioSecondRectNumeric_ValueChanged);
-            // 
-            // ratioFirstRectNumeric
-            // 
-            this.ratioFirstRectNumeric.Location = new System.Drawing.Point(107, 121);
-            this.ratioFirstRectNumeric.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.ratioFirstRectNumeric.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ratioFirstRectNumeric.Name = "ratioFirstRectNumeric";
-            this.ratioFirstRectNumeric.Size = new System.Drawing.Size(71, 22);
-            this.ratioFirstRectNumeric.TabIndex = 3;
-            this.ratioFirstRectNumeric.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ratioFirstRectNumeric.ValueChanged += new System.EventHandler(this.ratioFirstRectNumeric_ValueChanged);
-            // 
-            // ratioRectLabel
-            // 
-            this.ratioRectLabel.AutoSize = true;
-            this.ratioRectLabel.Location = new System.Drawing.Point(18, 126);
-            this.ratioRectLabel.Name = "ratioRectLabel";
-            this.ratioRectLabel.Size = new System.Drawing.Size(67, 17);
-            this.ratioRectLabel.TabIndex = 2;
-            this.ratioRectLabel.Text = "Stosunek";
-            // 
-            // rotationRectNumericUpDown
-            // 
-            this.rotationRectNumericUpDown.Location = new System.Drawing.Point(107, 86);
-            this.rotationRectNumericUpDown.Maximum = new decimal(new int[] {
-            90,
-            0,
-            0,
-            0});
-            this.rotationRectNumericUpDown.Name = "rotationRectNumericUpDown";
-            this.rotationRectNumericUpDown.Size = new System.Drawing.Size(166, 22);
-            this.rotationRectNumericUpDown.TabIndex = 1;
-            this.rotationRectNumericUpDown.ValueChanged += new System.EventHandler(this.rotationRectNumericUpDown_ValueChanged);
-            // 
-            // rotationRectLabel
-            // 
-            this.rotationRectLabel.AutoSize = true;
-            this.rotationRectLabel.Location = new System.Drawing.Point(18, 86);
-            this.rotationRectLabel.Name = "rotationRectLabel";
-            this.rotationRectLabel.Size = new System.Drawing.Size(44, 17);
-            this.rotationRectLabel.TabIndex = 0;
-            this.rotationRectLabel.Text = "Obrót";
-            // 
-            // classicExecutionOptionsGroupBox
-            // 
-            this.classicExecutionOptionsGroupBox.Controls.Add(this.deadRulesLabel);
-            this.classicExecutionOptionsGroupBox.Controls.Add(this.aliveRulesTextBox);
-            this.classicExecutionOptionsGroupBox.Controls.Add(this.deadRulesTextBox);
-            this.classicExecutionOptionsGroupBox.Controls.Add(this.aliveRulesLlabel);
-            this.classicExecutionOptionsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.classicExecutionOptionsGroupBox.Location = new System.Drawing.Point(3, 142);
-            this.classicExecutionOptionsGroupBox.Name = "classicExecutionOptionsGroupBox";
-            this.classicExecutionOptionsGroupBox.Size = new System.Drawing.Size(307, 100);
-            this.classicExecutionOptionsGroupBox.TabIndex = 59;
-            this.classicExecutionOptionsGroupBox.TabStop = false;
-            this.classicExecutionOptionsGroupBox.Text = "Opcje Rozrostu";
-            this.classicExecutionOptionsGroupBox.Visible = false;
-            // 
-            // deadRulesLabel
-            // 
-            this.deadRulesLabel.AutoSize = true;
-            this.deadRulesLabel.Location = new System.Drawing.Point(24, 67);
-            this.deadRulesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.deadRulesLabel.Name = "deadRulesLabel";
-            this.deadRulesLabel.Size = new System.Drawing.Size(101, 17);
-            this.deadRulesLabel.TabIndex = 60;
-            this.deadRulesLabel.Text = "Reguła śmierci";
-            // 
-            // aliveRulesTextBox
-            // 
-            this.aliveRulesTextBox.Location = new System.Drawing.Point(135, 32);
-            this.aliveRulesTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.aliveRulesTextBox.Name = "aliveRulesTextBox";
-            this.aliveRulesTextBox.Size = new System.Drawing.Size(138, 22);
-            this.aliveRulesTextBox.TabIndex = 57;
-            this.aliveRulesTextBox.Text = "3";
-            this.aliveRulesTextBox.Leave += new System.EventHandler(this.aliveRulesTextBox_TextChanged);
-            // 
-            // deadRulesTextBox
-            // 
-            this.deadRulesTextBox.Location = new System.Drawing.Point(135, 64);
-            this.deadRulesTextBox.Margin = new System.Windows.Forms.Padding(4);
-            this.deadRulesTextBox.Name = "deadRulesTextBox";
-            this.deadRulesTextBox.Size = new System.Drawing.Size(138, 22);
-            this.deadRulesTextBox.TabIndex = 58;
-            this.deadRulesTextBox.Text = "0;1;4;5;6;7;8";
-            this.deadRulesTextBox.Leave += new System.EventHandler(this.deadRulesTextBox_TextChanged);
-            // 
-            // aliveRulesLlabel
-            // 
-            this.aliveRulesLlabel.AutoSize = true;
-            this.aliveRulesLlabel.Location = new System.Drawing.Point(24, 32);
-            this.aliveRulesLlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.aliveRulesLlabel.Name = "aliveRulesLlabel";
-            this.aliveRulesLlabel.Size = new System.Drawing.Size(112, 17);
-            this.aliveRulesLlabel.TabIndex = 59;
-            this.aliveRulesLlabel.Text = "Reguła narodzin";
-            // 
-            // modeExecutionGroupBox
-            // 
-            this.modeExecutionGroupBox.Controls.Add(this.classicModeExecutionRadioButton);
-            this.modeExecutionGroupBox.Controls.Add(this.squareModeExecutionRadioButton);
-            this.modeExecutionGroupBox.Controls.Add(this.circleModeExecutionRadioButton);
-            this.modeExecutionGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.modeExecutionGroupBox.Location = new System.Drawing.Point(3, 86);
-            this.modeExecutionGroupBox.Margin = new System.Windows.Forms.Padding(4);
-            this.modeExecutionGroupBox.Name = "modeExecutionGroupBox";
-            this.modeExecutionGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.modeExecutionGroupBox.Size = new System.Drawing.Size(307, 56);
-            this.modeExecutionGroupBox.TabIndex = 57;
-            this.modeExecutionGroupBox.TabStop = false;
-            this.modeExecutionGroupBox.Text = "Tryb rozrostu";
-            // 
-            // classicModeExecutionRadioButton
-            // 
-            this.classicModeExecutionRadioButton.AutoSize = true;
-            this.classicModeExecutionRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.classicModeExecutionRadioButton.Location = new System.Drawing.Point(181, 19);
-            this.classicModeExecutionRadioButton.Name = "classicModeExecutionRadioButton";
-            this.classicModeExecutionRadioButton.Size = new System.Drawing.Size(92, 33);
-            this.classicModeExecutionRadioButton.TabIndex = 19;
-            this.classicModeExecutionRadioButton.TabStop = true;
-            this.classicModeExecutionRadioButton.Text = "Klasyczny";
-            this.classicModeExecutionRadioButton.UseVisualStyleBackColor = true;
-            this.classicModeExecutionRadioButton.Visible = false;
-            this.classicModeExecutionRadioButton.CheckedChanged += new System.EventHandler(this.executionModeRadioButton_CheckedChanged);
-            // 
-            // squareModeExecutionRadioButton
-            // 
-            this.squareModeExecutionRadioButton.AutoSize = true;
-            this.squareModeExecutionRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.squareModeExecutionRadioButton.Location = new System.Drawing.Point(77, 19);
-            this.squareModeExecutionRadioButton.Name = "squareModeExecutionRadioButton";
-            this.squareModeExecutionRadioButton.Size = new System.Drawing.Size(104, 33);
-            this.squareModeExecutionRadioButton.TabIndex = 17;
-            this.squareModeExecutionRadioButton.TabStop = true;
-            this.squareModeExecutionRadioButton.Text = "Prostokątny";
-            this.squareModeExecutionRadioButton.UseVisualStyleBackColor = true;
-            this.squareModeExecutionRadioButton.CheckedChanged += new System.EventHandler(this.executionModeRadioButton_CheckedChanged);
-            // 
-            // circleModeExecutionRadioButton
-            // 
-            this.circleModeExecutionRadioButton.AutoSize = true;
-            this.circleModeExecutionRadioButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.circleModeExecutionRadioButton.Location = new System.Drawing.Point(4, 19);
-            this.circleModeExecutionRadioButton.Name = "circleModeExecutionRadioButton";
-            this.circleModeExecutionRadioButton.Size = new System.Drawing.Size(73, 33);
-            this.circleModeExecutionRadioButton.TabIndex = 18;
-            this.circleModeExecutionRadioButton.TabStop = true;
-            this.circleModeExecutionRadioButton.Text = "Kołowy";
-            this.circleModeExecutionRadioButton.UseVisualStyleBackColor = true;
-            this.circleModeExecutionRadioButton.CheckedChanged += new System.EventHandler(this.executionModeRadioButton_CheckedChanged);
-            // 
-            // nucleonNumberPanel
-            // 
-            this.nucleonNumberPanel.Controls.Add(this.nucleonAmountLabel);
-            this.nucleonNumberPanel.Controls.Add(this.countNucleonIdValueLabel);
-            this.nucleonNumberPanel.Controls.Add(this.countNucleonTextLabel);
-            this.nucleonNumberPanel.Controls.Add(this.nucleonAmountNumericUpDown);
-            this.nucleonNumberPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nucleonNumberPanel.Location = new System.Drawing.Point(3, 18);
-            this.nucleonNumberPanel.Name = "nucleonNumberPanel";
-            this.nucleonNumberPanel.Size = new System.Drawing.Size(307, 68);
-            this.nucleonNumberPanel.TabIndex = 64;
-            // 
-            // nucleonAmountLabel
-            // 
-            this.nucleonAmountLabel.AutoSize = true;
-            this.nucleonAmountLabel.Location = new System.Drawing.Point(18, 9);
-            this.nucleonAmountLabel.Name = "nucleonAmountLabel";
-            this.nucleonAmountLabel.Size = new System.Drawing.Size(79, 17);
-            this.nucleonAmountLabel.TabIndex = 56;
-            this.nucleonAmountLabel.Text = "Ilość ziaren";
-            // 
-            // countNucleonIdValueLabel
-            // 
-            this.countNucleonIdValueLabel.AutoSize = true;
-            this.countNucleonIdValueLabel.Location = new System.Drawing.Point(193, 34);
-            this.countNucleonIdValueLabel.Name = "countNucleonIdValueLabel";
-            this.countNucleonIdValueLabel.Size = new System.Drawing.Size(16, 17);
-            this.countNucleonIdValueLabel.TabIndex = 61;
-            this.countNucleonIdValueLabel.Text = "0";
-            // 
-            // countNucleonTextLabel
-            // 
-            this.countNucleonTextLabel.AutoSize = true;
-            this.countNucleonTextLabel.Location = new System.Drawing.Point(17, 34);
-            this.countNucleonTextLabel.Name = "countNucleonTextLabel";
-            this.countNucleonTextLabel.Size = new System.Drawing.Size(146, 17);
-            this.countNucleonTextLabel.TabIndex = 60;
-            this.countNucleonTextLabel.Text = "Całkowita ilość ziaren:";
-            // 
-            // nucleonAmountNumericUpDown
-            // 
-            this.nucleonAmountNumericUpDown.Location = new System.Drawing.Point(129, 9);
-            this.nucleonAmountNumericUpDown.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nucleonAmountNumericUpDown.Name = "nucleonAmountNumericUpDown";
-            this.nucleonAmountNumericUpDown.Size = new System.Drawing.Size(144, 22);
-            this.nucleonAmountNumericUpDown.TabIndex = 59;
-            this.nucleonAmountNumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // addInTimeNucleaButton
-            // 
-            this.addInTimeNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.addInTimeNucleaButton.Location = new System.Drawing.Point(0, 0);
-            this.addInTimeNucleaButton.Name = "addInTimeNucleaButton";
-            this.addInTimeNucleaButton.Size = new System.Drawing.Size(154, 54);
-            this.addInTimeNucleaButton.TabIndex = 64;
-            this.addInTimeNucleaButton.Text = "Dodaj w czasie";
-            this.addInTimeNucleaButton.UseVisualStyleBackColor = true;
-            this.addInTimeNucleaButton.Click += new System.EventHandler(this.addInTimeNucleaButton_Click);
-            // 
-            // clearInTimeNucleaButton
-            // 
-            this.clearInTimeNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.clearInTimeNucleaButton.Location = new System.Drawing.Point(154, 0);
-            this.clearInTimeNucleaButton.Name = "clearInTimeNucleaButton";
-            this.clearInTimeNucleaButton.Size = new System.Drawing.Size(147, 54);
-            this.clearInTimeNucleaButton.TabIndex = 65;
-            this.clearInTimeNucleaButton.Text = "Wyczyść listę";
-            this.clearInTimeNucleaButton.UseVisualStyleBackColor = true;
-            this.clearInTimeNucleaButton.Click += new System.EventHandler(this.clearInTimeNucleaButton_Click);
-            // 
-            // nucleaInTimeListBox
-            // 
-            this.nucleaInTimeListBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nucleaInTimeListBox.FormattingEnabled = true;
-            this.nucleaInTimeListBox.ItemHeight = 16;
-            this.nucleaInTimeListBox.Location = new System.Drawing.Point(3, 18);
-            this.nucleaInTimeListBox.Name = "nucleaInTimeListBox";
-            this.nucleaInTimeListBox.Size = new System.Drawing.Size(301, 84);
-            this.nucleaInTimeListBox.TabIndex = 59;
-            // 
-            // nucleaInTimeGroupBox
-            // 
-            this.nucleaInTimeGroupBox.Controls.Add(this.nucleaInTimeButtonPanel);
-            this.nucleaInTimeGroupBox.Controls.Add(this.delayNucleonsInTimePanel);
-            this.nucleaInTimeGroupBox.Controls.Add(this.nucleaInTimeListBox);
-            this.nucleaInTimeGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nucleaInTimeGroupBox.Location = new System.Drawing.Point(3, 456);
-            this.nucleaInTimeGroupBox.Name = "nucleaInTimeGroupBox";
-            this.nucleaInTimeGroupBox.Size = new System.Drawing.Size(307, 224);
-            this.nucleaInTimeGroupBox.TabIndex = 60;
-            this.nucleaInTimeGroupBox.TabStop = false;
-            this.nucleaInTimeGroupBox.Text = "Zarodki dodane w czasie";
-            // 
-            // nucleaInTimeButtonPanel
-            // 
-            this.nucleaInTimeButtonPanel.Controls.Add(this.clearInTimeNucleaButton);
-            this.nucleaInTimeButtonPanel.Controls.Add(this.addInTimeNucleaButton);
-            this.nucleaInTimeButtonPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.nucleaInTimeButtonPanel.Location = new System.Drawing.Point(3, 156);
-            this.nucleaInTimeButtonPanel.Name = "nucleaInTimeButtonPanel";
-            this.nucleaInTimeButtonPanel.Size = new System.Drawing.Size(301, 54);
-            this.nucleaInTimeButtonPanel.TabIndex = 60;
-            // 
-            // delayNucleonsInTimePanel
-            // 
-            this.delayNucleonsInTimePanel.Controls.Add(this.delayNucleaInTimeNumeric);
-            this.delayNucleonsInTimePanel.Controls.Add(this.delayNucleaInTimeLabel);
-            this.delayNucleonsInTimePanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.delayNucleonsInTimePanel.Location = new System.Drawing.Point(3, 102);
-            this.delayNucleonsInTimePanel.Name = "delayNucleonsInTimePanel";
-            this.delayNucleonsInTimePanel.Size = new System.Drawing.Size(301, 54);
-            this.delayNucleonsInTimePanel.TabIndex = 61;
-            // 
-            // delayNucleaInTimeLabel
-            // 
-            this.delayNucleaInTimeLabel.AutoSize = true;
-            this.delayNucleaInTimeLabel.Location = new System.Drawing.Point(17, 21);
-            this.delayNucleaInTimeLabel.Name = "delayNucleaInTimeLabel";
-            this.delayNucleaInTimeLabel.Size = new System.Drawing.Size(80, 17);
-            this.delayNucleaInTimeLabel.TabIndex = 0;
-            this.delayNucleaInTimeLabel.Text = "Opóźnienie";
-            // 
-            // delayNucleaInTimeNumeric
-            // 
-            this.delayNucleaInTimeNumeric.Location = new System.Drawing.Point(110, 19);
-            this.delayNucleaInTimeNumeric.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.delayNucleaInTimeNumeric.Name = "delayNucleaInTimeNumeric";
-            this.delayNucleaInTimeNumeric.Size = new System.Drawing.Size(166, 22);
-            this.delayNucleaInTimeNumeric.TabIndex = 1;
-            // 
             // Automat2D
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -992,19 +993,16 @@ namespace Lab8
             this.splitContainer.ResumeLayout(false);
             this.settingsPanel.ResumeLayout(false);
             this.menuTabControl.ResumeLayout(false);
-            this.optionsTabPage.ResumeLayout(false);
-            this.simulationOptionsGroupBox.ResumeLayout(false);
-            this.simulationOptionsGroupBox.PerformLayout();
-            this.gridOptionsGroupBox.ResumeLayout(false);
-            this.gridOptionsGroupBox.PerformLayout();
-            this.gridViewGroupBox.ResumeLayout(false);
-            this.gridViewGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBar)).EndInit();
             this.executionTabPage.ResumeLayout(false);
             this.executionTabPage.PerformLayout();
             this.executionGroupBox.ResumeLayout(false);
             this.executionButtonsPanel.ResumeLayout(false);
             this.nucleaGroupBox.ResumeLayout(false);
+            this.nucleaInTimeGroupBox.ResumeLayout(false);
+            this.nucleaInTimeButtonPanel.ResumeLayout(false);
+            this.delayNucleonsInTimePanel.ResumeLayout(false);
+            this.delayNucleonsInTimePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.delayNucleaInTimeNumeric)).EndInit();
             this.nucleaButtonPanel.ResumeLayout(false);
             this.rectangleExecutionOptionsGroupBox.ResumeLayout(false);
             this.rectangleExecutionOptionsGroupBox.PerformLayout();
@@ -1020,11 +1018,14 @@ namespace Lab8
             this.nucleonNumberPanel.ResumeLayout(false);
             this.nucleonNumberPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nucleonAmountNumericUpDown)).EndInit();
-            this.nucleaInTimeGroupBox.ResumeLayout(false);
-            this.nucleaInTimeButtonPanel.ResumeLayout(false);
-            this.delayNucleonsInTimePanel.ResumeLayout(false);
-            this.delayNucleonsInTimePanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.delayNucleaInTimeNumeric)).EndInit();
+            this.optionsTabPage.ResumeLayout(false);
+            this.simulationOptionsGroupBox.ResumeLayout(false);
+            this.simulationOptionsGroupBox.PerformLayout();
+            this.gridOptionsGroupBox.ResumeLayout(false);
+            this.gridOptionsGroupBox.PerformLayout();
+            this.gridViewGroupBox.ResumeLayout(false);
+            this.gridViewGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomTrackBar)).EndInit();
             this.ResumeLayout(false);
 
         }

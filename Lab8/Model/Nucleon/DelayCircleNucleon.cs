@@ -20,7 +20,7 @@ namespace Lab8
 
         public override string ToString()
         {
-            return $"Circle, Delay: {Delay}, Amount: {NucleonAmount}";
+            return $"Koło, Opóźnienie: {Delay}, Ilość: {NucleonAmount}";
         }
     }
 }
