@@ -36,8 +36,8 @@ namespace Lab9
                     .Where(p => CurrentGrid.Cells[p.X, p.Y].State == 2 || CurrentGrid.Cells[p.X, p.Y].State == 0);
                 foreach (Point nP in neighborsPoints)
                 {
-                    MoveCellToFrontalPoints(CurrentGrid.Cells[origP.X, origP.Y], CurrentGrid.Cells[nP.X, nP.Y]);
-
+                    Cell newCell = CurrentGrid.Cells[nP.X, nP.Y];
+                    MoveCellToFrontalPoints(origCell, newCell);
                 }
                 FrontPoints.AddRange(neighborsPoints);
                 if (origCell.State == 1 && _Neighborhood.GetNeighborhood(origP.X, origP.Y, Grid.SizeX, Grid.SizeY, vonNeuman)
@@ -98,6 +98,27 @@ namespace Lab9
             cell.ChangeState(2);
             cell.Id = originCell.Id;
             cell.OriginPosition = originCell.OriginPosition;
+            cell.Direction = new Point(originCell.Direction);
+            if (cell.CurrentPosition.X == Grid.SizeX - 1 && originCell.CurrentPosition.X == 0)
+            {
+                cell.OriginPosition = cell.OriginPosition.Clone();
+                cell.OriginPosition.Position.X = Grid.SizeX - 1 + originCell.OriginPosition.Position.X;
+            }
+            else if (cell.CurrentPosition.X == 0 && originCell.CurrentPosition.X == Grid.SizeX - 1)
+            {
+                cell.OriginPosition = cell.OriginPosition.Clone();
+                cell.OriginPosition.Position.X = originCell.OriginPosition.Position.X - Grid.SizeX - 1;
+            }
+            if(cell.CurrentPosition.Y == Grid.SizeY - 1 && originCell.CurrentPosition.Y == 0)    
+            {
+                cell.OriginPosition = cell.OriginPosition.Clone();
+                cell.OriginPosition.Position.Y = Grid.SizeY - 1 + originCell.OriginPosition.Position.Y;
+            }
+            else if(cell.CurrentPosition.Y == 0 && originCell.CurrentPosition.Y == Grid.SizeY - 1)
+            {
+                cell.OriginPosition = cell.OriginPosition.Clone();
+                cell.OriginPosition.Position.Y = originCell.OriginPosition.Position.Y - Grid.SizeY - 1;
+            }
             cell.Time = cell.OriginPosition.CalculateChangeStateTime(cell.CurrentPosition);
         }
     }

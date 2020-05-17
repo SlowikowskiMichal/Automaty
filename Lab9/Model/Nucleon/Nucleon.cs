@@ -9,7 +9,7 @@ namespace Lab9
     abstract class Nucleon
     {
 
-        protected Point Position;
+        public Point Position;
         protected double Iteration;
 
         public Nucleon(Point position)
@@ -18,9 +18,17 @@ namespace Lab9
             Iteration = FrontalSolverEngine.Iteration;
         }
 
+        public Nucleon(Point position, double iteration)
+        {
+            Position = position;
+            Iteration = iteration;
+        }
+
         public virtual double CalculateChangeStateTime(Point cellPosition)
         {
             return 0.0;
         }
+
+        internal abstract Nucleon Clone();
     }
 }

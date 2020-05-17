@@ -719,7 +719,7 @@ namespace Lab9
             this.optionsTabPage.Location = new System.Drawing.Point(4, 25);
             this.optionsTabPage.Name = "optionsTabPage";
             this.optionsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.optionsTabPage.Size = new System.Drawing.Size(319, 993);
+            this.optionsTabPage.Size = new System.Drawing.Size(249, 993);
             this.optionsTabPage.TabIndex = 0;
             this.optionsTabPage.Text = "Opcje";
             // 
@@ -738,7 +738,7 @@ namespace Lab9
             this.simulationOptionsGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.simulationOptionsGroupBox.Name = "simulationOptionsGroupBox";
             this.simulationOptionsGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.simulationOptionsGroupBox.Size = new System.Drawing.Size(313, 230);
+            this.simulationOptionsGroupBox.Size = new System.Drawing.Size(243, 230);
             this.simulationOptionsGroupBox.TabIndex = 59;
             this.simulationOptionsGroupBox.TabStop = false;
             this.simulationOptionsGroupBox.Text = "Opcje symulacji";
@@ -807,12 +807,10 @@ namespace Lab9
             // boundaryComboBox
             // 
             this.boundaryComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.boundaryComboBox.Enabled = false;
             this.boundaryComboBox.FormattingEnabled = true;
             this.boundaryComboBox.Items.AddRange(new object[] {
             "Periodyczne",
-            "Odbijające",
-            "Ustalone (0)"});
+            "Ustalony (0)"});
             this.boundaryComboBox.Location = new System.Drawing.Point(109, 23);
             this.boundaryComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.boundaryComboBox.Name = "boundaryComboBox";
@@ -857,7 +855,7 @@ namespace Lab9
             this.gridOptionsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.gridOptionsGroupBox.Location = new System.Drawing.Point(3, 89);
             this.gridOptionsGroupBox.Name = "gridOptionsGroupBox";
-            this.gridOptionsGroupBox.Size = new System.Drawing.Size(313, 116);
+            this.gridOptionsGroupBox.Size = new System.Drawing.Size(243, 116);
             this.gridOptionsGroupBox.TabIndex = 58;
             this.gridOptionsGroupBox.TabStop = false;
             this.gridOptionsGroupBox.Text = "Opcje siatki";
@@ -932,7 +930,7 @@ namespace Lab9
             this.gridViewGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.gridViewGroupBox.Name = "gridViewGroupBox";
             this.gridViewGroupBox.Padding = new System.Windows.Forms.Padding(4);
-            this.gridViewGroupBox.Size = new System.Drawing.Size(313, 86);
+            this.gridViewGroupBox.Size = new System.Drawing.Size(243, 86);
             this.gridViewGroupBox.TabIndex = 60;
             this.gridViewGroupBox.TabStop = false;
             this.gridViewGroupBox.Text = "Widok siatki";

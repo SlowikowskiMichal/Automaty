@@ -14,9 +14,19 @@ namespace Lab9
             RadiusMultiplier = radiusMultiplier;
         }
 
+        CircleNucleon(Point position, double iteration, double radiusMultiplier = 1.1) : base(position,iteration)
+        {
+            RadiusMultiplier = radiusMultiplier;
+        }
+
         public override double CalculateChangeStateTime(Point cellPosition)
         {
             return cellPosition.DistanceBettwenPoints(Position) * RadiusMultiplier + Iteration;
+        }
+
+        internal override Nucleon Clone()
+        {
+            return new CircleNucleon(new Point(Position), Iteration, RadiusMultiplier);
         }
     }
 }

@@ -31,8 +31,8 @@ namespace Lab9
             InitializeComponent();
             CurrentNucleonId = 0;
             GridController = GridController.GetInstance();
-            GridController.SetNeighborhoodType((int)BoundaryConditions.Fixed);
-            boundaryComboBox.SelectedIndex = (int)BoundaryConditions.Fixed;
+            GridController.SetNeighborhoodType((int)BoundaryConditions.Periodic);
+            boundaryComboBox.SelectedIndex = (int)BoundaryConditions.Periodic;
             randomNeighborhoodComboBox.SelectedIndex = 0;
             NeighborhoodCheckedListBox.SetItemChecked(0,true);
             circleModeExecutionRadioButton.Checked = true;
@@ -40,8 +40,6 @@ namespace Lab9
             pointsToDraw = new List<Point>();
             xCellTextBox.Text = Grid.SizeX.ToString();
             yCellTextBox.Text = Grid.SizeY.ToString();
-
-
 
             //GRID VIEW
             Zoom = zoomTrackBar.Value;

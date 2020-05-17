@@ -10,6 +10,13 @@ namespace Lab9
     {
         public int X;
         public int Y;
+        
+
+        public Point(Point point)
+        {
+            this.X = point.X;
+            this.Y = point.Y;
+        }
 
         public Point(int x, int y)
         {
@@ -31,6 +38,11 @@ namespace Lab9
         {
             this.X = x;
             this.Y = y;
+        }
+
+        public static Point operator*(Point a, Point b)
+        {
+            return new Point(a.X * b.X, a.Y * b.Y);
         }
     }
 }

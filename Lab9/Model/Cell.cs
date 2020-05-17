@@ -11,7 +11,7 @@ namespace Lab9
 
         public Point CurrentPosition;
         public Nucleon OriginPosition;
-
+        public Point Direction;
         public int State { get; private set; }
         public int Id { get; set; }
 
@@ -25,6 +25,7 @@ namespace Lab9
             CurrentPosition = new Point(x,y);
             OriginPosition = null;
             Time = -1;
+            Direction = new Point(0, 0);
         }
 
         public Cell(Cell otherCell)
@@ -63,5 +64,6 @@ namespace Lab9
         {
             OriginPosition = new RectangleNucleon(CurrentPosition,rotation, firstSideRatio,secondSideRatio);
         }
+
     }
 }

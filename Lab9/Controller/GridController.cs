@@ -153,11 +153,7 @@ namespace Lab9
                     int y1 = y0 + Zoom;
 
                     var state = CurrentGrid.Cells[p.X, p.Y].State;
-                    if (state == 0)
-                    {
-                        c = Color.White;
-                    }
-                    else if (state == 1)
+                    if (state == 1)
                     {
                         c = ColorTranslator.FromHtml(ColorManager.indexColors[CurrentGrid.Cells[p.X, p.Y].Id % ColorManager.indexColors.Length]);
                     }
@@ -167,7 +163,7 @@ namespace Lab9
                     }
                     else
                     {
-                        c = Color.Red;
+                        c = Color.White;
                     }
 
 
@@ -209,6 +205,7 @@ namespace Lab9
             CurrentGrid.Cells[x, y].ChangeState(1);
             CurrentGrid.Cells[x, y].Id = currentNucleonId;
             CurrentGrid.Cells[x, y].SetAsCircleOrigin();
+            CurrentGrid.Cells[x, y].Direction = new Point(1,1);
             CurrentGrid.Cells[x, y].Time = 0;
         }
 
@@ -221,7 +218,7 @@ namespace Lab9
             Random r = new Random();
             List<Point> cellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
 
-            foreach (Point p in emptyCellPoints)
+            foreach (Point p in cellPoints)
             {
                 SetCellAsActive(p.X, p.Y, OriginGrains.Count);
                 CurrentGrid.Cells[p.X, p.Y].SetAsRectangleOrigin(rotation, firstRatio, secondRatio);

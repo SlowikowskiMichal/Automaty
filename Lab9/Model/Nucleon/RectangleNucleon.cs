@@ -27,6 +27,16 @@ namespace Lab9
             FinalMultiplier = Math.Max(firstRatio, secondRatio) / Math.Min(firstRatio, secondRatio) * 2;
         }
 
+        private RectangleNucleon(double sideRatio, double yRatio, double xRatio, double cosAngle, double sinAngle, double finalMultiplier, Point position, double iteration) : base(position, iteration)
+        {
+            SideRatio = sideRatio;
+            YRatio = yRatio;
+            XRatio = xRatio;
+            CosAngle = cosAngle;
+            SinAngle = sinAngle;
+            FinalMultiplier = finalMultiplier;
+        }
+
         public override double CalculateChangeStateTime(Point cellPosition)
         {
             var diffX = (cellPosition.X - Position.X);
@@ -55,6 +65,11 @@ namespace Lab9
                 valToReturn += Math.Abs(x0) * XRatio;
             }
             return valToReturn * FinalMultiplier + Iteration;
+        }
+
+        internal override Nucleon Clone()
+        {
+            return new RectangleNucleon(SideRatio, YRatio, XRatio, CosAngle, SinAngle, FinalMultiplier, new Point(Position), Iteration);
         }
     }
 }
