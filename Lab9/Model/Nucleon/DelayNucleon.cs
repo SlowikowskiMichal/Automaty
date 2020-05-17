@@ -15,7 +15,7 @@ namespace Lab9
 
         protected GridController gridController;
 
-        protected Action AddNucleonsAction;
+        protected Action<List<Point>> AddNucleonsAction;
 
         public DelayNucleon(int nucleonAmount,  int delay)
         {
@@ -23,16 +23,16 @@ namespace Lab9
             NucleonAmount = nucleonAmount;
             gridController = GridController.GetInstance();
             CurrentTime = 0;
-            AddNucleonsAction = new Action(() => Debug.WriteLine("Delay Nucleon Default Action"));
+            AddNucleonsAction = new Action<List<Point>>((a) => Debug.WriteLine("Delay Nucleon Default Action"));
         }
 
-        public void AddNucleons()
+        public void AddNucleons(List<Point> emptyCellPoints)
         {
             CurrentTime++;
             if(CurrentTime > Delay)
             {
                 CurrentTime = 0;
-                AddNucleonsAction.Invoke();
+                AddNucleonsAction.Invoke(emptyCellPoints);
             }
         }
     }

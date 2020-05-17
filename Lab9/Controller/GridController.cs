@@ -113,11 +113,13 @@ namespace Lab9
             List<Point> ChangedPoints = Solver.Setup();
             PrepareImage(ChangedPoints, CurrentBitmap);
             progress.Report(new Bitmap(CurrentBitmap));
+            List<Point> emptyCellPoints = new List<Point>();
             do
             {
                 foreach (DelayNucleon dn in DelayNucleons)
                 {
-                    dn.AddNucleons();
+                    emptyCellPoints = GetEmptyCells();
+                    dn.AddNucleons(emptyCellPoints);
                 }
                 ChangedPoints = Solver.Run(CurrentGrid);
                 PrepareImage(ChangedPoints, CurrentBitmap);
@@ -210,12 +212,14 @@ namespace Lab9
             CurrentGrid.Cells[x, y].Time = 0;
         }
 
-        internal int AddRectangleCells(int numberOfActiveCells, double rotation, double firstRatio, double secondRatio)
+        internal int AddRectangleCells(int numberOfActiveCells, double rotation, double firstRatio, double secondRatio, List<Point> emptyCellPoints = null)
         {
-            List<Point> emptyCellPoints = new List<Point>();
-            emptyCellPoints = GetEmptyCells();
+            if (emptyCellPoints == null)
+            {
+                emptyCellPoints = GetEmptyCells();
+            }
             Random r = new Random();
-            emptyCellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
+            List<Point> cellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
 
             foreach (Point p in emptyCellPoints)
             {
@@ -223,20 +227,23 @@ namespace Lab9
                 CurrentGrid.Cells[p.X, p.Y].SetAsRectangleOrigin(rotation, firstRatio, secondRatio);
                 OriginGrains.Add(CurrentGrid.Cells[p.X, p.Y].CurrentPosition);
                 FrontalSolverEngine.FrontPoints.Add(p);
+                emptyCellPoints.Remove(p);
             }
 
             return emptyCellPoints.Count;
         }
 
-        internal int AddRandomRectangleCells(int numberOfActiveCells)
+        internal int AddRandomRectangleCells(int numberOfActiveCells, List<Point> emptyCellPoints = null)
         {
-            List<Point> emptyCellPoints = new List<Point>();
-            emptyCellPoints = GetEmptyCells();
+            if (emptyCellPoints == null)
+            {
+                emptyCellPoints = GetEmptyCells();
+            }
             Random r = new Random();
-            emptyCellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
+            List<Point> cellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
 
 
-            foreach (Point p in emptyCellPoints)
+            foreach (Point p in cellPoints)
             {
                 var Rotation = r.NextDouble() * 90.0;
                 var FirstRatio = r.NextDouble() * 10;
@@ -245,28 +252,33 @@ namespace Lab9
                 CurrentGrid.Cells[p.X, p.Y].SetAsRectangleOrigin(Rotation, FirstRatio, SecondRatio);
                 OriginGrains.Add(CurrentGrid.Cells[p.X, p.Y].CurrentPosition);
                 FrontalSolverEngine.FrontPoints.Add(p);
+                emptyCellPoints.Remove(p);
             }
 
-            return emptyCellPoints.Count;
+            return cellPoints.Count;
         }
 
-        internal int AddCircleCells(int numberOfActiveCells)
+        internal int AddCircleCells(int numberOfActiveCells, List<Point> emptyCellPoints = null)
         {
-            List<Point> emptyCellPoints = new List<Point>();
-            emptyCellPoints = GetEmptyCells();
+            if(emptyCellPoints == null)
+            {
+                emptyCellPoints = GetEmptyCells();
+            }
+            
             Random r = new Random();
-            emptyCellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
+            List<Point> cellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
 
 
-            foreach (Point p in emptyCellPoints)
+            foreach (Point p in cellPoints)
             {
                 SetCellAsActive(p.X, p.Y, OriginGrains.Count);
                 CurrentGrid.Cells[p.X, p.Y].SetAsCircleOrigin();
                 OriginGrains.Add(CurrentGrid.Cells[p.X, p.Y].CurrentPosition);
                 FrontalSolverEngine.FrontPoints.Add(p);
+                emptyCellPoints.Remove(p);
             }
 
-            return emptyCellPoints.Count;
+            return cellPoints.Count;
         }
 
         private List<Point> GetEmptyCells()

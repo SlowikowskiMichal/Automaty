@@ -17,26 +17,25 @@ namespace Lab9
         {
             if(rotation == null || firstRotation == null || secondRotation == null)
             {
-                AddNucleonsAction = new Action(AddRandomRectNucleons);
+                AddNucleonsAction = new Action<List<Point>>(AddRandomRectNucleons);
             }
             else
             {
                 this.Rotation = rotation.Value;
                 this.FirstSideRatio = firstRotation.Value;
                 this.SecondSideRatio = secondRotation.Value;
-                AddNucleonsAction = new Action(AddRectNucleons);
+                AddNucleonsAction = new Action<List<Point>>(AddRectNucleons);
             }
         }
 
-
-        void AddRandomRectNucleons()
+        void AddRandomRectNucleons(List<Point> emptyPointList)
         {
-            gridController.AddRandomRectangleCells(NucleonAmount);
+            gridController.AddRandomRectangleCells(NucleonAmount, emptyPointList);
         }
 
-        void AddRectNucleons()
+        void AddRectNucleons(List<Point> emptyPointList)
         {
-            gridController.AddRectangleCells(NucleonAmount,Rotation,FirstSideRatio,SecondSideRatio);
+            gridController.AddRectangleCells(NucleonAmount,Rotation,FirstSideRatio,SecondSideRatio, emptyPointList);
         }
 
         public override string ToString()

@@ -10,12 +10,12 @@ namespace Lab9
     {
         public DelayCircleNucleon(int nucleonAmount, int delay): base(nucleonAmount, delay)
         {
-            AddNucleonsAction = new Action(AddCircleNucleons);
+            AddNucleonsAction = new Action<List<Point>>(AddCircleNucleons);
         }
 
-        private void AddCircleNucleons()
+        private void AddCircleNucleons(List<Point> emptyCellPoints)
         {
-            gridController.AddCircleCells(NucleonAmount);
+            gridController.AddCircleCells(NucleonAmount, emptyCellPoints);
         }
 
         public override string ToString()
