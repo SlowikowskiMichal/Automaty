@@ -559,7 +559,34 @@ namespace Lab8
 
         private void addInTimeNucleaButton_Click(object sender, EventArgs e)
         {
-            GridController.
+            if (circleModeExecutionRadioButton.Checked)
+            {
+                GridController.AddCircleDelayNucleons((int)nucleonAmountNumericUpDown.Value, (int)delayNucleaInTimeNumeric.Value);
+            }
+            else
+            {
+                if (sameRotationRectRadioButton.Checked)
+                {
+                    GridController.AddRectangleDelayNucleons((int)nucleonAmountNumericUpDown.Value,
+                        (double)rotationRectNumericUpDown.Value, (double)ratioFirstRectNumeric.Value, (double)ratioSecondRectNumeric.Value, 
+                        (int)delayNucleaInTimeNumeric.Value);
+                }
+                else
+                {
+                    GridController.AddRandomRectangleDelayNucleons((int)nucleonAmountNumericUpDown.Value, (int)delayNucleaInTimeNumeric.Value);
+                }
+            }
+            nucleaInTimeListBox.Items.Clear();
+            foreach (String s in GridController.GetDelayNucleonsInformation())
+            {
+                nucleaInTimeListBox.Items.Add(s);
+            }
+        }
+
+        private void clearInTimeNucleaButton_Click(object sender, EventArgs e)
+        {
+            GridController.ClearDelayNucleons();
+            nucleaInTimeListBox.Items.Clear();
         }
 
         private void SetDeadRuleFromTextBox()

@@ -73,6 +73,9 @@
     <Compile Include="Model\Neighborhood\PseudoHeksagonalNeighborhood.cs" />
     <Compile Include="Model\Neighborhood\RectangleNeighborhood.cs" />
     <Compile Include="Model\Nucleon\CircleNucleon.cs" />
+    <Compile Include="Model\Nucleon\DelayCircleNucleon.cs" />
+    <Compile Include="Model\Nucleon\DelayNucleon.cs" />
+    <Compile Include="Model\Nucleon\DelayRectNucleon.cs" />
     <Compile Include="Model\Nucleon\Nucleon.cs" />
     <Compile Include="Model\Nucleon\RectangleNucleon.cs" />
     <Compile Include="Model\Point.cs" />

@@ -52,7 +52,7 @@ namespace Lab8
         public override List<Point> Run(Grid CurrentGrid)
         {
             base.Run(CurrentGrid);
-            Iteration -= 0.9;
+            //Iteration -= 0.9;
             List<Point> ChangedPoints = new List<Point>();
             for (int i = FrontPoints.Count - 1; i >= 0; i--)
             {
@@ -83,7 +83,6 @@ namespace Lab8
             cell.Id = originCell.Id;
             cell.OriginPosition = originCell.OriginPosition;
             cell.Time = cell.OriginPosition.CalculateChangeStateTime(cell.CurrentPosition);
-            
         }
     }
 }

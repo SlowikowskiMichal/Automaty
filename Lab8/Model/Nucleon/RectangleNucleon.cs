@@ -13,6 +13,7 @@ namespace Lab8
         double XRatio;
         double CosAngle;
         double SinAngle;
+        double FinalMultiplier;
 
         public RectangleNucleon(Point position, double rotation, double firstRatio, double secondRatio) : base(position)
         {
@@ -23,6 +24,7 @@ namespace Lab8
 
             YRatio = firstRatio / Math.Max(firstRatio, secondRatio);
             XRatio = secondRatio / Math.Max(firstRatio, secondRatio);
+            FinalMultiplier = Math.Max(firstRatio, secondRatio) / Math.Min(firstRatio, secondRatio) * 2;
         }
 
         public override double CalculateChangeStateTime(Point cellPosition)
@@ -32,24 +34,27 @@ namespace Lab8
             double x0 = diffX * CosAngle - diffY * SinAngle;
             double y0 = diffX * SinAngle + diffY * CosAngle;
 
+
+            double valToReturn = 0.0;
             if (y0 != 0)
             {
                 double ratio = Math.Abs(x0 / y0);
 
                 if (ratio <= SideRatio)
                 {
-                    return Math.Abs(y0) * YRatio;
+                    valToReturn += Math.Abs(y0) * YRatio;
                 }
                 else
                 {
-                    return Math.Abs(x0) * XRatio;
+                    valToReturn += Math.Abs(x0) * XRatio;
                 }
 
             }
             else
             {
-                return Math.Abs(x0) * XRatio;
+                valToReturn += Math.Abs(x0) * XRatio;
             }
+            return valToReturn * FinalMultiplier + Iteration;
         }
     }
 }

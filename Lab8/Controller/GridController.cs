@@ -23,6 +23,9 @@ namespace Lab8
         Bitmap CurrentBitmap;
         SolverEngine Solver;
 
+
+        List<DelayNucleon> DelayNucleons;
+
         internal List<int> AliveRule;
         internal List<int> DeadRule;
 
@@ -57,6 +60,7 @@ namespace Lab8
                 _Instance = new GridController(100, 100);
                 _Instance._Neighborhood = NeighborhoodManager.GetInstance();
                 _Instance.Solver = new FrontalSolverEngine();
+                _Instance.DelayNucleons = new List<DelayNucleon>();
             }
             return _Instance;
         }
@@ -106,23 +110,18 @@ namespace Lab8
         public void CalculateNextGrid(IProgress<Bitmap> progress, bool multipleSteps = true)
         {
             Running = true;
-            //Stopwatch sw = new Stopwatch();
             List<Point> ChangedPoints = Solver.Setup();
             PrepareImage(ChangedPoints, CurrentBitmap);
             progress.Report(new Bitmap(CurrentBitmap));
             do
             {
-                //sw.Reset();
-                //sw.Start();
+                foreach(DelayNucleon dn in DelayNucleons)
+                {
+                    dn.AddNucleons();
+                }
                 ChangedPoints = Solver.Run(CurrentGrid);
-                //sw.Stop();
-                //Debug.WriteLine($"Calculations Time {sw.Elapsed}");
-                //sw.Reset();
-                //sw.Start();
                 PrepareImage(ChangedPoints, CurrentBitmap);
                 progress.Report(new Bitmap(CurrentBitmap));
-                //sw.Stop();
-                //Debug.WriteLine($"Report Time {sw.Elapsed}");
             } while (Running && multipleSteps && SolverEngine.Change);
             Running = false;
         }
@@ -408,6 +407,41 @@ namespace Lab8
                     }
                 }
             }
+        }
+
+        internal void AddCircleDelayNucleons(int nucleonAmount, int delay)
+        {
+            DelayCircleNucleon dcn = new DelayCircleNucleon(nucleonAmount, delay);
+            DelayNucleons.Add(dcn);
+        }
+
+        internal void AddRectangleDelayNucleons(int nucleonAmount, double rotation, double firstSideRatio, double secondSideRatio, int delay)
+        {
+            DelayRectNucleon drn = new DelayRectNucleon(nucleonAmount, delay,rotation,firstSideRatio,secondSideRatio);
+            DelayNucleons.Add(drn);
+        }
+
+        internal void AddRandomRectangleDelayNucleons(int nucleonAmount, int delay)
+        {
+            DelayRectNucleon drn = new DelayRectNucleon(nucleonAmount, delay,null,null,null);
+            DelayNucleons.Add(drn);
+        }
+
+        internal void ClearDelayNucleons()
+        {
+            DelayNucleons.Clear();
+        }
+
+        public List<String> GetDelayNucleonsInformation()
+        {
+            List<String> TextList = new List<String>();
+
+            foreach(DelayNucleon dn in DelayNucleons)
+            {
+                TextList.Add(dn.ToString());
+            }
+
+            return TextList;
         }
         #endregion
         #endregion

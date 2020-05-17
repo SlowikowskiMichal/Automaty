@@ -93,6 +93,12 @@ namespace Lab8
             this.nucleonAmountNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.addInTimeNucleaButton = new System.Windows.Forms.Button();
             this.clearInTimeNucleaButton = new System.Windows.Forms.Button();
+            this.nucleaInTimeListBox = new System.Windows.Forms.ListBox();
+            this.nucleaInTimeGroupBox = new System.Windows.Forms.GroupBox();
+            this.nucleaInTimeButtonPanel = new System.Windows.Forms.Panel();
+            this.delayNucleonsInTimePanel = new System.Windows.Forms.Panel();
+            this.delayNucleaInTimeLabel = new System.Windows.Forms.Label();
+            this.delayNucleaInTimeNumeric = new System.Windows.Forms.NumericUpDown();
             this.gridPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
@@ -120,6 +126,10 @@ namespace Lab8
             this.modeExecutionGroupBox.SuspendLayout();
             this.nucleonNumberPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nucleonAmountNumericUpDown)).BeginInit();
+            this.nucleaInTimeGroupBox.SuspendLayout();
+            this.nucleaInTimeButtonPanel.SuspendLayout();
+            this.delayNucleonsInTimePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.delayNucleaInTimeNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // gridPanel
@@ -175,8 +185,8 @@ namespace Lab8
             // 
             // menuTabControl
             // 
-            this.menuTabControl.Controls.Add(this.optionsTabPage);
             this.menuTabControl.Controls.Add(this.executionTabPage);
+            this.menuTabControl.Controls.Add(this.optionsTabPage);
             this.menuTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuTabControl.Location = new System.Drawing.Point(0, 0);
             this.menuTabControl.Name = "menuTabControl";
@@ -468,7 +478,7 @@ namespace Lab8
             this.executionGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.executionGroupBox.Controls.Add(this.executionButtonsPanel);
             this.executionGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.executionGroupBox.Location = new System.Drawing.Point(3, 462);
+            this.executionGroupBox.Location = new System.Drawing.Point(3, 686);
             this.executionGroupBox.Margin = new System.Windows.Forms.Padding(4);
             this.executionGroupBox.Name = "executionGroupBox";
             this.executionGroupBox.Padding = new System.Windows.Forms.Padding(4);
@@ -528,6 +538,7 @@ namespace Lab8
             // 
             this.nucleaGroupBox.AutoSize = true;
             this.nucleaGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.nucleaGroupBox.Controls.Add(this.nucleaInTimeGroupBox);
             this.nucleaGroupBox.Controls.Add(this.nucleaButtonPanel);
             this.nucleaGroupBox.Controls.Add(this.rectangleExecutionOptionsGroupBox);
             this.nucleaGroupBox.Controls.Add(this.classicExecutionOptionsGroupBox);
@@ -536,15 +547,13 @@ namespace Lab8
             this.nucleaGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.nucleaGroupBox.Location = new System.Drawing.Point(3, 3);
             this.nucleaGroupBox.Name = "nucleaGroupBox";
-            this.nucleaGroupBox.Size = new System.Drawing.Size(313, 459);
+            this.nucleaGroupBox.Size = new System.Drawing.Size(313, 683);
             this.nucleaGroupBox.TabIndex = 58;
             this.nucleaGroupBox.TabStop = false;
             this.nucleaGroupBox.Text = "Zarodki";
             // 
             // nucleaButtonPanel
             // 
-            this.nucleaButtonPanel.Controls.Add(this.clearInTimeNucleaButton);
-            this.nucleaButtonPanel.Controls.Add(this.addInTimeNucleaButton);
             this.nucleaButtonPanel.Controls.Add(this.clearNucleaButton);
             this.nucleaButtonPanel.Controls.Add(this.addNucleaButton);
             this.nucleaButtonPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -556,11 +565,11 @@ namespace Lab8
             // clearNucleaButton
             // 
             this.clearNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.clearNucleaButton.Location = new System.Drawing.Point(69, 0);
+            this.clearNucleaButton.Location = new System.Drawing.Point(157, 0);
             this.clearNucleaButton.Name = "clearNucleaButton";
-            this.clearNucleaButton.Size = new System.Drawing.Size(76, 56);
+            this.clearNucleaButton.Size = new System.Drawing.Size(148, 56);
             this.clearNucleaButton.TabIndex = 63;
-            this.clearNucleaButton.Text = "Wyczyść";
+            this.clearNucleaButton.Text = "Wyczyść obecne zarodki";
             this.clearNucleaButton.UseVisualStyleBackColor = true;
             this.clearNucleaButton.Click += new System.EventHandler(this.clearNucleaButton_Click);
             // 
@@ -569,9 +578,9 @@ namespace Lab8
             this.addNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
             this.addNucleaButton.Location = new System.Drawing.Point(0, 0);
             this.addNucleaButton.Name = "addNucleaButton";
-            this.addNucleaButton.Size = new System.Drawing.Size(69, 56);
+            this.addNucleaButton.Size = new System.Drawing.Size(157, 56);
             this.addNucleaButton.TabIndex = 62;
-            this.addNucleaButton.Text = "Dodaj";
+            this.addNucleaButton.Text = "Dodaj natychmiast";
             this.addNucleaButton.UseVisualStyleBackColor = true;
             this.addNucleaButton.Click += new System.EventHandler(this.addNucleaButton_Click);
             // 
@@ -883,9 +892,9 @@ namespace Lab8
             // addInTimeNucleaButton
             // 
             this.addInTimeNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.addInTimeNucleaButton.Location = new System.Drawing.Point(145, 0);
+            this.addInTimeNucleaButton.Location = new System.Drawing.Point(0, 0);
             this.addInTimeNucleaButton.Name = "addInTimeNucleaButton";
-            this.addInTimeNucleaButton.Size = new System.Drawing.Size(76, 56);
+            this.addInTimeNucleaButton.Size = new System.Drawing.Size(154, 54);
             this.addInTimeNucleaButton.TabIndex = 64;
             this.addInTimeNucleaButton.Text = "Dodaj w czasie";
             this.addInTimeNucleaButton.UseVisualStyleBackColor = true;
@@ -894,12 +903,77 @@ namespace Lab8
             // clearInTimeNucleaButton
             // 
             this.clearInTimeNucleaButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.clearInTimeNucleaButton.Location = new System.Drawing.Point(221, 0);
+            this.clearInTimeNucleaButton.Location = new System.Drawing.Point(154, 0);
             this.clearInTimeNucleaButton.Name = "clearInTimeNucleaButton";
-            this.clearInTimeNucleaButton.Size = new System.Drawing.Size(82, 56);
+            this.clearInTimeNucleaButton.Size = new System.Drawing.Size(147, 54);
             this.clearInTimeNucleaButton.TabIndex = 65;
-            this.clearInTimeNucleaButton.Text = "Wyczyść";
+            this.clearInTimeNucleaButton.Text = "Wyczyść listę";
             this.clearInTimeNucleaButton.UseVisualStyleBackColor = true;
+            this.clearInTimeNucleaButton.Click += new System.EventHandler(this.clearInTimeNucleaButton_Click);
+            // 
+            // nucleaInTimeListBox
+            // 
+            this.nucleaInTimeListBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleaInTimeListBox.FormattingEnabled = true;
+            this.nucleaInTimeListBox.ItemHeight = 16;
+            this.nucleaInTimeListBox.Location = new System.Drawing.Point(3, 18);
+            this.nucleaInTimeListBox.Name = "nucleaInTimeListBox";
+            this.nucleaInTimeListBox.Size = new System.Drawing.Size(301, 84);
+            this.nucleaInTimeListBox.TabIndex = 59;
+            // 
+            // nucleaInTimeGroupBox
+            // 
+            this.nucleaInTimeGroupBox.Controls.Add(this.nucleaInTimeButtonPanel);
+            this.nucleaInTimeGroupBox.Controls.Add(this.delayNucleonsInTimePanel);
+            this.nucleaInTimeGroupBox.Controls.Add(this.nucleaInTimeListBox);
+            this.nucleaInTimeGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleaInTimeGroupBox.Location = new System.Drawing.Point(3, 456);
+            this.nucleaInTimeGroupBox.Name = "nucleaInTimeGroupBox";
+            this.nucleaInTimeGroupBox.Size = new System.Drawing.Size(307, 224);
+            this.nucleaInTimeGroupBox.TabIndex = 60;
+            this.nucleaInTimeGroupBox.TabStop = false;
+            this.nucleaInTimeGroupBox.Text = "Zarodki dodane w czasie";
+            // 
+            // nucleaInTimeButtonPanel
+            // 
+            this.nucleaInTimeButtonPanel.Controls.Add(this.clearInTimeNucleaButton);
+            this.nucleaInTimeButtonPanel.Controls.Add(this.addInTimeNucleaButton);
+            this.nucleaInTimeButtonPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.nucleaInTimeButtonPanel.Location = new System.Drawing.Point(3, 156);
+            this.nucleaInTimeButtonPanel.Name = "nucleaInTimeButtonPanel";
+            this.nucleaInTimeButtonPanel.Size = new System.Drawing.Size(301, 54);
+            this.nucleaInTimeButtonPanel.TabIndex = 60;
+            // 
+            // delayNucleonsInTimePanel
+            // 
+            this.delayNucleonsInTimePanel.Controls.Add(this.delayNucleaInTimeNumeric);
+            this.delayNucleonsInTimePanel.Controls.Add(this.delayNucleaInTimeLabel);
+            this.delayNucleonsInTimePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.delayNucleonsInTimePanel.Location = new System.Drawing.Point(3, 102);
+            this.delayNucleonsInTimePanel.Name = "delayNucleonsInTimePanel";
+            this.delayNucleonsInTimePanel.Size = new System.Drawing.Size(301, 54);
+            this.delayNucleonsInTimePanel.TabIndex = 61;
+            // 
+            // delayNucleaInTimeLabel
+            // 
+            this.delayNucleaInTimeLabel.AutoSize = true;
+            this.delayNucleaInTimeLabel.Location = new System.Drawing.Point(17, 21);
+            this.delayNucleaInTimeLabel.Name = "delayNucleaInTimeLabel";
+            this.delayNucleaInTimeLabel.Size = new System.Drawing.Size(80, 17);
+            this.delayNucleaInTimeLabel.TabIndex = 0;
+            this.delayNucleaInTimeLabel.Text = "Opóźnienie";
+            // 
+            // delayNucleaInTimeNumeric
+            // 
+            this.delayNucleaInTimeNumeric.Location = new System.Drawing.Point(110, 19);
+            this.delayNucleaInTimeNumeric.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.delayNucleaInTimeNumeric.Name = "delayNucleaInTimeNumeric";
+            this.delayNucleaInTimeNumeric.Size = new System.Drawing.Size(166, 22);
+            this.delayNucleaInTimeNumeric.TabIndex = 1;
             // 
             // Automat2D
             // 
@@ -946,6 +1020,11 @@ namespace Lab8
             this.nucleonNumberPanel.ResumeLayout(false);
             this.nucleonNumberPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nucleonAmountNumericUpDown)).EndInit();
+            this.nucleaInTimeGroupBox.ResumeLayout(false);
+            this.nucleaInTimeButtonPanel.ResumeLayout(false);
+            this.delayNucleonsInTimePanel.ResumeLayout(false);
+            this.delayNucleonsInTimePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.delayNucleaInTimeNumeric)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1014,6 +1093,12 @@ namespace Lab8
         private Label countNucleonTextLabel;
         private Button clearInTimeNucleaButton;
         private Button addInTimeNucleaButton;
+        private GroupBox nucleaInTimeGroupBox;
+        private Panel nucleaInTimeButtonPanel;
+        private Panel delayNucleonsInTimePanel;
+        private NumericUpDown delayNucleaInTimeNumeric;
+        private Label delayNucleaInTimeLabel;
+        private ListBox nucleaInTimeListBox;
     }
 }
 

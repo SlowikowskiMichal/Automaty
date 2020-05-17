@@ -10,10 +10,12 @@ namespace Lab8
     {
 
         protected Point Position;
+        protected double Iteration;
 
         public Nucleon(Point position)
         {
             Position = position;
+            Iteration = FrontalSolverEngine.Iteration;
         }
 
         public virtual double CalculateChangeStateTime(Point cellPosition)

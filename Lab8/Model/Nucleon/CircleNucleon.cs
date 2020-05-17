@@ -16,7 +16,7 @@ namespace Lab8
 
         public override double CalculateChangeStateTime(Point cellPosition)
         {
-            return cellPosition.DistanceBettwenPoints(Position) * RadiusMultiplier;
+            return cellPosition.DistanceBettwenPoints(Position) * RadiusMultiplier + Iteration;
         }
     }
 }
