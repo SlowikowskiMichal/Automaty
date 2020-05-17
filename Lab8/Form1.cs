@@ -171,11 +171,13 @@ namespace Lab8
             GridController.ResizeGrid(sizeX, sizeY);
             Bitmap gridToDraw = this.GridController.GetGridImage();
             this.gridPictureBox.Size = new Size(gridToDraw.Width, gridToDraw.Height);
+            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
             DrawGrid(gridToDraw);
         }
         private void clearButton_Click(object sender, EventArgs e)
         {
             GridController.ClearGrid();
+            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
             DrawGrid(this.GridController.GetGridImage());
 
         }
@@ -389,7 +391,7 @@ namespace Lab8
 
         private void gridPictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-
+            /*
             if (e.Button == MouseButtons.Left)
             {
                 if (GridController.IsSimulationRunning())
@@ -420,16 +422,17 @@ namespace Lab8
                     drawChangedCells(x, y);
                 }
             }
+            */
         }
 
         private void gridPictureBox_MouseDown_1(object sender, MouseEventArgs e)
         {
+            /*
             if (e.Button == MouseButtons.Right)
             {
                 CurrentNucleonId = ++CurrentNucleonId % (int)nucleonAmountNumericUpDown.Value;
             }
-
-            currentNucleonIdValueLabel.Text = string.Format("{0}", CurrentNucleonId + 1);
+            */
         }
 
         private void executionModeRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -444,18 +447,8 @@ namespace Lab8
 
             if(squareModeExecutionRadioButton.Checked)
             {
-                GridController.SetSolver(1);
                 rectangleExecutionOptionsGroupBox.Visible = true;
             
-            }
-            else if (circleModeExecutionRadioButton.Checked)
-            {
-                GridController.SetSolver(0);
-            }
-            else
-            {
-                GridController.SetSolver(2);
-                classicExecutionOptionsGroupBox.Visible = true;
             }
         }
 
@@ -476,6 +469,7 @@ namespace Lab8
 
         private void gridPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
+            /*
             if (GridController.IsSimulationRunning())
             {
                 ShowMyDialogBox("Nie można rysować podczas symulacji.");
@@ -495,6 +489,7 @@ namespace Lab8
 
                 DrawGrid(this.GridController.GetGridImage());
             }
+            */
         }
 
         private void aliveRulesTextBox_TextChanged(object sender, EventArgs e)
@@ -529,6 +524,42 @@ namespace Lab8
         private void gridPictureBox_Click(object sender, EventArgs e)
         {
             gridPictureBox_MouseDown(sender, (MouseEventArgs)e);
+        }
+
+        private void addNucleaButton_Click(object sender, EventArgs e)
+        {
+            if(circleModeExecutionRadioButton.Checked)
+            {
+                GridController.AddCircleCells((int)nucleonAmountNumericUpDown.Value);
+            }
+            else
+            {
+                if(sameRotationRectRadioButton.Checked)
+                {
+                    GridController.AddRectangleCells((int)nucleonAmountNumericUpDown.Value, 
+                        (double)rotationRectNumericUpDown.Value, (double)ratioFirstRectNumeric.Value, (double)ratioSecondRectNumeric.Value);
+                }
+                else
+                {
+                    GridController.AddRandomRectangleCells((int)nucleonAmountNumericUpDown.Value);
+                }
+                
+            }
+            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
+            DrawGrid(this.GridController.GetGridImage());
+        }
+
+        private void clearNucleaButton_Click(object sender, EventArgs e)
+        {
+            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
+            GridController.ClearGrid();
+            countNucleonIdValueLabel.Text = GridController.OriginGrains.Count.ToString();
+            DrawGrid(this.GridController.GetGridImage());
+        }
+
+        private void addInTimeNucleaButton_Click(object sender, EventArgs e)
+        {
+            GridController.
         }
 
         private void SetDeadRuleFromTextBox()

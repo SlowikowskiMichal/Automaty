@@ -10,7 +10,7 @@ namespace Lab8
     {
 
         public Point CurrentPosition;
-        public Point OriginPosition;
+        public Nucleon OriginPosition;
 
         public int State { get; private set; }
         public int Id { get; set; }
@@ -23,7 +23,7 @@ namespace Lab8
             State = 0;
             Id = -1;
             CurrentPosition = new Point(x,y);
-            OriginPosition = new Point(-1,-1);
+            OriginPosition = null;
             Time = -1;
         }
 
@@ -34,13 +34,6 @@ namespace Lab8
             this.CurrentPosition = otherCell.CurrentPosition;
             this.OriginPosition = otherCell.OriginPosition;
             this.Time = otherCell.Time;
-        }
-
-
-        public void SetOriginFromCoords(int x, int y)
-        {
-            OriginPosition.X = x;
-            OriginPosition.Y = y;
         }
 
         public void ChangeState()
@@ -57,8 +50,18 @@ namespace Lab8
         {
             State = 0;
             Id = -1;
-            OriginPosition = new Point(-1, -1);
+            OriginPosition = null;
             Time = -1;
+        }
+
+        internal void SetAsCircleOrigin()
+        {
+            OriginPosition = new CircleNucleon(CurrentPosition);
+        }
+
+        internal void SetAsRectangleOrigin(double rotation, double firstSideRatio, double secondSideRatio)
+        {
+            OriginPosition = new RectangleNucleon(CurrentPosition,rotation, firstSideRatio,secondSideRatio);
         }
     }
 }

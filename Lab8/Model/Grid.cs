@@ -100,11 +100,6 @@ namespace Lab8
             return Cells[x, y].Id;
         }
 
-        public void ChangeCellOrigin(int x, int y, int originX, int originY)
-        {
-            Cells[x, y].SetOriginFromCoords(originX, originY);
-        }
-
         internal int GetCellState(int x, int y)
         {
             if (x < 0 || y < 0)

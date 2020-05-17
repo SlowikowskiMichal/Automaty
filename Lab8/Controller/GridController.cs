@@ -11,12 +11,17 @@ namespace Lab8
 {
     class GridController
     {
+        public enum CellGrowthMode
+        {
+            Rectangle,
+            Circle
+        }
+
         #region Attributes
 
         NeighborhoodManager _Neighborhood;
         Bitmap CurrentBitmap;
         SolverEngine Solver;
-        List<SolverEngine> SolversList;
 
         internal List<int> AliveRule;
         internal List<int> DeadRule;
@@ -51,8 +56,7 @@ namespace Lab8
             {
                 _Instance = new GridController(100, 100);
                 _Instance._Neighborhood = NeighborhoodManager.GetInstance();
-                _Instance.SolversList = new List<SolverEngine>() { new CircleSolver(), new RectSolver(), new ClassicSolverEngine() };
-                _Instance.Solver = _Instance.SolversList[0];
+                _Instance.Solver = new FrontalSolverEngine();
             }
             return _Instance;
         }
@@ -196,13 +200,86 @@ namespace Lab8
 
         internal void SetCellAsActive(int x, int y, int currentNucleonId)
         {
-
+            
             CurrentGrid.Cells[x, y].ChangeState(1);
             CurrentGrid.Cells[x, y].Id = currentNucleonId;
-            CurrentGrid.Cells[x, y].OriginPosition.Set(x, y);
+            CurrentGrid.Cells[x, y].SetAsCircleOrigin();
             CurrentGrid.Cells[x, y].Time = 0;
+        }
 
-            OriginGrains.Add(CurrentGrid.Cells[x, y].CurrentPosition);
+        internal int AddRectangleCells(int numberOfActiveCells, double rotation, double firstRatio, double secondRatio)
+        {
+            List<Point> emptyCellPoints = new List<Point>();
+            emptyCellPoints = GetEmptyCells();
+            Random r = new Random();
+            emptyCellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
+
+            foreach (Point p in emptyCellPoints)
+            {
+                SetCellAsActive(p.X, p.Y, OriginGrains.Count);
+                CurrentGrid.Cells[p.X, p.Y].SetAsRectangleOrigin(rotation, firstRatio, secondRatio);
+                OriginGrains.Add(CurrentGrid.Cells[p.X, p.Y].CurrentPosition);
+                FrontalSolverEngine.FrontPoints.Add(p);
+            }
+
+            return emptyCellPoints.Count;
+        }
+
+        internal int AddRandomRectangleCells(int numberOfActiveCells)
+        {
+            List<Point> emptyCellPoints = new List<Point>();
+            emptyCellPoints = GetEmptyCells();
+            Random r = new Random();
+            emptyCellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
+
+
+            foreach (Point p in emptyCellPoints)
+            {
+                var Rotation = r.NextDouble() * 90.0;
+                var FirstRatio = r.NextDouble() * 10;
+                var SecondRatio = r.NextDouble() * 10;
+                SetCellAsActive(p.X, p.Y, OriginGrains.Count);
+                CurrentGrid.Cells[p.X, p.Y].SetAsRectangleOrigin(Rotation, FirstRatio, SecondRatio);
+                OriginGrains.Add(CurrentGrid.Cells[p.X, p.Y].CurrentPosition);
+                FrontalSolverEngine.FrontPoints.Add(p);
+            }
+
+            return emptyCellPoints.Count;
+        }
+
+        internal int AddCircleCells(int numberOfActiveCells)
+        {
+            List<Point> emptyCellPoints = new List<Point>();
+            emptyCellPoints = GetEmptyCells();
+            Random r = new Random();
+            emptyCellPoints = emptyCellPoints.OrderBy(e => r.Next()).Take(numberOfActiveCells).ToList();
+
+
+            foreach (Point p in emptyCellPoints)
+            {
+                SetCellAsActive(p.X, p.Y, OriginGrains.Count);
+                CurrentGrid.Cells[p.X, p.Y].SetAsCircleOrigin();
+                OriginGrains.Add(CurrentGrid.Cells[p.X, p.Y].CurrentPosition);
+                FrontalSolverEngine.FrontPoints.Add(p);
+            }
+
+            return emptyCellPoints.Count;
+        }
+
+        private List<Point> GetEmptyCells()
+        {
+            List<Point> emptyCells = new List<Point>();
+            for(int x = 0; x < Grid.SizeX; x++)
+            {
+                for (int y = 0; y < Grid.SizeY; y++)
+                {
+                    if(CurrentGrid.Cells[x,y].State == 0)
+                    {
+                        emptyCells.Add(CurrentGrid.Cells[x, y].CurrentPosition);
+                    }
+                }
+            }
+            return emptyCells;
         }
 
         internal void ResetCell(int x, int y)
@@ -330,14 +407,6 @@ namespace Lab8
                         CurrentGrid.Cells[x, y].ChangeState(0);
                     }
                 }
-            }
-        }
-
-        internal void SetSolver(int index)
-        {
-            if (index >= 0 && index < SolversList.Count)
-            {
-                Solver = _Instance.SolversList[index];
             }
         }
         #endregion
